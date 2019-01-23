@@ -2,6 +2,7 @@
 SOAP 1.1 Service
 
 Copyright (c) 2018-2019 Yaroslav Shkliar
+
 Copyright (c) 2018-2019 ILIT.RU, Research IT Laboratory 
 
 http://www.ilit.ru
