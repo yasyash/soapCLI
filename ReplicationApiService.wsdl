@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="ReplicationApiService"
+  targetNamespace="urn:ReplicationApiService"
+  xmlns:tns="urn:ReplicationApiService"
+  xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+  xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+  xmlns:ns="urn:ReplicationApiService"
+  xmlns:SOAP="http://schemas.xmlsoap.org/wsdl/soap/"
+  xmlns:HTTP="http://schemas.xmlsoap.org/wsdl/http/"
+  xmlns:MIME="http://schemas.xmlsoap.org/wsdl/mime/"
+  xmlns:DIME="http://schemas.xmlsoap.org/ws/2002/04/dime/wsdl/"
+  xmlns:WSDL="http://schemas.xmlsoap.org/wsdl/"
+  xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+<types>
+
+  <schema targetNamespace="urn:ReplicationApiService"
+    xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/"
+    xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+    xmlns:ns="urn:ReplicationApiService"
+    xmlns="http://www.w3.org/2001/XMLSchema"
+    elementFormDefault="unqualified"
+    attributeFormDefault="unqualified">
+    <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
+    <simpleType name="ErrorCode"><!-- ns__ErrorCode -->
+      <restriction base="xsd:QName">
+        <!-- = 0 -->
+        <enumeration value="ns:NO-ERROR-AUTHORIZATION"/><!-- ns__NO_ERROR_AUTHORIZATION -->
+        <!-- = 1 -->
+        <enumeration value="ns:AUTHORIZATION-ERROR-IS"/><!-- ns__AUTHORIZATION_ERROR_IS -->
+      </restriction>
+    </simpleType>
+    <simpleType name="UserAccessRightCode"><!-- ns__UserAccessRightCode -->
+      <restriction base="xsd:string">
+        <!-- = 0 -->
+        <enumeration value="NONE"/><!-- NONE -->
+        <!-- = 1 -->
+        <enumeration value="VIEW"/><!-- VIEW -->
+        <!-- = 2 -->
+        <enumeration value="EDIT"/><!-- EDIT -->
+        <!-- = 3 -->
+        <enumeration value="DELETE"/><!-- DELETE -->
+      </restriction>
+    </simpleType>
+    <complexType name="ArrayOfStationInfo"><!-- ns__ArrayOfStationInfo -->
+          <sequence>
+            <element name="StationsInfo" type="ns:StationInfo" minOccurs="0" maxOccurs="unbounded"/><!-- ns__ArrayOfStationInfo::StationsInfo -->
+          </sequence>
+    </complexType>
+    <complexType name="StInfo"><!-- ns__StInfo -->
+          <sequence>
+            <element name="ID" type="xsd:string" minOccurs="1" maxOccurs="1"/><!-- ns__StInfo::ID -->
+            <element name="Code" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- ns__StInfo::Code -->
+            <element name="Name" type="xsd:string" minOccurs="1" maxOccurs="1"/><!-- ns__StInfo::Name -->
+            <element name="UpdatePeriod" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- ns__StInfo::UpdatePeriod -->
+            <element name="UserAccessRight" type="ns:UserAccessRightCode" minOccurs="1" maxOccurs="1"/><!-- ns__StInfo::UserAccessRight -->
+          </sequence>
+    </complexType>
+  </schema>
+
+</types>
+
+<message name="GetStations">
+  <part name="login" type="xsd:string"/><!-- ns__GetStations::login -->
+  <part name="password" type="xsd:string"/><!-- ns__GetStations::password -->
+</message>
+
+<message name="StationInfo">
+  <part name="ID" type="xsd:string"/><!-- ns__GetStations::ID -->
+  <part name="Code" type="xsd:int"/><!-- ns__GetStations::Code -->
+  <part name="Name" type="xsd:string"/><!-- ns__GetStations::Name -->
+  <part name="UpdatePeriod" type="xsd:int"/><!-- ns__GetStations::UpdatePeriod -->
+  <part name="UserAccessRight" type="ns:UserAccessRightCode"/><!-- ns__GetStations::UserAccessRight -->
+</message>
+
+<message name="GetStationsResp">
+  <part name="login" type="xsd:string"/><!-- ns__GetStationsResp::login -->
+  <part name="password" type="xsd:string"/><!-- ns__GetStationsResp::password -->
+</message>
+
+<message name="GetStationsResponse">
+  <part name="GetStationsResult" type="ns:ArrayOfStationInfo"/><!-- ns__GetStationsResp::GetStationsResult -->
+  <part name="ErrorCode" type="ns:ErrorCode"/><!-- ns__GetStationsResp::ErrorCode -->
+</message>
+
+<portType name="ReplicationApiServicePortType">
+  <operation name="GetStations">
+    <documentation>Service definition of function ns__GetStations</documentation>
+    <input message="tns:GetStations"/>
+    <output message="tns:StationInfo"/>
+  </operation>
+  <operation name="GetStationsResp">
+    <documentation>Service definition of function ns__GetStationsResp</documentation>
+    <input message="tns:GetStationsResp"/>
+    <output message="tns:GetStationsResponse"/>
+  </operation>
+</portType>
+
+<binding name="ReplicationApiService" type="tns:ReplicationApiServicePortType">
+  <SOAP:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+  <operation name="GetStations">
+    <SOAP:operation style="rpc" soapAction=""/>
+    <input>
+          <SOAP:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:ReplicationApiService"/>
+    </input>
+    <output>
+          <SOAP:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:ReplicationApiService"/>
+    </output>
+  </operation>
+  <operation name="GetStationsResp">
+    <SOAP:operation style="rpc" soapAction=""/>
+    <input>
+          <SOAP:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:ReplicationApiService"/>
+    </input>
+    <output>
+          <SOAP:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:ReplicationApiService"/>
+    </output>
+  </operation>
+</binding>
+
+<service name="ReplicationApiService">
+  <documentation>gSOAP 2.8.75 generated service definition</documentation>
+  <port name="ReplicationApiService" binding="tns:ReplicationApiService">
+    <SOAP:address location="http://localhost:80"/>
+  </port>
+</service>
+
+</definitions>
