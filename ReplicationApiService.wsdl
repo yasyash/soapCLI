@@ -29,9 +29,13 @@
     <simpleType name="ErrorCode"><!-- ns__ErrorCode -->
       <restriction base="xsd:QName">
         <!-- = 0 -->
-        <enumeration value="ns:NO-ERROR-AUTHORIZATION"/><!-- ns__NO_ERROR_AUTHORIZATION -->
+        <enumeration value="ns:AUTHORIZATION-IS-OK"/><!-- ns__AUTHORIZATION_IS_OK -->
         <!-- = 1 -->
         <enumeration value="ns:AUTHORIZATION-ERROR-IS"/><!-- ns__AUTHORIZATION_ERROR_IS -->
+        <!-- = 2 -->
+        <enumeration value="ns:CONNECTION-NOT-ESTABLISHED"/><!-- ns__CONNECTION_NOT_ESTABLISHED -->
+        <!-- = 3 -->
+        <enumeration value="ns:ERROR-QUERY-EXEC"/><!-- ns__ERROR_QUERY_EXEC -->
       </restriction>
     </simpleType>
     <simpleType name="UserAccessRightCode"><!-- ns__UserAccessRightCode -->
@@ -46,6 +50,18 @@
         <enumeration value="DELETE"/><!-- DELETE -->
       </restriction>
     </simpleType>
+    <complexType name="StationInfo"><!-- ns__StationInfo -->
+          <sequence>
+            <element name="ID" type="xsd:string" minOccurs="1" maxOccurs="1"/><!-- ns__StationInfo::ID -->
+            <element name="Code" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- ns__StationInfo::Code -->
+            <element name="Name" type="xsd:string" minOccurs="1" maxOccurs="1"/><!-- ns__StationInfo::Name -->
+            <element name="UpdatePeriod" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- ns__StationInfo::UpdatePeriod -->
+            <element name="Place" type="xsd:string" minOccurs="1" maxOccurs="1"/><!-- ns__StationInfo::Place -->
+            <element name="Latitude" type="xsd:float" minOccurs="1" maxOccurs="1"/><!-- ns__StationInfo::Latitude -->
+            <element name="Longitude" type="xsd:float" minOccurs="1" maxOccurs="1"/><!-- ns__StationInfo::Longitude -->
+            <element name="UserAccessRight" type="xsd:string" minOccurs="1" maxOccurs="1"/><!-- ns__StationInfo::UserAccessRight -->
+          </sequence>
+    </complexType>
     <complexType name="ArrayOfStationInfo"><!-- ns__ArrayOfStationInfo -->
           <sequence>
             <element name="StationsInfo" type="ns:StationInfo" minOccurs="0" maxOccurs="unbounded"/><!-- ns__ArrayOfStationInfo::StationsInfo -->
@@ -69,33 +85,15 @@
   <part name="password" type="xsd:string"/><!-- ns__GetStations::password -->
 </message>
 
-<message name="StationInfo">
-  <part name="ID" type="xsd:string"/><!-- ns__GetStations::ID -->
-  <part name="Code" type="xsd:int"/><!-- ns__GetStations::Code -->
-  <part name="Name" type="xsd:string"/><!-- ns__GetStations::Name -->
-  <part name="UpdatePeriod" type="xsd:int"/><!-- ns__GetStations::UpdatePeriod -->
-  <part name="UserAccessRight" type="ns:UserAccessRightCode"/><!-- ns__GetStations::UserAccessRight -->
-</message>
-
-<message name="GetStationsResp">
-  <part name="login" type="xsd:string"/><!-- ns__GetStationsResp::login -->
-  <part name="password" type="xsd:string"/><!-- ns__GetStationsResp::password -->
-</message>
-
 <message name="GetStationsResponse">
-  <part name="GetStationsResult" type="ns:ArrayOfStationInfo"/><!-- ns__GetStationsResp::GetStationsResult -->
-  <part name="ErrorCode" type="ns:ErrorCode"/><!-- ns__GetStationsResp::ErrorCode -->
+  <part name="GetStationsResult" type="ns:ArrayOfStationInfo"/><!-- ns__GetStations::GetStationsResult -->
+  <part name="ErrorCode" type="ns:ErrorCode"/><!-- ns__GetStations::ErrorCode -->
 </message>
 
 <portType name="ReplicationApiServicePortType">
   <operation name="GetStations">
     <documentation>Service definition of function ns__GetStations</documentation>
     <input message="tns:GetStations"/>
-    <output message="tns:StationInfo"/>
-  </operation>
-  <operation name="GetStationsResp">
-    <documentation>Service definition of function ns__GetStationsResp</documentation>
-    <input message="tns:GetStationsResp"/>
     <output message="tns:GetStationsResponse"/>
   </operation>
 </portType>
@@ -103,15 +101,6 @@
 <binding name="ReplicationApiService" type="tns:ReplicationApiServicePortType">
   <SOAP:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
   <operation name="GetStations">
-    <SOAP:operation style="rpc" soapAction=""/>
-    <input>
-          <SOAP:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:ReplicationApiService"/>
-    </input>
-    <output>
-          <SOAP:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:ReplicationApiService"/>
-    </output>
-  </operation>
-  <operation name="GetStationsResp">
     <SOAP:operation style="rpc" soapAction=""/>
     <input>
           <SOAP:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:ReplicationApiService"/>

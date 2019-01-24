@@ -33,12 +33,14 @@ A commercial use license is available from Genivia Inc., contact@genivia.com
 #define SOAP_TYPE_ns__ErrorCode (10)
 /* ns:ErrorCode */
 enum ns__ErrorCode {
-	ns__NO_ERROR_AUTHORIZATION = 0,
-	ns__AUTHORIZATION_ERROR_IS = 1
+	ns__AUTHORIZATION_IS_OK = 0,
+	ns__AUTHORIZATION_ERROR_IS = 1,
+	ns__CONNECTION_NOT_ESTABLISHED = 2,
+	ns__ERROR_QUERY_EXEC = 3
 };
 #endif
 
-/* replicator.h:20 */
+/* replicator.h:22 */
 #ifndef SOAP_TYPE_ns__UserAccessRightCode
 #define SOAP_TYPE_ns__UserAccessRightCode (11)
 /* ns:UserAccessRightCode */
@@ -63,14 +65,13 @@ enum ns__UserAccessRightCode {
  *                                                                            *
 \******************************************************************************/
 
-class ns__StationInfo;	/* replicator.h:27 */
-class ns__ArrayOfStationInfo;	/* replicator.h:38 */
-class ns__GetStationsResponse;	/* replicator.h:44 */
-class ns__StInfo;	/* replicator.h:52 */
-struct ns__GetStations;	/* replicator.h:61 */
-struct ns__GetStationsResp;	/* replicator.h:62 */
+class ns__StationInfo;	/* replicator.h:29 */
+class ns__ArrayOfStationInfo;	/* replicator.h:43 */
+class ns__GetStationsResponse;	/* replicator.h:51 */
+class ns__StInfo;	/* replicator.h:59 */
+struct ns__GetStations;	/* replicator.h:68 */
 
-/* replicator.h:27 */
+/* replicator.h:29 */
 #ifndef SOAP_TYPE_ns__StationInfo
 #define SOAP_TYPE_ns__StationInfo (12)
 /* complex XML schema type 'ns:StationInfo': */
@@ -84,8 +85,14 @@ class SOAP_CMAC ns__StationInfo {
         std::wstring Name;
         /// Required element 'UpdatePeriod' of XML schema type 'xsd:int'
         int UpdatePeriod;
-        /// Required element 'UserAccessRight' of XML schema type 'ns:UserAccessRightCode'
-        enum ns__UserAccessRightCode UserAccessRight;
+        /// Required element 'Place' of XML schema type 'xsd:string'
+        std::wstring Place;
+        /// Required element 'Latitude' of XML schema type 'xsd:float'
+        float Latitude;
+        /// Required element 'Longitude' of XML schema type 'xsd:float'
+        float Longitude;
+        /// Required element 'UserAccessRight' of XML schema type 'xsd:string'
+        std::wstring UserAccessRight;
       public:
         /// Return unique type id SOAP_TYPE_ns__StationInfo
         virtual long soap_type(void) const { return SOAP_TYPE_ns__StationInfo; }
@@ -105,16 +112,16 @@ class SOAP_CMAC ns__StationInfo {
         virtual ns__StationInfo *soap_alloc(void) const { return SOAP_NEW_UNMANAGED(ns__StationInfo); }
       public:
         /// Constructor with default initializations
-        ns__StationInfo() : ID(), Code(), Name(), UpdatePeriod(), UserAccessRight() { }
+        ns__StationInfo() : ID(), Code(), Name(), UpdatePeriod(), Place(), Latitude(), Longitude(), UserAccessRight() { }
         virtual ~ns__StationInfo() { }
         /// Friend allocator used by soap_new_ns__StationInfo(struct soap*, int)
         friend SOAP_FMAC1 ns__StationInfo * SOAP_FMAC2 soap_instantiate_ns__StationInfo(struct soap*, int, const char*, const char*, size_t*);
 };
 #endif
 
-/* replicator.h:38 */
+/* replicator.h:43 */
 #ifndef SOAP_TYPE_ns__ArrayOfStationInfo
-#define SOAP_TYPE_ns__ArrayOfStationInfo (13)
+#define SOAP_TYPE_ns__ArrayOfStationInfo (14)
 /* complex XML schema type 'ns:ArrayOfStationInfo': */
 class SOAP_CMAC ns__ArrayOfStationInfo {
       public:
@@ -146,9 +153,9 @@ class SOAP_CMAC ns__ArrayOfStationInfo {
 };
 #endif
 
-/* replicator.h:44 */
+/* replicator.h:51 */
 #ifndef SOAP_TYPE_ns__GetStationsResponse
-#define SOAP_TYPE_ns__GetStationsResponse (15)
+#define SOAP_TYPE_ns__GetStationsResponse (16)
 /* complex XML schema type 'ns:GetStationsResponse': */
 class SOAP_CMAC ns__GetStationsResponse {
       public:
@@ -184,9 +191,9 @@ class SOAP_CMAC ns__GetStationsResponse {
 };
 #endif
 
-/* replicator.h:52 */
+/* replicator.h:59 */
 #ifndef SOAP_TYPE_ns__StInfo
-#define SOAP_TYPE_ns__StInfo (18)
+#define SOAP_TYPE_ns__StInfo (19)
 /* complex XML schema type 'ns:StInfo': */
 class SOAP_CMAC ns__StInfo {
       public:
@@ -226,9 +233,9 @@ class SOAP_CMAC ns__StInfo {
 };
 #endif
 
-/* replicator.h:61 */
+/* replicator.h:68 */
 #ifndef SOAP_TYPE_ns__GetStations
-#define SOAP_TYPE_ns__GetStations (21)
+#define SOAP_TYPE_ns__GetStations (22)
 /* complex XML schema type 'ns:GetStations': */
 struct SOAP_CMAC ns__GetStations {
       public:
@@ -248,32 +255,10 @@ struct SOAP_CMAC ns__GetStations {
 };
 #endif
 
-/* replicator.h:62 */
-#ifndef SOAP_TYPE_ns__GetStationsResp
-#define SOAP_TYPE_ns__GetStationsResp (24)
-/* complex XML schema type 'ns:GetStationsResp': */
-struct SOAP_CMAC ns__GetStationsResp {
-      public:
-        /** Context that manages this object */
-        struct soap *soap;
-        /** Required element 'login' of XML schema type 'xsd:string' */
-        std::wstring login;
-        /** Required element 'password' of XML schema type 'xsd:string' */
-        std::wstring password;
-      public:
-        /** Return unique type id SOAP_TYPE_ns__GetStationsResp */
-        long soap_type() const { return SOAP_TYPE_ns__GetStationsResp; }
-        /** Constructor with member initializations */
-        ns__GetStationsResp() : soap(), login(), password() { }
-        /** Friend allocator */
-        friend SOAP_FMAC1 ns__GetStationsResp * SOAP_FMAC2 soap_instantiate_ns__GetStationsResp(struct soap*, int, const char*, const char*, size_t*);
-};
-#endif
-
-/* replicator.h:63 */
+/* replicator.h:69 */
 #ifndef WITH_NOGLOBAL
 #ifndef SOAP_TYPE_SOAP_ENV__Header
-#define SOAP_TYPE_SOAP_ENV__Header (25)
+#define SOAP_TYPE_SOAP_ENV__Header (23)
 /* SOAP_ENV__Header: */
 struct SOAP_CMAC SOAP_ENV__Header {
       public:
@@ -287,10 +272,10 @@ struct SOAP_CMAC SOAP_ENV__Header {
 #endif
 #endif
 
-/* replicator.h:63 */
+/* replicator.h:69 */
 #ifndef WITH_NOGLOBAL
 #ifndef SOAP_TYPE_SOAP_ENV__Code
-#define SOAP_TYPE_SOAP_ENV__Code (26)
+#define SOAP_TYPE_SOAP_ENV__Code (24)
 /* Type SOAP_ENV__Code is a recursive data type, (in)directly referencing itself through its (base or derived class) members */
 /* SOAP_ENV__Code: */
 struct SOAP_CMAC SOAP_ENV__Code {
@@ -310,10 +295,10 @@ struct SOAP_CMAC SOAP_ENV__Code {
 #endif
 #endif
 
-/* replicator.h:63 */
+/* replicator.h:69 */
 #ifndef WITH_NOGLOBAL
 #ifndef SOAP_TYPE_SOAP_ENV__Detail
-#define SOAP_TYPE_SOAP_ENV__Detail (28)
+#define SOAP_TYPE_SOAP_ENV__Detail (26)
 /* SOAP_ENV__Detail: */
 struct SOAP_CMAC SOAP_ENV__Detail {
       public:
@@ -333,10 +318,10 @@ struct SOAP_CMAC SOAP_ENV__Detail {
 #endif
 #endif
 
-/* replicator.h:63 */
+/* replicator.h:69 */
 #ifndef WITH_NOGLOBAL
 #ifndef SOAP_TYPE_SOAP_ENV__Reason
-#define SOAP_TYPE_SOAP_ENV__Reason (31)
+#define SOAP_TYPE_SOAP_ENV__Reason (29)
 /* SOAP_ENV__Reason: */
 struct SOAP_CMAC SOAP_ENV__Reason {
       public:
@@ -353,10 +338,10 @@ struct SOAP_CMAC SOAP_ENV__Reason {
 #endif
 #endif
 
-/* replicator.h:63 */
+/* replicator.h:69 */
 #ifndef WITH_NOGLOBAL
 #ifndef SOAP_TYPE_SOAP_ENV__Fault
-#define SOAP_TYPE_SOAP_ENV__Fault (32)
+#define SOAP_TYPE_SOAP_ENV__Fault (30)
 /* SOAP_ENV__Fault: */
 struct SOAP_CMAC SOAP_ENV__Fault {
       public:
@@ -431,6 +416,11 @@ typedef std::wstring xsd__string;
 #define SOAP_TYPE_int (1)
 #endif
 
+/* float has binding name 'float' for type 'xsd:float' */
+#ifndef SOAP_TYPE_float
+#define SOAP_TYPE_float (13)
+#endif
+
 /* enum ns__UserAccessRightCode has binding name 'ns__UserAccessRightCode' for type 'ns:UserAccessRightCode' */
 #ifndef SOAP_TYPE_ns__UserAccessRightCode
 #define SOAP_TYPE_ns__UserAccessRightCode (11)
@@ -443,17 +433,17 @@ typedef std::wstring xsd__string;
 
 /* ns__StInfo has binding name 'ns__StInfo' for type 'ns:StInfo' */
 #ifndef SOAP_TYPE_ns__StInfo
-#define SOAP_TYPE_ns__StInfo (18)
+#define SOAP_TYPE_ns__StInfo (19)
 #endif
 
 /* ns__GetStationsResponse has binding name 'ns__GetStationsResponse' for type 'ns:GetStationsResponse' */
 #ifndef SOAP_TYPE_ns__GetStationsResponse
-#define SOAP_TYPE_ns__GetStationsResponse (15)
+#define SOAP_TYPE_ns__GetStationsResponse (16)
 #endif
 
 /* ns__ArrayOfStationInfo has binding name 'ns__ArrayOfStationInfo' for type 'ns:ArrayOfStationInfo' */
 #ifndef SOAP_TYPE_ns__ArrayOfStationInfo
-#define SOAP_TYPE_ns__ArrayOfStationInfo (13)
+#define SOAP_TYPE_ns__ArrayOfStationInfo (14)
 #endif
 
 /* ns__StationInfo has binding name 'ns__StationInfo' for type 'ns:StationInfo' */
@@ -473,57 +463,52 @@ typedef std::wstring xsd__string;
 
 /* struct SOAP_ENV__Fault has binding name 'SOAP_ENV__Fault' for type '' */
 #ifndef SOAP_TYPE_SOAP_ENV__Fault
-#define SOAP_TYPE_SOAP_ENV__Fault (32)
+#define SOAP_TYPE_SOAP_ENV__Fault (30)
 #endif
 
 /* struct SOAP_ENV__Reason has binding name 'SOAP_ENV__Reason' for type '' */
 #ifndef SOAP_TYPE_SOAP_ENV__Reason
-#define SOAP_TYPE_SOAP_ENV__Reason (31)
+#define SOAP_TYPE_SOAP_ENV__Reason (29)
 #endif
 
 /* struct SOAP_ENV__Detail has binding name 'SOAP_ENV__Detail' for type '' */
 #ifndef SOAP_TYPE_SOAP_ENV__Detail
-#define SOAP_TYPE_SOAP_ENV__Detail (28)
+#define SOAP_TYPE_SOAP_ENV__Detail (26)
 #endif
 
 /* struct SOAP_ENV__Code has binding name 'SOAP_ENV__Code' for type '' */
 #ifndef SOAP_TYPE_SOAP_ENV__Code
-#define SOAP_TYPE_SOAP_ENV__Code (26)
+#define SOAP_TYPE_SOAP_ENV__Code (24)
 #endif
 
 /* struct SOAP_ENV__Header has binding name 'SOAP_ENV__Header' for type '' */
 #ifndef SOAP_TYPE_SOAP_ENV__Header
-#define SOAP_TYPE_SOAP_ENV__Header (25)
-#endif
-
-/* struct ns__GetStationsResp has binding name 'ns__GetStationsResp' for type 'ns:GetStationsResp' */
-#ifndef SOAP_TYPE_ns__GetStationsResp
-#define SOAP_TYPE_ns__GetStationsResp (24)
+#define SOAP_TYPE_SOAP_ENV__Header (23)
 #endif
 
 /* struct ns__GetStations has binding name 'ns__GetStations' for type 'ns:GetStations' */
 #ifndef SOAP_TYPE_ns__GetStations
-#define SOAP_TYPE_ns__GetStations (21)
+#define SOAP_TYPE_ns__GetStations (22)
 #endif
 
 /* struct SOAP_ENV__Reason * has binding name 'PointerToSOAP_ENV__Reason' for type '' */
 #ifndef SOAP_TYPE_PointerToSOAP_ENV__Reason
-#define SOAP_TYPE_PointerToSOAP_ENV__Reason (34)
+#define SOAP_TYPE_PointerToSOAP_ENV__Reason (32)
 #endif
 
 /* struct SOAP_ENV__Detail * has binding name 'PointerToSOAP_ENV__Detail' for type '' */
 #ifndef SOAP_TYPE_PointerToSOAP_ENV__Detail
-#define SOAP_TYPE_PointerToSOAP_ENV__Detail (33)
+#define SOAP_TYPE_PointerToSOAP_ENV__Detail (31)
 #endif
 
 /* struct SOAP_ENV__Code * has binding name 'PointerToSOAP_ENV__Code' for type '' */
 #ifndef SOAP_TYPE_PointerToSOAP_ENV__Code
-#define SOAP_TYPE_PointerToSOAP_ENV__Code (27)
+#define SOAP_TYPE_PointerToSOAP_ENV__Code (25)
 #endif
 
 /* ns__ArrayOfStationInfo * has binding name 'PointerTons__ArrayOfStationInfo' for type 'ns:ArrayOfStationInfo' */
 #ifndef SOAP_TYPE_PointerTons__ArrayOfStationInfo
-#define SOAP_TYPE_PointerTons__ArrayOfStationInfo (16)
+#define SOAP_TYPE_PointerTons__ArrayOfStationInfo (17)
 #endif
 
 /* _QName has binding name '_QName' for type 'xsd:QName' */
@@ -543,7 +528,7 @@ typedef std::wstring xsd__string;
 
 /* std::vector<ns__StationInfo>  has binding name 'std__vectorTemplateOfns__StationInfo' for type 'ns:StationInfo' */
 #ifndef SOAP_TYPE_std__vectorTemplateOfns__StationInfo
-#define SOAP_TYPE_std__vectorTemplateOfns__StationInfo (14)
+#define SOAP_TYPE_std__vectorTemplateOfns__StationInfo (15)
 #endif
 
 /******************************************************************************\

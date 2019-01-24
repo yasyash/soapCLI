@@ -52,15 +52,15 @@ This report has the following contents describing the data binding interface typ
 
 <table class="doxtable">
 <tr><th> Type </th><th> Declared </th><th> Serializable </th><th> Bitmask </th><th> Values </th></tr>
-<tr><td><code><a href="#ns__ErrorCode"> enum ns__ErrorCode </a></code></td><td> replicator.h:15 </td><td> yes </td><td>  </td><td> <code> ns__NO_ERROR_AUTHORIZATION </code>, <code> ns__AUTHORIZATION_ERROR_IS </code> </td></tr>
-<tr><td><code><a href="#ns__UserAccessRightCode"> enum ns__UserAccessRightCode </a></code></td><td> replicator.h:20 </td><td> yes </td><td>  </td><td> <code> NONE </code>, <code> VIEW </code>, <code> EDIT </code>, <code> DELETE </code> </td></tr>
+<tr><td><code><a href="#ns__ErrorCode"> enum ns__ErrorCode </a></code></td><td> replicator.h:15 </td><td> yes </td><td>  </td><td> <code> ns__AUTHORIZATION_IS_OK </code>, <code> ns__AUTHORIZATION_ERROR_IS </code>, <code> ns__CONNECTION_NOT_ESTABLISHED </code>, <code> ns__ERROR_QUERY_EXEC </code> </td></tr>
+<tr><td><code><a href="#ns__UserAccessRightCode"> enum ns__UserAccessRightCode </a></code></td><td> replicator.h:22 </td><td> yes </td><td>  </td><td> <code> NONE </code>, <code> VIEW </code>, <code> EDIT </code>, <code> DELETE </code> </td></tr>
 </table>
 
 <a name="ns__ErrorCode"></a>
 
 ### `enum ns__ErrorCode`
 
-This enum type is declared in [replicator.h](replicator.h) at line 15 and has values  `ns__NO_ERROR_AUTHORIZATION` (= 0), `ns__AUTHORIZATION_ERROR_IS` (= 1).
+This enum type is declared in [replicator.h](replicator.h) at line 15 and has values  `ns__AUTHORIZATION_IS_OK` (= 0), `ns__AUTHORIZATION_ERROR_IS` (= 1), `ns__CONNECTION_NOT_ESTABLISHED` (= 2), `ns__ERROR_QUERY_EXEC` (= 3).
 
 - `enum ns__ErrorCode *soap_new_ns__ErrorCode(struct soap*)` managed allocation with default initialization
 - `enum ns__ErrorCode *soap_new_ns__ErrorCode(struct soap*, int n)` managed allocation with default initialization of array `enum ns__ErrorCode[n]`
@@ -72,8 +72,10 @@ The component of XML schema type *`ns:ErrorCode`* in schema "[urn:ReplicationApi
 
     <simpleType name="ErrorCode">
       <restriction base="xsd:QName">
-        <enumeration value="ns:NO-ERROR-AUTHORIZATION"/>
+        <enumeration value="ns:AUTHORIZATION-IS-OK"/>
         <enumeration value="ns:AUTHORIZATION-ERROR-IS"/>
+        <enumeration value="ns:CONNECTION-NOT-ESTABLISHED"/>
+        <enumeration value="ns:ERROR-QUERY-EXEC"/>
       </restriction>
     </simpleType>
 
@@ -84,7 +86,7 @@ The component of XML schema type *`ns:ErrorCode`* in schema "[urn:ReplicationApi
 
 ### `enum ns__UserAccessRightCode`
 
-This enum type is declared in [replicator.h](replicator.h) at line 20 and has values  `NONE` (= 0), `VIEW` (= 1), `EDIT` (= 2), `DELETE` (= 3).
+This enum type is declared in [replicator.h](replicator.h) at line 22 and has values  `NONE` (= 0), `VIEW` (= 1), `EDIT` (= 2), `DELETE` (= 3).
 
 - `enum ns__UserAccessRightCode *soap_new_ns__UserAccessRightCode(struct soap*)` managed allocation with default initialization
 - `enum ns__UserAccessRightCode *soap_new_ns__UserAccessRightCode(struct soap*, int n)` managed allocation with default initialization of array `enum ns__UserAccessRightCode[n]`
@@ -112,24 +114,23 @@ The table below lists the classes, structs and unions declared in [replicator.h]
 
 <table class="doxtable">
 <tr><th> Type </th><th> Declared </th><th> Serializable </th></tr>
-<tr><td><code><a href="#ns__StationInfo"> ns__StationInfo </a></code></td><td> replicator.h:27 </td><td> yes </td></tr>
-<tr><td><code><a href="#ns__ArrayOfStationInfo"> ns__ArrayOfStationInfo </a></code></td><td> replicator.h:38 </td><td> yes </td></tr>
-<tr><td><code><a href="#ns__GetStationsResponse"> ns__GetStationsResponse </a></code></td><td> replicator.h:44 </td><td> yes </td></tr>
-<tr><td><code><a href="#ns__StInfo"> ns__StInfo </a></code></td><td> replicator.h:52 </td><td> yes </td></tr>
-<tr><td><code><a href="#ns__GetStations"> struct ns__GetStations </a></code></td><td> replicator.h:61 </td><td> yes </td></tr>
-<tr><td><code><a href="#ns__GetStationsResp"> struct ns__GetStationsResp </a></code></td><td> replicator.h:62 </td><td> yes </td></tr>
-<tr><td><code><a href="#SOAP_ENV__Header"> struct SOAP_ENV__Header </a></code></td><td> replicator.h:63 </td><td> yes </td></tr>
-<tr><td><code><a href="#SOAP_ENV__Code"> struct SOAP_ENV__Code </a></code></td><td> replicator.h:63 </td><td> yes </td></tr>
-<tr><td><code><a href="#SOAP_ENV__Detail"> struct SOAP_ENV__Detail </a></code></td><td> replicator.h:63 </td><td> yes </td></tr>
-<tr><td><code><a href="#SOAP_ENV__Reason"> struct SOAP_ENV__Reason </a></code></td><td> replicator.h:63 </td><td> yes </td></tr>
-<tr><td><code><a href="#SOAP_ENV__Fault"> struct SOAP_ENV__Fault </a></code></td><td> replicator.h:63 </td><td> yes </td></tr>
+<tr><td><code><a href="#ns__StationInfo"> ns__StationInfo </a></code></td><td> replicator.h:29 </td><td> yes </td></tr>
+<tr><td><code><a href="#ns__ArrayOfStationInfo"> ns__ArrayOfStationInfo </a></code></td><td> replicator.h:43 </td><td> yes </td></tr>
+<tr><td><code><a href="#ns__GetStationsResponse"> ns__GetStationsResponse </a></code></td><td> replicator.h:51 </td><td> yes </td></tr>
+<tr><td><code><a href="#ns__StInfo"> ns__StInfo </a></code></td><td> replicator.h:59 </td><td> yes </td></tr>
+<tr><td><code><a href="#ns__GetStations"> struct ns__GetStations </a></code></td><td> replicator.h:68 </td><td> yes </td></tr>
+<tr><td><code><a href="#SOAP_ENV__Header"> struct SOAP_ENV__Header </a></code></td><td> replicator.h:69 </td><td> yes </td></tr>
+<tr><td><code><a href="#SOAP_ENV__Code"> struct SOAP_ENV__Code </a></code></td><td> replicator.h:69 </td><td> yes </td></tr>
+<tr><td><code><a href="#SOAP_ENV__Detail"> struct SOAP_ENV__Detail </a></code></td><td> replicator.h:69 </td><td> yes </td></tr>
+<tr><td><code><a href="#SOAP_ENV__Reason"> struct SOAP_ENV__Reason </a></code></td><td> replicator.h:69 </td><td> yes </td></tr>
+<tr><td><code><a href="#SOAP_ENV__Fault"> struct SOAP_ENV__Fault </a></code></td><td> replicator.h:69 </td><td> yes </td></tr>
 </table>
 
 <a name="ns__StationInfo"></a>
 
 ### `ns__StationInfo`
 
-This class is declared in [replicator.h](replicator.h) at line 27, is serialized as XML schema type *`ns:StationInfo`*, and has the following auto-completed declaration in soapStub.h:
+This class is declared in [replicator.h](replicator.h) at line 29, is serialized as XML schema type *`ns:StationInfo`*, and has the following auto-completed declaration in soapStub.h:
 
     class SOAP_CMAC ns__StationInfo {
       public:
@@ -141,8 +142,14 @@ This class is declared in [replicator.h](replicator.h) at line 27, is serialized
         std::wstring Name;
         /// Required element 'UpdatePeriod' of XML schema type 'xsd:int'
         int UpdatePeriod;
-        /// Required element 'UserAccessRight' of XML schema type 'ns:UserAccessRightCode'
-        enum ns__UserAccessRightCode UserAccessRight;
+        /// Required element 'Place' of XML schema type 'xsd:string'
+        std::wstring Place;
+        /// Required element 'Latitude' of XML schema type 'xsd:float'
+        float Latitude;
+        /// Required element 'Longitude' of XML schema type 'xsd:float'
+        float Longitude;
+        /// Required element 'UserAccessRight' of XML schema type 'xsd:string'
+        std::wstring UserAccessRight;
       public:
         /// Return unique type id SOAP_TYPE_ns__StationInfo
         virtual long soap_type(void) const { return SOAP_TYPE_ns__StationInfo; }
@@ -162,7 +169,7 @@ This class is declared in [replicator.h](replicator.h) at line 27, is serialized
         virtual ns__StationInfo *soap_alloc(void) const { return SOAP_NEW_UNMANAGED(ns__StationInfo); }
       public:
         /// Constructor with default initializations
-        ns__StationInfo() : ID(), Code(), Name(), UpdatePeriod(), UserAccessRight() { }
+        ns__StationInfo() : ID(), Code(), Name(), UpdatePeriod(), Place(), Latitude(), Longitude(), UserAccessRight() { }
         virtual ~ns__StationInfo() { }
         /// Friend allocator used by soap_new_ns__StationInfo(struct soap*, int)
         friend SOAP_FMAC1 ns__StationInfo * SOAP_FMAC2 soap_instantiate_ns__StationInfo(struct soap*, int, const char*, const char*, size_t*);
@@ -174,14 +181,17 @@ where:
 - `int Code` is a required element *`<Code>`* of XML schema type *`xsd:int`*
 - `std::wstring Name` is a required element *`<Name>`* of XML schema type *`xsd:string`*
 - `int UpdatePeriod` is a required element *`<UpdatePeriod>`* of XML schema type *`xsd:int`*
-- `enum ns__UserAccessRightCode UserAccessRight` is a required element *`<UserAccessRight>`* of XML schema type *`ns:UserAccessRightCode`*, where the type of this member is <code><a href="#ns__UserAccessRightCode"> ns__UserAccessRightCode </a></code>
+- `std::wstring Place` is a required element *`<Place>`* of XML schema type *`xsd:string`*
+- `float Latitude` is a required element *`<Latitude>`* of XML schema type *`xsd:float`*
+- `float Longitude` is a required element *`<Longitude>`* of XML schema type *`xsd:float`*
+- `std::wstring UserAccessRight` is a required element *`<UserAccessRight>`* of XML schema type *`xsd:string`*
 
 The following operations on `ns__StationInfo` are available:
 
 - `ns__StationInfo *soap_new_ns__StationInfo(struct soap*)` managed allocation with default initialization
 - `ns__StationInfo *soap_new_ns__StationInfo(struct soap*, int n)` managed allocation of array `ns__StationInfo[n]`
-- `ns__StationInfo *soap_new_req_ns__StationInfo(struct soap*, const std::wstring& ID, int Code, const std::wstring& Name, int UpdatePeriod, enum ns__UserAccessRightCode UserAccessRight)` managed allocation with required members assigned the values of these parameters, with all other members default initialized
-- `ns__StationInfo *soap_new_set_ns__StationInfo(struct soap*, const std::wstring& ID, int Code, const std::wstring& Name, int UpdatePeriod, enum ns__UserAccessRightCode UserAccessRight)` managed allocation with public members assigned the values of these parameters
+- `ns__StationInfo *soap_new_req_ns__StationInfo(struct soap*, const std::wstring& ID, int Code, const std::wstring& Name, int UpdatePeriod, const std::wstring& Place, float Latitude, float Longitude, const std::wstring& UserAccessRight)` managed allocation with required members assigned the values of these parameters, with all other members default initialized
+- `ns__StationInfo *soap_new_set_ns__StationInfo(struct soap*, const std::wstring& ID, int Code, const std::wstring& Name, int UpdatePeriod, const std::wstring& Place, float Latitude, float Longitude, const std::wstring& UserAccessRight)` managed allocation with public members assigned the values of these parameters
 - `void ns__StationInfo::soap_default(struct soap*)` (re)set members to default values
 - `int soap_write_ns__StationInfo(struct soap*, const ns__StationInfo*)` serialize to XML, returns `SOAP_OK` or error code
 - `int soap_PUT_ns__StationInfo(struct soap*, const char *URL, const ns__StationInfo*)` REST PUT XML, returns `SOAP_OK` or error code
@@ -199,7 +209,10 @@ The component of XML schema type *`ns:StationInfo`* in schema "[urn:ReplicationA
             <element name="Code" type="xsd:int" minOccurs="1" maxOccurs="1"/>
             <element name="Name" type="xsd:string" minOccurs="1" maxOccurs="1"/>
             <element name="UpdatePeriod" type="xsd:int" minOccurs="1" maxOccurs="1"/>
-            <element name="UserAccessRight" type="ns:UserAccessRightCode" minOccurs="1" maxOccurs="1"/>
+            <element name="Place" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+            <element name="Latitude" type="xsd:float" minOccurs="1" maxOccurs="1"/>
+            <element name="Longitude" type="xsd:float" minOccurs="1" maxOccurs="1"/>
+            <element name="UserAccessRight" type="xsd:string" minOccurs="1" maxOccurs="1"/>
           </sequence>
     </complexType>
 
@@ -210,7 +223,7 @@ The component of XML schema type *`ns:StationInfo`* in schema "[urn:ReplicationA
 
 ### `ns__ArrayOfStationInfo`
 
-This class is declared in [replicator.h](replicator.h) at line 38, is serialized as XML schema type *`ns:ArrayOfStationInfo`*, and has the following auto-completed declaration in soapStub.h:
+This class is declared in [replicator.h](replicator.h) at line 43, is serialized as XML schema type *`ns:ArrayOfStationInfo`*, and has the following auto-completed declaration in soapStub.h:
 
     class SOAP_CMAC ns__ArrayOfStationInfo {
       public:
@@ -275,7 +288,7 @@ The component of XML schema type *`ns:ArrayOfStationInfo`* in schema "[urn:Repli
 
 ### `ns__GetStationsResponse`
 
-This class is declared in [replicator.h](replicator.h) at line 44, is serialized as XML schema type *`ns:GetStationsResponse`*, and has the following auto-completed declaration in soapStub.h:
+This class is declared in [replicator.h](replicator.h) at line 51, is serialized as XML schema type *`ns:GetStationsResponse`*, and has the following auto-completed declaration in soapStub.h:
 
     class SOAP_CMAC ns__GetStationsResponse {
       public:
@@ -347,7 +360,7 @@ The component of XML schema type *`ns:GetStationsResponse`* in schema "[urn:Repl
 
 ### `ns__StInfo`
 
-This class is declared in [replicator.h](replicator.h) at line 52, is serialized as XML schema type *`ns:StInfo`*, and has the following auto-completed declaration in soapStub.h:
+This class is declared in [replicator.h](replicator.h) at line 59, is serialized as XML schema type *`ns:StInfo`*, and has the following auto-completed declaration in soapStub.h:
 
     class SOAP_CMAC ns__StInfo {
       public:
@@ -428,16 +441,7 @@ The component of XML schema type *`ns:StInfo`* in schema "[urn:ReplicationApiSer
 
 ### `struct ns__GetStations`
 
-This struct is declared in [replicator.h](replicator.h) at line 61, is serialized as XML schema type *`ns:GetStations`* and is internally used as the operation request element *`<ns:GetStations>`* with the request parameters of service operation `ns__GetStations()`.
-
-[![][1] To top](#)
-
-
-<a name="ns__GetStationsResp"></a>
-
-### `struct ns__GetStationsResp`
-
-This struct is declared in [replicator.h](replicator.h) at line 62, is serialized as XML schema type *`ns:GetStationsResp`* and is internally used as the operation request element *`<ns:GetStationsResp>`* with the request parameters of service operation `ns__GetStationsResp()`.
+This struct is declared in [replicator.h](replicator.h) at line 68, is serialized as XML schema type *`ns:GetStations`* and is internally used as the operation request element *`<ns:GetStations>`* with the request parameters of service operation `ns__GetStations()`.
 
 [![][1] To top](#)
 
@@ -446,7 +450,7 @@ This struct is declared in [replicator.h](replicator.h) at line 62, is serialize
 
 ### `struct SOAP_ENV__Header`
 
-This struct is declared in [replicator.h](replicator.h) at line 63, is the SOAP protocol *`<SOAP-ENV:Header>`* element with message-specific child elements that are mandatory to process when attributed with *`mustUnderstand="true"`*.  Headers are usually added and processed by plugins.  To remove the SOAP Header when sending or returning a message, set `soap->header = NULL`.  Use `soap_header(struct soap *soap)` to allocate a `struct SOAP_ENV__Header` which will be pointed to by `soap->header`, then initialize it with `soap_default_SOAP_ENV__Header(soap, soap->header)` and set one or more of its data members (if any):
+This struct is declared in [replicator.h](replicator.h) at line 69, is the SOAP protocol *`<SOAP-ENV:Header>`* element with message-specific child elements that are mandatory to process when attributed with *`mustUnderstand="true"`*.  Headers are usually added and processed by plugins.  To remove the SOAP Header when sending or returning a message, set `soap->header = NULL`.  Use `soap_header(struct soap *soap)` to allocate a `struct SOAP_ENV__Header` which will be pointed to by `soap->header`, then initialize it with `soap_default_SOAP_ENV__Header(soap, soap->header)` and set one or more of its data members (if any):
 
 *No SOAP headers are applicable*
 
@@ -469,7 +473,7 @@ This struct will be auto-generated when it is not explicitly declared in an inte
 
 ### `struct SOAP_ENV__Code`
 
-This struct is declared in [replicator.h](replicator.h) at line 63, is recursive, meaning it may (in)directly reference itself through its (base or derived class) members, and is the SOAP protocol *`<SOAP-ENV:Code>`* element.  This struct is for internal use and will be auto-generated when not explicitly declared.
+This struct is declared in [replicator.h](replicator.h) at line 69, is recursive, meaning it may (in)directly reference itself through its (base or derived class) members, and is the SOAP protocol *`<SOAP-ENV:Code>`* element.  This struct is for internal use and will be auto-generated when not explicitly declared.
 
 [![][1] To top](#)
 
@@ -478,7 +482,7 @@ This struct is declared in [replicator.h](replicator.h) at line 63, is recursive
 
 ### `struct SOAP_ENV__Detail`
 
-This struct is declared in [replicator.h](replicator.h) at line 63, is the SOAP protocol *`<SOAP-ENV:Detail>`* element with details returned by a service that triggered the error.  Fault details are added and processed by plugins by setting the `detail` (for SOAP 1.1) or `SOAP_ENV__Detail` (for SOAP 1.2) member of `struct SOAP_ENV__Fault` and then setting one ore more of the detail members:
+This struct is declared in [replicator.h](replicator.h) at line 69, is the SOAP protocol *`<SOAP-ENV:Detail>`* element with details returned by a service that triggered the error.  Fault details are added and processed by plugins by setting the `detail` (for SOAP 1.1) or `SOAP_ENV__Detail` (for SOAP 1.2) member of `struct SOAP_ENV__Fault` and then setting one ore more of the detail members:
 
 - `char *__any` catch-all XML in literal XML string, see also <code><a href="#_XML"> _XML </a></code>
 - `int __type` element *`<fault>`* serialized with C/C++ type `__type` = `SOAP_TYPE_<Type>`
@@ -509,7 +513,7 @@ This struct will be auto-generated when it is not explicitly declared in an inte
 
 ### `struct SOAP_ENV__Reason`
 
-This struct is declared in [replicator.h](replicator.h) at line 63, is the SOAP protocol *`<SOAP-ENV:Reason>`* element.  This struct is for internal use and will be auto-generated when not explicitly declared.
+This struct is declared in [replicator.h](replicator.h) at line 69, is the SOAP protocol *`<SOAP-ENV:Reason>`* element.  This struct is for internal use and will be auto-generated when not explicitly declared.
 
 [![][1] To top](#)
 
@@ -518,7 +522,7 @@ This struct is declared in [replicator.h](replicator.h) at line 63, is the SOAP 
 
 ### `struct SOAP_ENV__Fault`
 
-This struct is declared in [replicator.h](replicator.h) at line 63, is the SOAP protocol *`<SOAP-ENV:Fault>`* element with fault information and details returned by a service that triggered the error.  At the server side, a fault can be explicitly set within a service operation by calling and returning:
+This struct is declared in [replicator.h](replicator.h) at line 69, is the SOAP protocol *`<SOAP-ENV:Fault>`* element with fault information and details returned by a service that triggered the error.  At the server side, a fault can be explicitly set within a service operation by calling and returning:
 
 - `int soap_sender_fault(struct soap *soap, const char *faultstring, const char *XML)` return this error code when the sender is at fault (irrecoverable)
 - `int soap_receiver_fault(struct soap *soap, const char *faultstring, const char *XML)` return this error code when the receiver is at fault (recoverable, sender may retry)
@@ -648,6 +652,7 @@ The table below lists the serializable types by *Type*, binding *Name*, *Kind*, 
 <tr><th> C/C++ Type </th><th> Name </th><th> Kind </th><th> XML schema name </th></tr>
 <tr><td><code> char </code></td><td><code> byte </code></td><td> char </td><td> xsd:byte </td></tr>
 <tr><td><code> int </code></td><td><code> int </code></td><td> int </td><td> xsd:int </td></tr>
+<tr><td><code> float </code></td><td><code> float </code></td><td> float </td><td> xsd:float </td></tr>
 <tr><td><code><a href="#ns__UserAccessRightCode"> enum ns__UserAccessRightCode </a></code></td><td><code> ns__UserAccessRightCode </code></td><td> enum </td><td> ns:UserAccessRightCode </td></tr>
 <tr><td><code><a href="#ns__ErrorCode"> enum ns__ErrorCode </a></code></td><td><code> ns__ErrorCode </code></td><td> enum </td><td> ns:ErrorCode </td></tr>
 <tr><td><code><a href="#ns__StInfo"> ns__StInfo </a></code></td><td><code> ns__StInfo </code></td><td> class </td><td> ns:StInfo </td></tr>
@@ -661,7 +666,6 @@ The table below lists the serializable types by *Type*, binding *Name*, *Kind*, 
 <tr><td><code><a href="#SOAP_ENV__Detail"> struct SOAP_ENV__Detail </a></code></td><td><code> SOAP_ENV__Detail </code></td><td> struct </td><td>  </td></tr>
 <tr><td><code><a href="#SOAP_ENV__Code"> struct SOAP_ENV__Code </a></code></td><td><code> SOAP_ENV__Code </code></td><td> struct </td><td>  </td></tr>
 <tr><td><code><a href="#SOAP_ENV__Header"> struct SOAP_ENV__Header </a></code></td><td><code> SOAP_ENV__Header </code></td><td> struct </td><td>  </td></tr>
-<tr><td><code><a href="#ns__GetStationsResp"> struct ns__GetStationsResp </a></code></td><td><code> ns__GetStationsResp </code></td><td> struct </td><td> ns:GetStationsResp </td></tr>
 <tr><td><code><a href="#ns__GetStations"> struct ns__GetStations </a></code></td><td><code> ns__GetStations </code></td><td> struct </td><td> ns:GetStations </td></tr>
 <tr><td><code><a href="#_QName"> _QName </a></code></td><td><code> _QName </code></td><td> string </td><td> xsd:QName </td></tr>
 <tr><td><code><a href="#_XML"> _XML </a></code></td><td><code> _XML </code></td><td> string </td><td> (literal XML string) </td></tr>
@@ -754,10 +758,7 @@ This service class is declared in [soapReplicationApiServiceService.h](soapRepli
         // Note: compile with -DWITH_PURE_VIRTUAL to declare pure virtual methods
         //
         /// Web service operation 'GetStations' implementation, should return SOAP_OK or error code
-        virtual int GetStations(struct soap *soap, const std::wstring& login, const std::wstring& password, ns__StationInfo &result) SOAP_PURE_VIRTUAL;
-        //
-        /// Web service operation 'GetStationsResp' implementation, should return SOAP_OK or error code
-        virtual int GetStationsResp(struct soap *soap, const std::wstring& login, const std::wstring& password, ns__GetStationsResponse &result) SOAP_PURE_VIRTUAL;
+        virtual int GetStations(struct soap *soap, const std::wstring& login, const std::wstring& password, ns__GetStationsResponse &result) SOAP_PURE_VIRTUAL;
     };
 
 Use the service request dispatcher to accept and process service requests:
@@ -770,7 +771,7 @@ Use the service request dispatcher to accept and process service requests:
 
 ### Service Operation `ReplicationApiServiceService::GetStations()`
 
-This service operation is declared in [replicator.h](replicator.h) at line 61 and has the following properties:
+This service operation is declared in [replicator.h](replicator.h) at line 68 and has the following properties:
 
 - SOAP 1.1 protocol
 - SOAP rpc style
@@ -782,35 +783,7 @@ The following service class method must be implemented in the service back-end c
 
         //
         /// Web service operation 'GetStations' implementation, should return SOAP_OK or error code
-        virtual int GetStations(struct soap *soap, const std::wstring& login, const std::wstring& password, ns__StationInfo &result) SOAP_PURE_VIRTUAL;
-
-where:
-
-- `struct soap *soap` is optional
-- `std::wstring login` is required
-- `std::wstring password` is required
-- `ns__StationInfo &result` is the service operation response data populated by the service operation, where the type of this result parameter is <code><a href="#ns__StationInfo"> ns__StationInfo </a></code>
-
-This service method should be implemented as part of the service back-end code and return `SOAP_OK` and set the last parameter `result` to the result, or return an error code
-
-[![][1] To top](#)
-
-
-### Service Operation `ReplicationApiServiceService::GetStationsResp()`
-
-This service operation is declared in [replicator.h](replicator.h) at line 62 and has the following properties:
-
-- SOAP 1.1 protocol
-- SOAP rpc style
-- SOAP encoded
-- SOAP action ""
-- Operation namespace prefix `ns` and URI "[urn:ReplicationApiService](#doc-namespaces)"
-
-The following service class method must be implemented in the service back-end code and will be called by the service dispatcher `ReplicationApiServiceService::serve(soap)`:
-
-        //
-        /// Web service operation 'GetStationsResp' implementation, should return SOAP_OK or error code
-        virtual int GetStationsResp(struct soap *soap, const std::wstring& login, const std::wstring& password, ns__GetStationsResponse &result) SOAP_PURE_VIRTUAL;
+        virtual int GetStations(struct soap *soap, const std::wstring& login, const std::wstring& password, ns__GetStationsResponse &result) SOAP_PURE_VIRTUAL;
 
 where:
 
@@ -852,5 +825,5 @@ The table binds XML namespace prefixes (first column) to namespace URIs (second 
 
 --------------------------------------------------------------------------------
 
-_Generated on Tue Jan 22 2019 22:35:05 UTC by soapcpp2 v2.8.75 for replicator.h._
+_Generated on Thu Jan 24 2019 15:35:44 UTC by soapcpp2 v2.8.75 for replicator.h._
 _The gSOAP XML Web services tools are Copyright (C) Robert van Engelen, Genivia Inc. All Rights Reserved._

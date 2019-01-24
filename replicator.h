@@ -13,8 +13,10 @@ template <class T> class std::vector;
 typedef std::wstring xsd__string;
 
 enum ns__ErrorCode {
-    ns__NO_ERROR_AUTHORIZATION,
-    ns__AUTHORIZATION_ERROR_IS
+    ns__AUTHORIZATION_IS_OK,
+    ns__AUTHORIZATION_ERROR_IS,
+    ns__CONNECTION_NOT_ESTABLISHED,
+    ns__ERROR_QUERY_EXEC
 };
 
 enum ns__UserAccessRightCode{
@@ -30,7 +32,10 @@ public:
     int Code;
     xsd__string Name;
     int UpdatePeriod;
-    enum ns__UserAccessRightCode UserAccessRight;
+    xsd__string Place;
+    float Latitude;
+    float Longitude;
+    xsd__string UserAccessRight;
 
 
 };
@@ -60,5 +65,4 @@ public:
     enum ns__UserAccessRightCode UserAccessRight;
 };
 
-int ns__GetStations (struct soap *soap, xsd__string login, xsd__string password, ns__StationInfo &result);
-int ns__GetStationsResp (struct soap *soap, xsd__string login, xsd__string password, ns__GetStationsResponse &result);
+int ns__GetStations (struct soap *soap, xsd__string login, xsd__string password, ns__GetStationsResponse &result);

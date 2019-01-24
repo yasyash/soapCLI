@@ -201,6 +201,83 @@ inline int soap_POST_recv_int(struct soap *soap, int *p)
 }
 #endif
 
+#ifndef SOAP_TYPE_float_DEFINED
+#define SOAP_TYPE_float_DEFINED
+
+inline void soap_default_float(struct soap *soap, float *a)
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifdef SOAP_DEFAULT_float
+	*a = SOAP_DEFAULT_float;
+#else
+	*a = (float)0;
+#endif
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_float(struct soap*, const char*, int, const float *, const char*);
+SOAP_FMAC3 float * SOAP_FMAC4 soap_in_float(struct soap*, const char*, float *, const char*);
+
+SOAP_FMAC3 float * SOAP_FMAC4 soap_new_float(struct soap *soap, int n = -1);
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_float(struct soap*, const float *, const char*, const char*);
+
+inline int soap_write_float(struct soap *soap, float const*p)
+{
+	soap_free_temp(soap);
+	if (p)
+	{	if (soap_begin_send(soap) || ::soap_put_float(soap, p, "float", "") || soap_end_send(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_PUT_float(struct soap *soap, const char *URL, float const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || ::soap_put_float(soap, p, "float", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH_float(struct soap *soap, const char *URL, float const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || ::soap_put_float(soap, p, "float", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send_float(struct soap *soap, const char *URL, float const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || ::soap_put_float(soap, p, "float", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 float * SOAP_FMAC4 soap_get_float(struct soap*, float *, const char*, const char*);
+
+inline int soap_read_float(struct soap *soap, float *p)
+{
+	if (p)
+	{	if (soap_begin_recv(soap) || ::soap_get_float(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET_float(struct soap *soap, const char *URL, float *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read_float(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv_float(struct soap *soap, float *p)
+{
+	if (::soap_read_float(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
 #ifndef SOAP_TYPE_ns__UserAccessRightCode_DEFINED
 #define SOAP_TYPE_ns__UserAccessRightCode_DEFINED
 
@@ -671,7 +748,10 @@ inline ns__StationInfo * soap_new_req_ns__StationInfo(
 	int Code,
 	const std::wstring& Name,
 	int UpdatePeriod,
-	enum ns__UserAccessRightCode UserAccessRight)
+	const std::wstring& Place,
+	float Latitude,
+	float Longitude,
+	const std::wstring& UserAccessRight)
 {
 	ns__StationInfo *_p = ::soap_new_ns__StationInfo(soap);
 	if (_p)
@@ -680,6 +760,9 @@ inline ns__StationInfo * soap_new_req_ns__StationInfo(
 		_p->ns__StationInfo::Code = Code;
 		_p->ns__StationInfo::Name = Name;
 		_p->ns__StationInfo::UpdatePeriod = UpdatePeriod;
+		_p->ns__StationInfo::Place = Place;
+		_p->ns__StationInfo::Latitude = Latitude;
+		_p->ns__StationInfo::Longitude = Longitude;
 		_p->ns__StationInfo::UserAccessRight = UserAccessRight;
 	}
 	return _p;
@@ -691,7 +774,10 @@ inline ns__StationInfo * soap_new_set_ns__StationInfo(
 	int Code,
 	const std::wstring& Name,
 	int UpdatePeriod,
-	enum ns__UserAccessRightCode UserAccessRight)
+	const std::wstring& Place,
+	float Latitude,
+	float Longitude,
+	const std::wstring& UserAccessRight)
 {
 	ns__StationInfo *_p = ::soap_new_ns__StationInfo(soap);
 	if (_p)
@@ -700,6 +786,9 @@ inline ns__StationInfo * soap_new_set_ns__StationInfo(
 		_p->ns__StationInfo::Code = Code;
 		_p->ns__StationInfo::Name = Name;
 		_p->ns__StationInfo::UpdatePeriod = UpdatePeriod;
+		_p->ns__StationInfo::Place = Place;
+		_p->ns__StationInfo::Latitude = Latitude;
+		_p->ns__StationInfo::Longitude = Longitude;
 		_p->ns__StationInfo::UserAccessRight = UserAccessRight;
 	}
 	return _p;
@@ -1459,106 +1548,6 @@ inline int soap_POST_recv_SOAP_ENV__Header(struct soap *soap, struct SOAP_ENV__H
 }
 #endif
 
-#endif
-
-#ifndef SOAP_TYPE_ns__GetStationsResp_DEFINED
-#define SOAP_TYPE_ns__GetStationsResp_DEFINED
-SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns__GetStationsResp(struct soap*, struct ns__GetStationsResp *);
-SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns__GetStationsResp(struct soap*, const struct ns__GetStationsResp *);
-SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns__GetStationsResp(struct soap*, const char*, int, const struct ns__GetStationsResp *, const char*);
-SOAP_FMAC3 struct ns__GetStationsResp * SOAP_FMAC4 soap_in_ns__GetStationsResp(struct soap*, const char*, struct ns__GetStationsResp *, const char*);
-SOAP_FMAC1 struct ns__GetStationsResp * SOAP_FMAC2 soap_instantiate_ns__GetStationsResp(struct soap*, int, const char*, const char*, size_t*);
-
-inline struct ns__GetStationsResp * soap_new_ns__GetStationsResp(struct soap *soap, int n = -1)
-{
-	return soap_instantiate_ns__GetStationsResp(soap, n, NULL, NULL, NULL);
-}
-
-inline struct ns__GetStationsResp * soap_new_req_ns__GetStationsResp(
-	struct soap *soap,
-	const std::wstring& login,
-	const std::wstring& password)
-{
-	struct ns__GetStationsResp *_p = ::soap_new_ns__GetStationsResp(soap);
-	if (_p)
-	{	::soap_default_ns__GetStationsResp(soap, _p);
-		_p->login = login;
-		_p->password = password;
-	}
-	return _p;
-}
-
-inline struct ns__GetStationsResp * soap_new_set_ns__GetStationsResp(
-	struct soap *soap,
-	const std::wstring& login,
-	const std::wstring& password)
-{
-	struct ns__GetStationsResp *_p = ::soap_new_ns__GetStationsResp(soap);
-	if (_p)
-	{	::soap_default_ns__GetStationsResp(soap, _p);
-		_p->login = login;
-		_p->password = password;
-	}
-	return _p;
-}
-SOAP_FMAC3 int SOAP_FMAC4 soap_put_ns__GetStationsResp(struct soap*, const struct ns__GetStationsResp *, const char*, const char*);
-
-inline int soap_write_ns__GetStationsResp(struct soap *soap, struct ns__GetStationsResp const*p)
-{
-	soap_free_temp(soap);
-	if (soap_begin_send(soap) || (::soap_serialize_ns__GetStationsResp(soap, p), 0) || ::soap_put_ns__GetStationsResp(soap, p, "ns:GetStationsResp", "") || soap_end_send(soap))
-			return soap->error;
-	return SOAP_OK;
-}
-
-inline int soap_PUT_ns__GetStationsResp(struct soap *soap, const char *URL, struct ns__GetStationsResp const*p)
-{
-	soap_free_temp(soap);
-	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize_ns__GetStationsResp(soap, p), 0) || ::soap_put_ns__GetStationsResp(soap, p, "ns:GetStationsResp", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
-		return soap_closesock(soap);
-	return SOAP_OK;
-}
-
-inline int soap_PATCH_ns__GetStationsResp(struct soap *soap, const char *URL, struct ns__GetStationsResp const*p)
-{
-	soap_free_temp(soap);
-	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize_ns__GetStationsResp(soap, p), 0) || ::soap_put_ns__GetStationsResp(soap, p, "ns:GetStationsResp", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
-		return soap_closesock(soap);
-	return SOAP_OK;
-}
-
-inline int soap_POST_send_ns__GetStationsResp(struct soap *soap, const char *URL, struct ns__GetStationsResp const*p)
-{
-	soap_free_temp(soap);
-	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize_ns__GetStationsResp(soap, p), 0) || ::soap_put_ns__GetStationsResp(soap, p, "ns:GetStationsResp", "") || soap_end_send(soap))
-		return soap_closesock(soap);
-	return SOAP_OK;
-}
-SOAP_FMAC3 struct ns__GetStationsResp * SOAP_FMAC4 soap_get_ns__GetStationsResp(struct soap*, struct ns__GetStationsResp *, const char*, const char*);
-
-inline int soap_read_ns__GetStationsResp(struct soap *soap, struct ns__GetStationsResp *p)
-{
-	if (p)
-	{	::soap_default_ns__GetStationsResp(soap, p);
-		if (soap_begin_recv(soap) || ::soap_get_ns__GetStationsResp(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
-			return soap->error;
-	}
-	return SOAP_OK;
-}
-
-inline int soap_GET_ns__GetStationsResp(struct soap *soap, const char *URL, struct ns__GetStationsResp *p)
-{
-	if (soap_GET(soap, URL, NULL) || ::soap_read_ns__GetStationsResp(soap, p))
-		return soap_closesock(soap);
-	return soap_closesock(soap);
-}
-
-inline int soap_POST_recv_ns__GetStationsResp(struct soap *soap, struct ns__GetStationsResp *p)
-{
-	if (::soap_read_ns__GetStationsResp(soap, p))
-		return soap_closesock(soap);
-	return soap_closesock(soap);
-}
 #endif
 
 #ifndef SOAP_TYPE_ns__GetStations_DEFINED

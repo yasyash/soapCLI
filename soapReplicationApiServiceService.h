@@ -93,9 +93,6 @@ A commercial use license is available from Genivia Inc., contact@genivia.com
         // Note: compile with -DWITH_PURE_VIRTUAL to declare pure virtual methods
         //
         /// Web service operation 'GetStations' implementation, should return SOAP_OK or error code
-        virtual int GetStations(struct soap *soap, const std::wstring& login, const std::wstring& password, ns__StationInfo &result) SOAP_PURE_VIRTUAL;
-        //
-        /// Web service operation 'GetStationsResp' implementation, should return SOAP_OK or error code
-        virtual int GetStationsResp(struct soap *soap, const std::wstring& login, const std::wstring& password, ns__GetStationsResponse &result) SOAP_PURE_VIRTUAL;
+        virtual int GetStations(struct soap *soap, const std::wstring& login, const std::wstring& password, ns__GetStationsResponse &result) SOAP_PURE_VIRTUAL;
     };
 #endif

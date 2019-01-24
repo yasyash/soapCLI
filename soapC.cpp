@@ -18,7 +18,7 @@ A commercial use license is available from Genivia Inc., contact@genivia.com
 
 #include "soapH.h"
 
-SOAP_SOURCE_STAMP("@(#) soapC.cpp ver 2.8.75 2019-01-22 22:35:05 GMT")
+SOAP_SOURCE_STAMP("@(#) soapC.cpp ver 2.8.75 2019-01-24 15:35:44 GMT")
 
 
 #ifndef WITH_NOGLOBAL
@@ -191,6 +191,8 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, const char *tag,
 		return soap_in_byte(soap, tag, NULL, "xsd:byte");
 	case SOAP_TYPE_int:
 		return soap_in_int(soap, tag, NULL, "xsd:int");
+	case SOAP_TYPE_float:
+		return soap_in_float(soap, tag, NULL, "xsd:float");
 	case SOAP_TYPE_ns__UserAccessRightCode:
 		return soap_in_ns__UserAccessRightCode(soap, tag, NULL, "ns:UserAccessRightCode");
 	case SOAP_TYPE_ns__ErrorCode:
@@ -207,8 +209,6 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, const char *tag,
 		return soap_in_xsd__string(soap, tag, NULL, "xsd:string");
 	case SOAP_TYPE_std__wstring:
 		return soap_in_std__wstring(soap, tag, NULL, "xsd:string");
-	case SOAP_TYPE_ns__GetStationsResp:
-		return soap_in_ns__GetStationsResp(soap, tag, NULL, "ns:GetStationsResp");
 	case SOAP_TYPE_ns__GetStations:
 		return soap_in_ns__GetStations(soap, tag, NULL, "ns:GetStations");
 	case SOAP_TYPE_PointerTons__ArrayOfStationInfo:
@@ -262,6 +262,10 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, const char *tag,
 		{	*type = SOAP_TYPE_int;
 			return soap_in_int(soap, tag, NULL, NULL);
 		}
+		if (!soap_match_tag(soap, t, "xsd:float"))
+		{	*type = SOAP_TYPE_float;
+			return soap_in_float(soap, tag, NULL, NULL);
+		}
 		if (!soap_match_tag(soap, t, "ns:UserAccessRightCode"))
 		{	*type = SOAP_TYPE_ns__UserAccessRightCode;
 			return soap_in_ns__UserAccessRightCode(soap, tag, NULL, NULL);
@@ -269,10 +273,6 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, const char *tag,
 		if (!soap_match_tag(soap, t, "ns:ErrorCode"))
 		{	*type = SOAP_TYPE_ns__ErrorCode;
 			return soap_in_ns__ErrorCode(soap, tag, NULL, NULL);
-		}
-		if (!soap_match_tag(soap, t, "ns:GetStationsResp"))
-		{	*type = SOAP_TYPE_ns__GetStationsResp;
-			return soap_in_ns__GetStationsResp(soap, tag, NULL, NULL);
 		}
 		if (!soap_match_tag(soap, t, "ns:GetStations"))
 		{	*type = SOAP_TYPE_ns__GetStations;
@@ -354,6 +354,8 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_putelement(struct soap *soap, const void *ptr, co
 		return soap_out_byte(soap, tag, id, (const char *)ptr, "xsd:byte");
 	case SOAP_TYPE_int:
 		return soap_out_int(soap, tag, id, (const int *)ptr, "xsd:int");
+	case SOAP_TYPE_float:
+		return soap_out_float(soap, tag, id, (const float *)ptr, "xsd:float");
 	case SOAP_TYPE_ns__UserAccessRightCode:
 		return soap_out_ns__UserAccessRightCode(soap, tag, id, (const enum ns__UserAccessRightCode *)ptr, "ns:UserAccessRightCode");
 	case SOAP_TYPE_ns__ErrorCode:
@@ -370,8 +372,6 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_putelement(struct soap *soap, const void *ptr, co
 		return soap_out_xsd__string(soap, tag, id, (const std::wstring *)ptr, "xsd:string");
 	case SOAP_TYPE_std__wstring:
 		return soap_out_std__wstring(soap, tag, id, (const std::wstring *)ptr, "xsd:string");
-	case SOAP_TYPE_ns__GetStationsResp:
-		return soap_out_ns__GetStationsResp(soap, tag, id, (const struct ns__GetStationsResp *)ptr, "ns:GetStationsResp");
 	case SOAP_TYPE_ns__GetStations:
 		return soap_out_ns__GetStations(soap, tag, id, (const struct ns__GetStations *)ptr, "ns:GetStations");
 	case SOAP_TYPE_PointerTons__ArrayOfStationInfo:
@@ -417,9 +417,6 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 		break;
 	case SOAP_TYPE_std__wstring:
 		soap_serialize_std__wstring(soap, (const std::wstring *)ptr);
-		break;
-	case SOAP_TYPE_ns__GetStationsResp:
-		soap_serialize_ns__GetStationsResp(soap, (const struct ns__GetStationsResp *)ptr);
 		break;
 	case SOAP_TYPE_ns__GetStations:
 		soap_serialize_ns__GetStations(soap, (const struct ns__GetStations *)ptr);
@@ -479,8 +476,6 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_instantiate(struct soap *soap, int t, const ch
 		return (void*)soap_instantiate_ns__StInfo(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_ns__GetStations:
 		return (void*)soap_instantiate_ns__GetStations(soap, -1, type, arrayType, n);
-	case SOAP_TYPE_ns__GetStationsResp:
-		return (void*)soap_instantiate_ns__GetStationsResp(soap, -1, type, arrayType, n);
 #ifndef WITH_NOGLOBAL
 	case SOAP_TYPE_SOAP_ENV__Header:
 		return (void*)soap_instantiate_SOAP_ENV__Header(soap, -1, type, arrayType, n);
@@ -551,12 +546,6 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap *soap, struct soap_clist *p)
 			SOAP_DELETE(soap, static_cast<struct ns__GetStations*>(p->ptr), struct ns__GetStations);
 		else
 			SOAP_DELETE_ARRAY(soap, static_cast<struct ns__GetStations*>(p->ptr), struct ns__GetStations);
-		break;
-	case SOAP_TYPE_ns__GetStationsResp:
-		if (p->size < 0)
-			SOAP_DELETE(soap, static_cast<struct ns__GetStationsResp*>(p->ptr), struct ns__GetStationsResp);
-		else
-			SOAP_DELETE_ARRAY(soap, static_cast<struct ns__GetStationsResp*>(p->ptr), struct ns__GetStationsResp);
 		break;
 #ifndef WITH_NOGLOBAL
 	case SOAP_TYPE_SOAP_ENV__Header:
@@ -671,10 +660,6 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_finsert(struct soap *soap, int t, int tt, void *
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct ns__GetStations type=%d location=%p object=%p\n", t, p, q));
 		*(struct ns__GetStations*)p = *(struct ns__GetStations*)q;
 		break;
-	case SOAP_TYPE_ns__GetStationsResp:
-		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct ns__GetStationsResp type=%d location=%p object=%p\n", t, p, q));
-		*(struct ns__GetStationsResp*)p = *(struct ns__GetStationsResp*)q;
-		break;
 #ifndef WITH_NOGLOBAL
 	case SOAP_TYPE_SOAP_ENV__Header:
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct SOAP_ENV__Header type=%d location=%p object=%p\n", t, p, q));
@@ -786,6 +771,40 @@ SOAP_FMAC3 int * SOAP_FMAC4 soap_get_int(struct soap *soap, int *p, const char *
 	return p;
 }
 
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_float(struct soap *soap, const char *tag, int id, const float *a, const char *type)
+{
+	return soap_outfloat(soap, tag, id, a, type, SOAP_TYPE_float);
+}
+
+SOAP_FMAC3 float * SOAP_FMAC4 soap_in_float(struct soap *soap, const char *tag, float *a, const char *type)
+{
+	a = soap_infloat(soap, tag, a, type, SOAP_TYPE_float);
+	return a;
+}
+
+SOAP_FMAC3 float * SOAP_FMAC4 soap_new_float(struct soap *soap, int n)
+{
+	float *a = static_cast<float *>(soap_malloc(soap, (n = (n < 0 ? 1 : n)) * sizeof(float)));
+	for (float *p = a; p && n--; ++p)
+		soap_default_float(soap, p);
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_float(struct soap *soap, const float *a, const char *tag, const char *type)
+{
+	if (soap_out_float(soap, tag ? tag : "float", -2, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 float * SOAP_FMAC4 soap_get_float(struct soap *soap, float *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_float(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
 static const struct soap_code_map soap_codes_ns__UserAccessRightCode[] =
 {	{ (LONG64)NONE, "NONE" },
 	{ (LONG64)VIEW, "VIEW" },
@@ -872,8 +891,10 @@ SOAP_FMAC3 enum ns__UserAccessRightCode * SOAP_FMAC4 soap_get_ns__UserAccessRigh
 }
 
 static const struct soap_code_map soap_codes_ns__ErrorCode[] =
-{	{ (LONG64)ns__NO_ERROR_AUTHORIZATION, "ns:NO-ERROR-AUTHORIZATION" },
+{	{ (LONG64)ns__AUTHORIZATION_IS_OK, "ns:AUTHORIZATION-IS-OK" },
 	{ (LONG64)ns__AUTHORIZATION_ERROR_IS, "ns:AUTHORIZATION-ERROR-IS" },
+	{ (LONG64)ns__CONNECTION_NOT_ESTABLISHED, "ns:CONNECTION-NOT-ESTABLISHED" },
+	{ (LONG64)ns__ERROR_QUERY_EXEC, "ns:ERROR-QUERY-EXEC" },
 	{ 0, NULL }
 };
 
@@ -906,7 +927,7 @@ SOAP_FMAC3S int SOAP_FMAC4S soap_s2ns__ErrorCode(struct soap *soap, const char *
 		return soap->error = SOAP_EMPTY;
 	else
 	{	int n;
-		if (soap_s2int(soap, s, &n) || n < 0 || n > 1)
+		if (soap_s2int(soap, s, &n) || n < 0 || n > 3)
 			return soap->error = SOAP_TYPE;
 		*a = (enum ns__ErrorCode)n;
 	}
@@ -1404,7 +1425,10 @@ void ns__StationInfo::soap_default(struct soap *soap)
 	soap_default_int(soap, &this->ns__StationInfo::Code);
 	soap_default_xsd__string(soap, &this->ns__StationInfo::Name);
 	soap_default_int(soap, &this->ns__StationInfo::UpdatePeriod);
-	soap_default_ns__UserAccessRightCode(soap, &this->ns__StationInfo::UserAccessRight);
+	soap_default_xsd__string(soap, &this->ns__StationInfo::Place);
+	soap_default_float(soap, &this->ns__StationInfo::Latitude);
+	soap_default_float(soap, &this->ns__StationInfo::Longitude);
+	soap_default_xsd__string(soap, &this->ns__StationInfo::UserAccessRight);
 }
 
 void ns__StationInfo::soap_serialize(struct soap *soap) const
@@ -1413,6 +1437,8 @@ void ns__StationInfo::soap_serialize(struct soap *soap) const
 #ifndef WITH_NOIDREF
 	soap_serialize_xsd__string(soap, &this->ns__StationInfo::ID);
 	soap_serialize_xsd__string(soap, &this->ns__StationInfo::Name);
+	soap_serialize_xsd__string(soap, &this->ns__StationInfo::Place);
+	soap_serialize_xsd__string(soap, &this->ns__StationInfo::UserAccessRight);
 #endif
 }
 
@@ -1434,7 +1460,13 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns__StationInfo(struct soap *soap, const char
 		return soap->error;
 	if (soap_out_int(soap, "UpdatePeriod", -1, &a->ns__StationInfo::UpdatePeriod, ""))
 		return soap->error;
-	if (soap_out_ns__UserAccessRightCode(soap, "UserAccessRight", -1, &a->ns__StationInfo::UserAccessRight, ""))
+	if (soap_out_xsd__string(soap, "Place", -1, &a->ns__StationInfo::Place, ""))
+		return soap->error;
+	if (soap_out_float(soap, "Latitude", -1, &a->ns__StationInfo::Latitude, ""))
+		return soap->error;
+	if (soap_out_float(soap, "Longitude", -1, &a->ns__StationInfo::Longitude, ""))
+		return soap->error;
+	if (soap_out_xsd__string(soap, "UserAccessRight", -1, &a->ns__StationInfo::UserAccessRight, ""))
 		return soap->error;
 	return soap_element_end_out(soap, tag);
 }
@@ -1463,6 +1495,9 @@ SOAP_FMAC3 ns__StationInfo * SOAP_FMAC4 soap_in_ns__StationInfo(struct soap *soa
 	size_t soap_flag_Code1 = 1;
 	size_t soap_flag_Name1 = 1;
 	size_t soap_flag_UpdatePeriod1 = 1;
+	size_t soap_flag_Place1 = 1;
+	size_t soap_flag_Latitude1 = 1;
+	size_t soap_flag_Longitude1 = 1;
 	size_t soap_flag_UserAccessRight1 = 1;
 	if (soap->body && *soap->href != '#')
 	{
@@ -1492,8 +1527,26 @@ SOAP_FMAC3 ns__StationInfo * SOAP_FMAC4 soap_in_ns__StationInfo(struct soap *soa
 					continue;
 				}
 			}
-			if (soap_flag_UserAccessRight1 && soap->error == SOAP_TAG_MISMATCH)
-			{	if (soap_in_ns__UserAccessRightCode(soap, "UserAccessRight", &a->ns__StationInfo::UserAccessRight, "ns:UserAccessRightCode"))
+			if (soap_flag_Place1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+			{	if (soap_in_xsd__string(soap, "Place", &a->ns__StationInfo::Place, "xsd:string"))
+				{	soap_flag_Place1--;
+					continue;
+				}
+			}
+			if (soap_flag_Latitude1 && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_float(soap, "Latitude", &a->ns__StationInfo::Latitude, "xsd:float"))
+				{	soap_flag_Latitude1--;
+					continue;
+				}
+			}
+			if (soap_flag_Longitude1 && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_float(soap, "Longitude", &a->ns__StationInfo::Longitude, "xsd:float"))
+				{	soap_flag_Longitude1--;
+					continue;
+				}
+			}
+			if (soap_flag_UserAccessRight1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+			{	if (soap_in_xsd__string(soap, "UserAccessRight", &a->ns__StationInfo::UserAccessRight, "xsd:string"))
 				{	soap_flag_UserAccessRight1--;
 					continue;
 				}
@@ -1507,7 +1560,7 @@ SOAP_FMAC3 ns__StationInfo * SOAP_FMAC4 soap_in_ns__StationInfo(struct soap *soa
 		}
 		if (soap_element_end_in(soap, tag))
 			return NULL;
-		if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_ID1 > 0 || soap_flag_Code1 > 0 || soap_flag_Name1 > 0 || soap_flag_UpdatePeriod1 > 0 || soap_flag_UserAccessRight1 > 0))
+		if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_ID1 > 0 || soap_flag_Code1 > 0 || soap_flag_Name1 > 0 || soap_flag_UpdatePeriod1 > 0 || soap_flag_Place1 > 0 || soap_flag_Latitude1 > 0 || soap_flag_Longitude1 > 0 || soap_flag_UserAccessRight1 > 0))
 		{	soap->error = SOAP_OCCURS;
 			return NULL;
 		}
@@ -2341,133 +2394,6 @@ SOAP_FMAC3 struct SOAP_ENV__Header * SOAP_FMAC4 soap_get_SOAP_ENV__Header(struct
 }
 
 #endif
-
-SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns__GetStationsResp(struct soap *soap, struct ns__GetStationsResp *a)
-{
-	a->soap = soap;
-	soap_default_xsd__string(soap, &a->login);
-	soap_default_xsd__string(soap, &a->password);
-}
-
-SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns__GetStationsResp(struct soap *soap, const struct ns__GetStationsResp *a)
-{
-	(void)soap; (void)a; /* appease -Wall -Werror */
-#ifndef WITH_NOIDREF
-	soap_serialize_xsd__string(soap, &a->login);
-	soap_serialize_xsd__string(soap, &a->password);
-#endif
-}
-
-SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns__GetStationsResp(struct soap *soap, const char *tag, int id, const struct ns__GetStationsResp *a, const char *type)
-{
-	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
-	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_ns__GetStationsResp), type))
-		return soap->error;
-	if (soap_out_xsd__string(soap, "login", -1, &a->login, ""))
-		return soap->error;
-	if (soap_out_xsd__string(soap, "password", -1, &a->password, ""))
-		return soap->error;
-	return soap_element_end_out(soap, tag);
-}
-
-SOAP_FMAC3 struct ns__GetStationsResp * SOAP_FMAC4 soap_in_ns__GetStationsResp(struct soap *soap, const char *tag, struct ns__GetStationsResp *a, const char *type)
-{
-	size_t soap_flag_login = 1;
-	size_t soap_flag_password = 1;
-	(void)type; /* appease -Wall -Werror */
-	if (soap_element_begin_in(soap, tag, 0, NULL))
-		return NULL;
-	a = (struct ns__GetStationsResp*)soap_id_enter(soap, soap->id, a, SOAP_TYPE_ns__GetStationsResp, sizeof(struct ns__GetStationsResp), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
-	if (!a)
-		return NULL;
-	soap_default_ns__GetStationsResp(soap, a);
-	if (soap->body && *soap->href != '#')
-	{
-		for (;;)
-		{	soap->error = SOAP_TAG_MISMATCH;
-			if (soap_flag_login && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
-			{	if (soap_in_xsd__string(soap, "login", &a->login, "xsd:string"))
-				{	soap_flag_login--;
-					continue;
-				}
-			}
-			if (soap_flag_password && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
-			{	if (soap_in_xsd__string(soap, "password", &a->password, "xsd:string"))
-				{	soap_flag_password--;
-					continue;
-				}
-			}
-			if (soap->error == SOAP_TAG_MISMATCH)
-				soap->error = soap_ignore_element(soap);
-			if (soap->error == SOAP_NO_TAG)
-				break;
-			if (soap->error)
-				return NULL;
-		}
-		if (soap_element_end_in(soap, tag))
-			return NULL;
-		if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_login > 0 || soap_flag_password > 0))
-		{	soap->error = SOAP_OCCURS;
-			return NULL;
-		}
-	}
-	else if ((soap->mode & SOAP_XML_STRICT) && *soap->href != '#')
-	{	soap->error = SOAP_OCCURS;
-		return NULL;
-	}
-	else
-	{	a = (struct ns__GetStationsResp *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_ns__GetStationsResp, SOAP_TYPE_ns__GetStationsResp, sizeof(struct ns__GetStationsResp), 0, soap_finsert, NULL);
-		if (soap->body && soap_element_end_in(soap, tag))
-			return NULL;
-	}
-	return a;
-}
-
-SOAP_FMAC1 struct ns__GetStationsResp * SOAP_FMAC2 soap_instantiate_ns__GetStationsResp(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
-{
-	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_ns__GetStationsResp(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
-	(void)type; (void)arrayType; /* appease -Wall -Werror */
-	struct ns__GetStationsResp *p;
-	size_t k = sizeof(struct ns__GetStationsResp);
-	struct soap_clist *cp = soap_link(soap, SOAP_TYPE_ns__GetStationsResp, n, soap_fdelete);
-	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
-		return NULL;
-	if (n < 0)
-	{	p = SOAP_NEW(soap, struct ns__GetStationsResp);
-		if (p)
-			p->soap = soap;
-	}
-	else
-	{	p = SOAP_NEW_ARRAY(soap, struct ns__GetStationsResp, n);
-		k *= n;
-		if (p)
-			for (int i = 0; i < n; i++)
-				p[i].soap = soap;
-	}
-	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated struct ns__GetStationsResp location=%p n=%d\n", (void*)p, n));
-	if (size)
-		*size = k;
-	if (!p)
-		soap->error = SOAP_EOM;
-	else if (cp)
-		cp->ptr = (void*)p;
-	return p;
-}
-
-SOAP_FMAC3 int SOAP_FMAC4 soap_put_ns__GetStationsResp(struct soap *soap, const struct ns__GetStationsResp *a, const char *tag, const char *type)
-{
-	if (soap_out_ns__GetStationsResp(soap, tag ? tag : "ns:GetStationsResp", -2, a, type))
-		return soap->error;
-	return soap_putindependent(soap);
-}
-
-SOAP_FMAC3 struct ns__GetStationsResp * SOAP_FMAC4 soap_get_ns__GetStationsResp(struct soap *soap, struct ns__GetStationsResp *p, const char *tag, const char *type)
-{
-	if ((p = soap_in_ns__GetStationsResp(soap, tag, p, type)))
-		if (soap_getindependent(soap))
-			return NULL;
-	return p;
-}
 
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns__GetStations(struct soap *soap, struct ns__GetStations *a)
 {
