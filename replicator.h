@@ -13,25 +13,25 @@ template <class T> class std::vector;
 typedef std::wstring xsd__string;
 
 enum ns__ErrorCode {
-    ns__AUTHORIZATION_IS_OK,
-    ns__AUTHORIZATION_ERROR_IS,
-    ns__CONNECTION_NOT_ESTABLISHED,
-    ns__ERROR_QUERY_EXEC,
-    ns__ERROR_DB_BUSY
+    authoization_ok_,
+    authoization_error_,
+    connection_error_,
+    query_error_,
+    db_busy_
 };
 
 enum ns__UserAccessRightCode{
-    NONE,
-    VIEW,
-    EDIT,
-    DELETE
+    none_,
+    view_,
+    edit_,
+    delete_
 };
 
 enum ns__MeasurementClasses{
-    ns__MeasurementClasses_data,
-    ns__MeasurementClasses_alert,
-    ns__MeasurementClasses_hum_out,
-    ns__MeasurementClasses_none
+    data_,
+    alert_,
+    hum_out_,
+    nothing_
 };
 
 class ns__StationInfo{

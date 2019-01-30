@@ -52,16 +52,16 @@ This report has the following contents describing the data binding interface typ
 
 <table class="doxtable">
 <tr><th> Type </th><th> Declared </th><th> Serializable </th><th> Bitmask </th><th> Values </th></tr>
-<tr><td><code><a href="#ns__ErrorCode"> enum ns__ErrorCode </a></code></td><td> replicator.h:15 </td><td> yes </td><td>  </td><td> <code> ns__AUTHORIZATION_IS_OK </code>, <code> ns__AUTHORIZATION_ERROR_IS </code>, <code> ns__CONNECTION_NOT_ESTABLISHED </code>, <code> ns__ERROR_QUERY_EXEC </code>, <code> ns__ERROR_DB_BUSY </code> </td></tr>
-<tr><td><code><a href="#ns__UserAccessRightCode"> enum ns__UserAccessRightCode </a></code></td><td> replicator.h:23 </td><td> yes </td><td>  </td><td> <code> NONE </code>, <code> VIEW </code>, <code> EDIT </code>, <code> DELETE </code> </td></tr>
-<tr><td><code><a href="#ns__MeasurementClasses"> enum ns__MeasurementClasses </a></code></td><td> replicator.h:30 </td><td> yes </td><td>  </td><td> <code> ns__MeasurementClasses_data </code>, <code> ns__MeasurementClasses_alert </code>, <code> ns__MeasurementClasses_hum_out </code>, <code> ns__MeasurementClasses_none </code> </td></tr>
+<tr><td><code><a href="#ns__ErrorCode"> enum ns__ErrorCode </a></code></td><td> replicator.h:15 </td><td> yes </td><td>  </td><td> <code> authoization_ok_ </code>, <code> authoization_error_ </code>, <code> connection_error_ </code>, <code> query_error_ </code>, <code> db_busy_ </code> </td></tr>
+<tr><td><code><a href="#ns__UserAccessRightCode"> enum ns__UserAccessRightCode </a></code></td><td> replicator.h:23 </td><td> yes </td><td>  </td><td> <code> none_ </code>, <code> view_ </code>, <code> edit_ </code>, <code> delete_ </code> </td></tr>
+<tr><td><code><a href="#ns__MeasurementClasses"> enum ns__MeasurementClasses </a></code></td><td> replicator.h:30 </td><td> yes </td><td>  </td><td> <code> data_ </code>, <code> alert_ </code>, <code> hum_out_ </code>, <code> nothing_ </code> </td></tr>
 </table>
 
 <a name="ns__ErrorCode"></a>
 
 ### `enum ns__ErrorCode`
 
-This enum type is declared in [replicator.h](replicator.h) at line 15 and has values  `ns__AUTHORIZATION_IS_OK` (= 0), `ns__AUTHORIZATION_ERROR_IS` (= 1), `ns__CONNECTION_NOT_ESTABLISHED` (= 2), `ns__ERROR_QUERY_EXEC` (= 3), `ns__ERROR_DB_BUSY` (= 4).
+This enum type is declared in [replicator.h](replicator.h) at line 15 and has values  `authoization_ok_` (= 0), `authoization_error_` (= 1), `connection_error_` (= 2), `query_error_` (= 3), `db_busy_` (= 4).
 
 - `enum ns__ErrorCode *soap_new_ns__ErrorCode(struct soap*)` managed allocation with default initialization
 - `enum ns__ErrorCode *soap_new_ns__ErrorCode(struct soap*, int n)` managed allocation with default initialization of array `enum ns__ErrorCode[n]`
@@ -72,12 +72,12 @@ This enum type is declared in [replicator.h](replicator.h) at line 15 and has va
 The component of XML schema type *`ns:ErrorCode`* in schema "[urn:ReplicationApiService](#doc-namespaces)" is:
 
     <simpleType name="ErrorCode">
-      <restriction base="xsd:QName">
-        <enumeration value="ns:AUTHORIZATION-IS-OK"/>
-        <enumeration value="ns:AUTHORIZATION-ERROR-IS"/>
-        <enumeration value="ns:CONNECTION-NOT-ESTABLISHED"/>
-        <enumeration value="ns:ERROR-QUERY-EXEC"/>
-        <enumeration value="ns:ERROR-DB-BUSY"/>
+      <restriction base="xsd:string">
+        <enumeration value="authoization-ok"/>
+        <enumeration value="authoization-error"/>
+        <enumeration value="connection-error"/>
+        <enumeration value="query-error"/>
+        <enumeration value="db-busy"/>
       </restriction>
     </simpleType>
 
@@ -88,7 +88,7 @@ The component of XML schema type *`ns:ErrorCode`* in schema "[urn:ReplicationApi
 
 ### `enum ns__UserAccessRightCode`
 
-This enum type is declared in [replicator.h](replicator.h) at line 23 and has values  `NONE` (= 0), `VIEW` (= 1), `EDIT` (= 2), `DELETE` (= 3).
+This enum type is declared in [replicator.h](replicator.h) at line 23 and has values  `none_` (= 0), `view_` (= 1), `edit_` (= 2), `delete_` (= 3).
 
 - `enum ns__UserAccessRightCode *soap_new_ns__UserAccessRightCode(struct soap*)` managed allocation with default initialization
 - `enum ns__UserAccessRightCode *soap_new_ns__UserAccessRightCode(struct soap*, int n)` managed allocation with default initialization of array `enum ns__UserAccessRightCode[n]`
@@ -100,10 +100,10 @@ The component of XML schema type *`ns:UserAccessRightCode`* in schema "[urn:Repl
 
     <simpleType name="UserAccessRightCode">
       <restriction base="xsd:string">
-        <enumeration value="NONE"/>
-        <enumeration value="VIEW"/>
-        <enumeration value="EDIT"/>
-        <enumeration value="DELETE"/>
+        <enumeration value="none"/>
+        <enumeration value="view"/>
+        <enumeration value="edit"/>
+        <enumeration value="delete"/>
       </restriction>
     </simpleType>
 
@@ -114,7 +114,7 @@ The component of XML schema type *`ns:UserAccessRightCode`* in schema "[urn:Repl
 
 ### `enum ns__MeasurementClasses`
 
-This enum type is declared in [replicator.h](replicator.h) at line 30 and has values  `ns__MeasurementClasses_data` (= 0), `ns__MeasurementClasses_alert` (= 1), `ns__MeasurementClasses_hum_out` (= 2), `ns__MeasurementClasses_none` (= 3).
+This enum type is declared in [replicator.h](replicator.h) at line 30 and has values  `data_` (= 0), `alert_` (= 1), `hum_out_` (= 2), `nothing_` (= 3).
 
 - `enum ns__MeasurementClasses *soap_new_ns__MeasurementClasses(struct soap*)` managed allocation with default initialization
 - `enum ns__MeasurementClasses *soap_new_ns__MeasurementClasses(struct soap*, int n)` managed allocation with default initialization of array `enum ns__MeasurementClasses[n]`
@@ -125,11 +125,11 @@ This enum type is declared in [replicator.h](replicator.h) at line 30 and has va
 The component of XML schema type *`ns:MeasurementClasses`* in schema "[urn:ReplicationApiService](#doc-namespaces)" is:
 
     <simpleType name="MeasurementClasses">
-      <restriction base="xsd:QName">
-        <enumeration value="ns:MeasurementClasses-data"/>
-        <enumeration value="ns:MeasurementClasses-alert"/>
-        <enumeration value="ns:MeasurementClasses-hum-out"/>
-        <enumeration value="ns:MeasurementClasses-none"/>
+      <restriction base="xsd:string">
+        <enumeration value="data"/>
+        <enumeration value="alert"/>
+        <enumeration value="hum-out"/>
+        <enumeration value="nothing"/>
       </restriction>
     </simpleType>
 
@@ -1217,5 +1217,5 @@ The table binds XML namespace prefixes (first column) to namespace URIs (second 
 
 --------------------------------------------------------------------------------
 
-_Generated on Wed Jan 30 2019 17:23:01 UTC by soapcpp2 v2.8.75 for replicator.h._
+_Generated on Wed Jan 30 2019 21:51:30 UTC by soapcpp2 v2.8.75 for replicator.h._
 _The gSOAP XML Web services tools are Copyright (C) Robert van Engelen, Genivia Inc. All Rights Reserved._

@@ -33,11 +33,11 @@ A commercial use license is available from Genivia Inc., contact@genivia.com
 #define SOAP_TYPE_ns__ErrorCode (10)
 /* ns:ErrorCode */
 enum ns__ErrorCode {
-	ns__AUTHORIZATION_IS_OK = 0,
-	ns__AUTHORIZATION_ERROR_IS = 1,
-	ns__CONNECTION_NOT_ESTABLISHED = 2,
-	ns__ERROR_QUERY_EXEC = 3,
-	ns__ERROR_DB_BUSY = 4
+	authoization_ok_ = 0,
+	authoization_error_ = 1,
+	connection_error_ = 2,
+	query_error_ = 3,
+	db_busy_ = 4
 };
 #endif
 
@@ -46,10 +46,10 @@ enum ns__ErrorCode {
 #define SOAP_TYPE_ns__UserAccessRightCode (11)
 /* ns:UserAccessRightCode */
 enum ns__UserAccessRightCode {
-	NONE = 0,
-	VIEW = 1,
-	EDIT = 2,
-	DELETE = 3
+	none_ = 0,
+	view_ = 1,
+	edit_ = 2,
+	delete_ = 3
 };
 #endif
 
@@ -58,10 +58,10 @@ enum ns__UserAccessRightCode {
 #define SOAP_TYPE_ns__MeasurementClasses (12)
 /* ns:MeasurementClasses */
 enum ns__MeasurementClasses {
-	ns__MeasurementClasses_data = 0,
-	ns__MeasurementClasses_alert = 1,
-	ns__MeasurementClasses_hum_out = 2,
-	ns__MeasurementClasses_none = 3
+	data_ = 0,
+	alert_ = 1,
+	hum_out_ = 2,
+	nothing_ = 3
 };
 #endif
 

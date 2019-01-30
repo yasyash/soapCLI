@@ -108,7 +108,7 @@ int ReplicationApiServiceImpl::GetStations (struct soap *soap, const std::wstrin
 
     if (!status)
     {
-        result.ErrorCode = ns__AUTHORIZATION_ERROR_IS;
+        result.ErrorCode = authoization_error_;
 
         return SOAP_OK;
     }
@@ -118,7 +118,7 @@ int ReplicationApiServiceImpl::GetStations (struct soap *soap, const std::wstrin
     query.exec();
     if(query.lastError().isValid())
     {
-        result.ErrorCode = ns__ERROR_QUERY_EXEC;
+        result.ErrorCode = query_error_;
 
         return SOAP_OK;
     }
@@ -143,7 +143,7 @@ int ReplicationApiServiceImpl::GetStations (struct soap *soap, const std::wstrin
 
     } while (query.next());
 
-    result.ErrorCode = ns__AUTHORIZATION_IS_OK;
+    result.ErrorCode = authoization_ok_;
     recordset.clear();
     query.finish();
     query.clear();
@@ -175,7 +175,7 @@ int ReplicationApiServiceImpl::GetSensors (struct soap *soap, const std::wstring
 
       if (!status)
     {
-        result.ErrorCode = ns__AUTHORIZATION_ERROR_IS;
+        result.ErrorCode = authoization_error_;
         fprintf(stderr, "DB - BUSY \n");
         dbmutex->unlock();
 
@@ -190,7 +190,7 @@ int ReplicationApiServiceImpl::GetSensors (struct soap *soap, const std::wstring
 
     if(query->lastError().isValid())
     {
-        result.ErrorCode = ns__ERROR_QUERY_EXEC;
+        result.ErrorCode = query_error_;
         dbmutex->unlock();
 
         return SOAP_OK;
@@ -210,9 +210,9 @@ int ReplicationApiServiceImpl::GetSensors (struct soap *soap, const std::wstring
         si.AveragePeriod = recordset.value("updateperiod").toInt();
         si.Unit->Name = recordset.value("unit_name").toString().toStdWString();
 
-        if (recordset.value("measure_class").toString() == "data") si.MeasurClass = ns__MeasurementClasses_data;
-        if (recordset.value("measure_class").toString() == "alert") si.MeasurClass = ns__MeasurementClasses_alert;
-        if (recordset.value("measure_class").toString() == "hum_out") si.MeasurClass = ns__MeasurementClasses_hum_out;
+        if (recordset.value("measure_class").toString() == "data") si.MeasurClass = data_;
+        if (recordset.value("measure_class").toString() == "alert") si.MeasurClass = alert_;
+        if (recordset.value("measure_class").toString() == "hum_out") si.MeasurClass = hum_out_;
 
         si.StationID = StationID;
         si.IsWeathercock = recordset.value("is_wind_sensor").toBool() ? true : false;
@@ -226,7 +226,7 @@ int ReplicationApiServiceImpl::GetSensors (struct soap *soap, const std::wstring
 
     }
 
-    result.ErrorCode = ns__AUTHORIZATION_IS_OK;
+    result.ErrorCode = authoization_ok_;
     recordset.clear();
     query->finish();
     query->clear();

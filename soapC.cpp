@@ -18,7 +18,7 @@ A commercial use license is available from Genivia Inc., contact@genivia.com
 
 #include "soapH.h"
 
-SOAP_SOURCE_STAMP("@(#) soapC.cpp ver 2.8.75 2019-01-30 17:23:01 GMT")
+SOAP_SOURCE_STAMP("@(#) soapC.cpp ver 2.8.75 2019-01-30 21:51:30 GMT")
 
 
 #ifndef WITH_NOGLOBAL
@@ -1092,10 +1092,10 @@ SOAP_FMAC3 bool * SOAP_FMAC4 soap_get_bool(struct soap *soap, bool *p, const cha
 }
 
 static const struct soap_code_map soap_codes_ns__MeasurementClasses[] =
-{	{ (LONG64)ns__MeasurementClasses_data, "ns:MeasurementClasses-data" },
-	{ (LONG64)ns__MeasurementClasses_alert, "ns:MeasurementClasses-alert" },
-	{ (LONG64)ns__MeasurementClasses_hum_out, "ns:MeasurementClasses-hum-out" },
-	{ (LONG64)ns__MeasurementClasses_none, "ns:MeasurementClasses-none" },
+{	{ (LONG64)data_, "data" },
+	{ (LONG64)alert_, "alert" },
+	{ (LONG64)hum_out_, "hum-out" },
+	{ (LONG64)nothing_, "nothing" },
 	{ 0, NULL }
 };
 
@@ -1117,11 +1117,9 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns__MeasurementClasses(struct soap *soap, con
 SOAP_FMAC3S int SOAP_FMAC4S soap_s2ns__MeasurementClasses(struct soap *soap, const char *s, enum ns__MeasurementClasses *a)
 {
 	const struct soap_code_map *map;
-	char *t;
 	if (!s)
 		return soap->error;
-	soap_s2QName(soap, s, &t, 0, -1, NULL);
-	map = soap_code(soap_codes_ns__MeasurementClasses, t);
+	map = soap_code(soap_codes_ns__MeasurementClasses, s);
 	if (map)
 		*a = (enum ns__MeasurementClasses)map->code;
 	else if (!*s)
@@ -1179,10 +1177,10 @@ SOAP_FMAC3 enum ns__MeasurementClasses * SOAP_FMAC4 soap_get_ns__MeasurementClas
 }
 
 static const struct soap_code_map soap_codes_ns__UserAccessRightCode[] =
-{	{ (LONG64)NONE, "NONE" },
-	{ (LONG64)VIEW, "VIEW" },
-	{ (LONG64)EDIT, "EDIT" },
-	{ (LONG64)DELETE, "DELETE" },
+{	{ (LONG64)none_, "none" },
+	{ (LONG64)view_, "view" },
+	{ (LONG64)edit_, "edit" },
+	{ (LONG64)delete_, "delete" },
 	{ 0, NULL }
 };
 
@@ -1264,11 +1262,11 @@ SOAP_FMAC3 enum ns__UserAccessRightCode * SOAP_FMAC4 soap_get_ns__UserAccessRigh
 }
 
 static const struct soap_code_map soap_codes_ns__ErrorCode[] =
-{	{ (LONG64)ns__AUTHORIZATION_IS_OK, "ns:AUTHORIZATION-IS-OK" },
-	{ (LONG64)ns__AUTHORIZATION_ERROR_IS, "ns:AUTHORIZATION-ERROR-IS" },
-	{ (LONG64)ns__CONNECTION_NOT_ESTABLISHED, "ns:CONNECTION-NOT-ESTABLISHED" },
-	{ (LONG64)ns__ERROR_QUERY_EXEC, "ns:ERROR-QUERY-EXEC" },
-	{ (LONG64)ns__ERROR_DB_BUSY, "ns:ERROR-DB-BUSY" },
+{	{ (LONG64)authoization_ok_, "authoization-ok" },
+	{ (LONG64)authoization_error_, "authoization-error" },
+	{ (LONG64)connection_error_, "connection-error" },
+	{ (LONG64)query_error_, "query-error" },
+	{ (LONG64)db_busy_, "db-busy" },
 	{ 0, NULL }
 };
 
@@ -1290,11 +1288,9 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns__ErrorCode(struct soap *soap, const char *
 SOAP_FMAC3S int SOAP_FMAC4S soap_s2ns__ErrorCode(struct soap *soap, const char *s, enum ns__ErrorCode *a)
 {
 	const struct soap_code_map *map;
-	char *t;
 	if (!s)
 		return soap->error;
-	soap_s2QName(soap, s, &t, 0, -1, NULL);
-	map = soap_code(soap_codes_ns__ErrorCode, t);
+	map = soap_code(soap_codes_ns__ErrorCode, s);
 	if (map)
 		*a = (enum ns__ErrorCode)map->code;
 	else if (!*s)

@@ -27,41 +27,41 @@
     attributeFormDefault="unqualified">
     <import namespace="http://schemas.xmlsoap.org/soap/encoding/"/>
     <simpleType name="ErrorCode"><!-- ns__ErrorCode -->
-      <restriction base="xsd:QName">
+      <restriction base="xsd:string">
         <!-- = 0 -->
-        <enumeration value="ns:AUTHORIZATION-IS-OK"/><!-- ns__AUTHORIZATION_IS_OK -->
+        <enumeration value="authoization-ok"/><!-- authoization_ok_ -->
         <!-- = 1 -->
-        <enumeration value="ns:AUTHORIZATION-ERROR-IS"/><!-- ns__AUTHORIZATION_ERROR_IS -->
+        <enumeration value="authoization-error"/><!-- authoization_error_ -->
         <!-- = 2 -->
-        <enumeration value="ns:CONNECTION-NOT-ESTABLISHED"/><!-- ns__CONNECTION_NOT_ESTABLISHED -->
+        <enumeration value="connection-error"/><!-- connection_error_ -->
         <!-- = 3 -->
-        <enumeration value="ns:ERROR-QUERY-EXEC"/><!-- ns__ERROR_QUERY_EXEC -->
+        <enumeration value="query-error"/><!-- query_error_ -->
         <!-- = 4 -->
-        <enumeration value="ns:ERROR-DB-BUSY"/><!-- ns__ERROR_DB_BUSY -->
+        <enumeration value="db-busy"/><!-- db_busy_ -->
       </restriction>
     </simpleType>
     <simpleType name="UserAccessRightCode"><!-- ns__UserAccessRightCode -->
       <restriction base="xsd:string">
         <!-- = 0 -->
-        <enumeration value="NONE"/><!-- NONE -->
+        <enumeration value="none"/><!-- none_ -->
         <!-- = 1 -->
-        <enumeration value="VIEW"/><!-- VIEW -->
+        <enumeration value="view"/><!-- view_ -->
         <!-- = 2 -->
-        <enumeration value="EDIT"/><!-- EDIT -->
+        <enumeration value="edit"/><!-- edit_ -->
         <!-- = 3 -->
-        <enumeration value="DELETE"/><!-- DELETE -->
+        <enumeration value="delete"/><!-- delete_ -->
       </restriction>
     </simpleType>
     <simpleType name="MeasurementClasses"><!-- ns__MeasurementClasses -->
-      <restriction base="xsd:QName">
+      <restriction base="xsd:string">
         <!-- = 0 -->
-        <enumeration value="ns:MeasurementClasses-data"/><!-- ns__MeasurementClasses_data -->
+        <enumeration value="data"/><!-- data_ -->
         <!-- = 1 -->
-        <enumeration value="ns:MeasurementClasses-alert"/><!-- ns__MeasurementClasses_alert -->
+        <enumeration value="alert"/><!-- alert_ -->
         <!-- = 2 -->
-        <enumeration value="ns:MeasurementClasses-hum-out"/><!-- ns__MeasurementClasses_hum_out -->
+        <enumeration value="hum-out"/><!-- hum_out_ -->
         <!-- = 3 -->
-        <enumeration value="ns:MeasurementClasses-none"/><!-- ns__MeasurementClasses_none -->
+        <enumeration value="nothing"/><!-- nothing_ -->
       </restriction>
     </simpleType>
     <complexType name="StationInfo"><!-- ns__StationInfo -->
