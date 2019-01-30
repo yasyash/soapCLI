@@ -209,12 +209,15 @@ int ReplicationApiServiceService::serve()
 }
 
 static int serve_ns__GetStations(ReplicationApiServiceService*);
+static int serve_ns__GetSensors(ReplicationApiServiceService*);
 
 int ReplicationApiServiceService::dispatch()
 {
 	soap_peek_element(this);
 	if (!soap_match_tag(this, this->tag, "ns:GetStations"))
 		return serve_ns__GetStations(this);
+	if (!soap_match_tag(this, this->tag, "ns:GetSensors"))
+		return serve_ns__GetSensors(this);
 	return this->error = SOAP_NO_METHOD;
 }
 
@@ -252,6 +255,47 @@ static int serve_ns__GetStations(ReplicationApiServiceService *soap)
 	 || soap_putheader(soap)
 	 || soap_body_begin_out(soap)
 	 || result.soap_put(soap, "ns:GetStationsResponse", "")
+	 || soap_body_end_out(soap)
+	 || soap_envelope_end_out(soap)
+	 || soap_end_send(soap))
+		return soap->error;
+	return soap_closesock(soap);
+}
+
+static int serve_ns__GetSensors(ReplicationApiServiceService *soap)
+{	struct ns__GetSensors soap_tmp_ns__GetSensors;
+	ns__GetSensorsResponse result;
+	result.soap_default(soap);
+	soap_default_ns__GetSensors(soap, &soap_tmp_ns__GetSensors);
+	if (!soap_get_ns__GetSensors(soap, &soap_tmp_ns__GetSensors, "ns:GetSensors", NULL))
+		return soap->error;
+	if (soap_body_end_in(soap)
+	 || soap_envelope_end_in(soap)
+	 || soap_end_recv(soap))
+		return soap->error;
+	soap->error = soap->GetSensors(soap_tmp_ns__GetSensors.soap, soap_tmp_ns__GetSensors.login, soap_tmp_ns__GetSensors.password, soap_tmp_ns__GetSensors.StationID, soap_tmp_ns__GetSensors.From, soap_tmp_ns__GetSensors.To, result);
+	if (soap->error)
+		return soap->error;
+	soap->encodingStyle = ""; /* use SOAP encoding style */
+	soap_serializeheader(soap);
+	result.soap_serialize(soap);
+	if (soap_begin_count(soap))
+		return soap->error;
+	if ((soap->mode & SOAP_IO_LENGTH))
+	{	if (soap_envelope_begin_out(soap)
+		 || soap_putheader(soap)
+		 || soap_body_begin_out(soap)
+		 || result.soap_put(soap, "ns:GetSensorsResponse", "")
+		 || soap_body_end_out(soap)
+		 || soap_envelope_end_out(soap))
+			 return soap->error;
+	};
+	if (soap_end_count(soap)
+	 || soap_response(soap, SOAP_OK)
+	 || soap_envelope_begin_out(soap)
+	 || soap_putheader(soap)
+	 || soap_body_begin_out(soap)
+	 || result.soap_put(soap, "ns:GetSensorsResponse", "")
 	 || soap_body_end_out(soap)
 	 || soap_envelope_end_out(soap)
 	 || soap_end_send(soap))

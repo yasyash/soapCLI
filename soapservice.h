@@ -4,11 +4,16 @@
 #include <QSharedPointer>
 #include <QThreadPool>
 #include <QDebug>
-
+#include <QMutex>
 #include "soapStub.h"
+#include <QtCore/qloggingcategory.h>
+
+//Q_LOGGING_CATEGORY(QT_QM_SOAP, "qm_soap_main.tst");
+extern QMutex* dbmutex;
 
 
 namespace SOAPService {
+
 
 // Basic definitions
 
@@ -55,10 +60,15 @@ private:
 template< typename Service >
 AcceptTask< Service >::AcceptTask( QSharedPointer< Service > service, QThreadPool* threadPool ) :
     m_service( service ), m_threadPool( threadPool ) {
+
 }
 
 template< typename Service >
-void AcceptTask< Service >::run() {
+void AcceptTask< Service >::run()
+{
+    //Q_DECLARE_LOGGING_CATEGORY(QT_QM_SOAP);
+
+
     if( !m_service || !m_threadPool ) {
         return;
     }
@@ -76,7 +86,12 @@ void AcceptTask< Service >::run() {
                 arg( ( m_service->ip       ) & 0xFF );
 
         QSharedPointer< Service > serviceCopy( m_service->copy() );
+        //      serviceCopy->addThreadCount(m_threadPool->activeThreadCount());
         m_threadPool->start( new ServeTask< Service >( serviceCopy ) );
+
+        fprintf(stderr, "thread is =  %d \n" , m_threadPool->activeThreadCount());
+
+
     }
 }
 

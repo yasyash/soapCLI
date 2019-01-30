@@ -278,6 +278,241 @@ inline int soap_POST_recv_float(struct soap *soap, float *p)
 }
 #endif
 
+#ifndef SOAP_TYPE_double_DEFINED
+#define SOAP_TYPE_double_DEFINED
+
+inline void soap_default_double(struct soap *soap, double *a)
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifdef SOAP_DEFAULT_double
+	*a = SOAP_DEFAULT_double;
+#else
+	*a = (double)0;
+#endif
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_double(struct soap*, const char*, int, const double *, const char*);
+SOAP_FMAC3 double * SOAP_FMAC4 soap_in_double(struct soap*, const char*, double *, const char*);
+
+SOAP_FMAC3 double * SOAP_FMAC4 soap_new_double(struct soap *soap, int n = -1);
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_double(struct soap*, const double *, const char*, const char*);
+
+inline int soap_write_double(struct soap *soap, double const*p)
+{
+	soap_free_temp(soap);
+	if (p)
+	{	if (soap_begin_send(soap) || ::soap_put_double(soap, p, "double", "") || soap_end_send(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_PUT_double(struct soap *soap, const char *URL, double const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || ::soap_put_double(soap, p, "double", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH_double(struct soap *soap, const char *URL, double const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || ::soap_put_double(soap, p, "double", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send_double(struct soap *soap, const char *URL, double const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || ::soap_put_double(soap, p, "double", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 double * SOAP_FMAC4 soap_get_double(struct soap*, double *, const char*, const char*);
+
+inline int soap_read_double(struct soap *soap, double *p)
+{
+	if (p)
+	{	if (soap_begin_recv(soap) || ::soap_get_double(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET_double(struct soap *soap, const char *URL, double *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read_double(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv_double(struct soap *soap, double *p)
+{
+	if (::soap_read_double(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE_bool_DEFINED
+#define SOAP_TYPE_bool_DEFINED
+
+inline void soap_default_bool(struct soap *soap, bool *a)
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifdef SOAP_DEFAULT_bool
+	*a = SOAP_DEFAULT_bool;
+#else
+	*a = (bool)0;
+#endif
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_bool(struct soap*, const char*, int, const bool *, const char*);
+SOAP_FMAC3S const char* SOAP_FMAC4S soap_bool2s(struct soap*, bool);
+SOAP_FMAC3 bool * SOAP_FMAC4 soap_in_bool(struct soap*, const char*, bool *, const char*);
+SOAP_FMAC3S int SOAP_FMAC4S soap_s2bool(struct soap*, const char*, bool *);
+
+SOAP_FMAC3 bool * SOAP_FMAC4 soap_new_bool(struct soap *soap, int n = -1);
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_bool(struct soap*, const bool *, const char*, const char*);
+
+inline int soap_write_bool(struct soap *soap, bool const*p)
+{
+	soap_free_temp(soap);
+	if (p)
+	{	if (soap_begin_send(soap) || ::soap_put_bool(soap, p, "boolean", "") || soap_end_send(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_PUT_bool(struct soap *soap, const char *URL, bool const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || ::soap_put_bool(soap, p, "boolean", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH_bool(struct soap *soap, const char *URL, bool const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || ::soap_put_bool(soap, p, "boolean", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send_bool(struct soap *soap, const char *URL, bool const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || ::soap_put_bool(soap, p, "boolean", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 bool * SOAP_FMAC4 soap_get_bool(struct soap*, bool *, const char*, const char*);
+
+inline int soap_read_bool(struct soap *soap, bool *p)
+{
+	if (p)
+	{	if (soap_begin_recv(soap) || ::soap_get_bool(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET_bool(struct soap *soap, const char *URL, bool *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read_bool(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv_bool(struct soap *soap, bool *p)
+{
+	if (::soap_read_bool(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE_ns__MeasurementClasses_DEFINED
+#define SOAP_TYPE_ns__MeasurementClasses_DEFINED
+
+inline void soap_default_ns__MeasurementClasses(struct soap *soap, enum ns__MeasurementClasses *a)
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifdef SOAP_DEFAULT_ns__MeasurementClasses
+	*a = SOAP_DEFAULT_ns__MeasurementClasses;
+#else
+	*a = (enum ns__MeasurementClasses)0;
+#endif
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns__MeasurementClasses(struct soap*, const char*, int, const enum ns__MeasurementClasses *, const char*);
+SOAP_FMAC3S const char* SOAP_FMAC4S soap_ns__MeasurementClasses2s(struct soap*, enum ns__MeasurementClasses);
+SOAP_FMAC3 enum ns__MeasurementClasses * SOAP_FMAC4 soap_in_ns__MeasurementClasses(struct soap*, const char*, enum ns__MeasurementClasses *, const char*);
+SOAP_FMAC3S int SOAP_FMAC4S soap_s2ns__MeasurementClasses(struct soap*, const char*, enum ns__MeasurementClasses *);
+
+SOAP_FMAC3 enum ns__MeasurementClasses * SOAP_FMAC4 soap_new_ns__MeasurementClasses(struct soap *soap, int n = -1);
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_ns__MeasurementClasses(struct soap*, const enum ns__MeasurementClasses *, const char*, const char*);
+
+inline int soap_write_ns__MeasurementClasses(struct soap *soap, enum ns__MeasurementClasses const*p)
+{
+	soap_free_temp(soap);
+	if (p)
+	{	if (soap_begin_send(soap) || ::soap_put_ns__MeasurementClasses(soap, p, "ns:MeasurementClasses", "") || soap_end_send(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_PUT_ns__MeasurementClasses(struct soap *soap, const char *URL, enum ns__MeasurementClasses const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || ::soap_put_ns__MeasurementClasses(soap, p, "ns:MeasurementClasses", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH_ns__MeasurementClasses(struct soap *soap, const char *URL, enum ns__MeasurementClasses const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || ::soap_put_ns__MeasurementClasses(soap, p, "ns:MeasurementClasses", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send_ns__MeasurementClasses(struct soap *soap, const char *URL, enum ns__MeasurementClasses const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || ::soap_put_ns__MeasurementClasses(soap, p, "ns:MeasurementClasses", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 enum ns__MeasurementClasses * SOAP_FMAC4 soap_get_ns__MeasurementClasses(struct soap*, enum ns__MeasurementClasses *, const char*, const char*);
+
+inline int soap_read_ns__MeasurementClasses(struct soap *soap, enum ns__MeasurementClasses *p)
+{
+	if (p)
+	{	if (soap_begin_recv(soap) || ::soap_get_ns__MeasurementClasses(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET_ns__MeasurementClasses(struct soap *soap, const char *URL, enum ns__MeasurementClasses *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read_ns__MeasurementClasses(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv_ns__MeasurementClasses(struct soap *soap, enum ns__MeasurementClasses *p)
+{
+	if (::soap_read_ns__MeasurementClasses(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
 #ifndef SOAP_TYPE_ns__UserAccessRightCode_DEFINED
 #define SOAP_TYPE_ns__UserAccessRightCode_DEFINED
 
@@ -545,6 +780,101 @@ inline int soap_POST_recv_ns__StInfo(struct soap *soap, ns__StInfo *p)
 }
 #endif
 
+#ifndef SOAP_TYPE_ns__GetSensorsResponse_DEFINED
+#define SOAP_TYPE_ns__GetSensorsResponse_DEFINED
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns__GetSensorsResponse(struct soap*, const char*, int, const ns__GetSensorsResponse *, const char*);
+SOAP_FMAC3 ns__GetSensorsResponse * SOAP_FMAC4 soap_in_ns__GetSensorsResponse(struct soap*, const char*, ns__GetSensorsResponse *, const char*);
+SOAP_FMAC1 ns__GetSensorsResponse * SOAP_FMAC2 soap_instantiate_ns__GetSensorsResponse(struct soap*, int, const char*, const char*, size_t*);
+
+inline ns__GetSensorsResponse * soap_new_ns__GetSensorsResponse(struct soap *soap, int n = -1)
+{
+	return soap_instantiate_ns__GetSensorsResponse(soap, n, NULL, NULL, NULL);
+}
+
+inline ns__GetSensorsResponse * soap_new_req_ns__GetSensorsResponse(
+	struct soap *soap,
+	enum ns__ErrorCode ErrorCode)
+{
+	ns__GetSensorsResponse *_p = ::soap_new_ns__GetSensorsResponse(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->ns__GetSensorsResponse::ErrorCode = ErrorCode;
+	}
+	return _p;
+}
+
+inline ns__GetSensorsResponse * soap_new_set_ns__GetSensorsResponse(
+	struct soap *soap,
+	ns__ArrayOfSensorsInfo *GetSensorsResult,
+	enum ns__ErrorCode ErrorCode)
+{
+	ns__GetSensorsResponse *_p = ::soap_new_ns__GetSensorsResponse(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->ns__GetSensorsResponse::GetSensorsResult = GetSensorsResult;
+		_p->ns__GetSensorsResponse::ErrorCode = ErrorCode;
+	}
+	return _p;
+}
+
+inline int soap_write_ns__GetSensorsResponse(struct soap *soap, ns__GetSensorsResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns:GetSensorsResponse", p->soap_type() == SOAP_TYPE_ns__GetSensorsResponse ? "" : NULL) || soap_end_send(soap))
+		return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT_ns__GetSensorsResponse(struct soap *soap, const char *URL, ns__GetSensorsResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns:GetSensorsResponse", p->soap_type() == SOAP_TYPE_ns__GetSensorsResponse ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH_ns__GetSensorsResponse(struct soap *soap, const char *URL, ns__GetSensorsResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns:GetSensorsResponse", p->soap_type() == SOAP_TYPE_ns__GetSensorsResponse ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send_ns__GetSensorsResponse(struct soap *soap, const char *URL, ns__GetSensorsResponse const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns:GetSensorsResponse", p->soap_type() == SOAP_TYPE_ns__GetSensorsResponse ? "" : NULL) || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 ns__GetSensorsResponse * SOAP_FMAC4 soap_get_ns__GetSensorsResponse(struct soap*, ns__GetSensorsResponse *, const char*, const char*);
+
+inline int soap_read_ns__GetSensorsResponse(struct soap *soap, ns__GetSensorsResponse *p)
+{
+	if (p)
+	{	p->soap_default(soap);
+		if (soap_begin_recv(soap) || ::soap_get_ns__GetSensorsResponse(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET_ns__GetSensorsResponse(struct soap *soap, const char *URL, ns__GetSensorsResponse *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read_ns__GetSensorsResponse(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv_ns__GetSensorsResponse(struct soap *soap, ns__GetSensorsResponse *p)
+{
+	if (::soap_read_ns__GetSensorsResponse(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
 #ifndef SOAP_TYPE_ns__GetStationsResponse_DEFINED
 #define SOAP_TYPE_ns__GetStationsResponse_DEFINED
 SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns__GetStationsResponse(struct soap*, const char*, int, const ns__GetStationsResponse *, const char*);
@@ -640,6 +970,97 @@ inline int soap_POST_recv_ns__GetStationsResponse(struct soap *soap, ns__GetStat
 }
 #endif
 
+#ifndef SOAP_TYPE_ns__ArrayOfSensorsInfo_DEFINED
+#define SOAP_TYPE_ns__ArrayOfSensorsInfo_DEFINED
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns__ArrayOfSensorsInfo(struct soap*, const char*, int, const ns__ArrayOfSensorsInfo *, const char*);
+SOAP_FMAC3 ns__ArrayOfSensorsInfo * SOAP_FMAC4 soap_in_ns__ArrayOfSensorsInfo(struct soap*, const char*, ns__ArrayOfSensorsInfo *, const char*);
+SOAP_FMAC1 ns__ArrayOfSensorsInfo * SOAP_FMAC2 soap_instantiate_ns__ArrayOfSensorsInfo(struct soap*, int, const char*, const char*, size_t*);
+
+inline ns__ArrayOfSensorsInfo * soap_new_ns__ArrayOfSensorsInfo(struct soap *soap, int n = -1)
+{
+	return soap_instantiate_ns__ArrayOfSensorsInfo(soap, n, NULL, NULL, NULL);
+}
+
+inline ns__ArrayOfSensorsInfo * soap_new_req_ns__ArrayOfSensorsInfo(
+	struct soap *soap)
+{
+	ns__ArrayOfSensorsInfo *_p = ::soap_new_ns__ArrayOfSensorsInfo(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+	}
+	return _p;
+}
+
+inline ns__ArrayOfSensorsInfo * soap_new_set_ns__ArrayOfSensorsInfo(
+	struct soap *soap,
+	const std::vector<ns__SensorInfo> & SensorsInfo)
+{
+	ns__ArrayOfSensorsInfo *_p = ::soap_new_ns__ArrayOfSensorsInfo(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->ns__ArrayOfSensorsInfo::SensorsInfo = SensorsInfo;
+	}
+	return _p;
+}
+
+inline int soap_write_ns__ArrayOfSensorsInfo(struct soap *soap, ns__ArrayOfSensorsInfo const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns:ArrayOfSensorsInfo", p->soap_type() == SOAP_TYPE_ns__ArrayOfSensorsInfo ? "" : NULL) || soap_end_send(soap))
+		return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT_ns__ArrayOfSensorsInfo(struct soap *soap, const char *URL, ns__ArrayOfSensorsInfo const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns:ArrayOfSensorsInfo", p->soap_type() == SOAP_TYPE_ns__ArrayOfSensorsInfo ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH_ns__ArrayOfSensorsInfo(struct soap *soap, const char *URL, ns__ArrayOfSensorsInfo const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns:ArrayOfSensorsInfo", p->soap_type() == SOAP_TYPE_ns__ArrayOfSensorsInfo ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send_ns__ArrayOfSensorsInfo(struct soap *soap, const char *URL, ns__ArrayOfSensorsInfo const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns:ArrayOfSensorsInfo", p->soap_type() == SOAP_TYPE_ns__ArrayOfSensorsInfo ? "" : NULL) || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 ns__ArrayOfSensorsInfo * SOAP_FMAC4 soap_get_ns__ArrayOfSensorsInfo(struct soap*, ns__ArrayOfSensorsInfo *, const char*, const char*);
+
+inline int soap_read_ns__ArrayOfSensorsInfo(struct soap *soap, ns__ArrayOfSensorsInfo *p)
+{
+	if (p)
+	{	p->soap_default(soap);
+		if (soap_begin_recv(soap) || ::soap_get_ns__ArrayOfSensorsInfo(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET_ns__ArrayOfSensorsInfo(struct soap *soap, const char *URL, ns__ArrayOfSensorsInfo *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read_ns__ArrayOfSensorsInfo(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv_ns__ArrayOfSensorsInfo(struct soap *soap, ns__ArrayOfSensorsInfo *p)
+{
+	if (::soap_read_ns__ArrayOfSensorsInfo(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
 #ifndef SOAP_TYPE_ns__ArrayOfStationInfo_DEFINED
 #define SOAP_TYPE_ns__ArrayOfStationInfo_DEFINED
 SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns__ArrayOfStationInfo(struct soap*, const char*, int, const ns__ArrayOfStationInfo *, const char*);
@@ -726,6 +1147,230 @@ inline int soap_GET_ns__ArrayOfStationInfo(struct soap *soap, const char *URL, n
 inline int soap_POST_recv_ns__ArrayOfStationInfo(struct soap *soap, ns__ArrayOfStationInfo *p)
 {
 	if (::soap_read_ns__ArrayOfStationInfo(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE_ns__SensorInfo_DEFINED
+#define SOAP_TYPE_ns__SensorInfo_DEFINED
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns__SensorInfo(struct soap*, const char*, int, const ns__SensorInfo *, const char*);
+SOAP_FMAC3 ns__SensorInfo * SOAP_FMAC4 soap_in_ns__SensorInfo(struct soap*, const char*, ns__SensorInfo *, const char*);
+SOAP_FMAC1 ns__SensorInfo * SOAP_FMAC2 soap_instantiate_ns__SensorInfo(struct soap*, int, const char*, const char*, size_t*);
+
+inline ns__SensorInfo * soap_new_ns__SensorInfo(struct soap *soap, int n = -1)
+{
+	return soap_instantiate_ns__SensorInfo(soap, n, NULL, NULL, NULL);
+}
+
+inline ns__SensorInfo * soap_new_req_ns__SensorInfo(
+	struct soap *soap,
+	const std::wstring& ID,
+	const std::wstring& Name,
+	int AveragePeriod,
+	enum ns__MeasurementClasses MeasurClass,
+	const std::wstring& StationID,
+	bool IsWeathercock,
+	double PDKValue,
+	double PDKDayValue,
+	int DefaultColor)
+{
+	ns__SensorInfo *_p = ::soap_new_ns__SensorInfo(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->ns__SensorInfo::ID = ID;
+		_p->ns__SensorInfo::Name = Name;
+		_p->ns__SensorInfo::AveragePeriod = AveragePeriod;
+		_p->ns__SensorInfo::MeasurClass = MeasurClass;
+		_p->ns__SensorInfo::StationID = StationID;
+		_p->ns__SensorInfo::IsWeathercock = IsWeathercock;
+		_p->ns__SensorInfo::PDKValue = PDKValue;
+		_p->ns__SensorInfo::PDKDayValue = PDKDayValue;
+		_p->ns__SensorInfo::DefaultColor = DefaultColor;
+	}
+	return _p;
+}
+
+inline ns__SensorInfo * soap_new_set_ns__SensorInfo(
+	struct soap *soap,
+	const std::wstring& ID,
+	const std::wstring& Name,
+	int AveragePeriod,
+	ns__UnitInfo *Unit,
+	enum ns__MeasurementClasses MeasurClass,
+	const std::wstring& StationID,
+	bool IsWeathercock,
+	double PDKValue,
+	double PDKDayValue,
+	int DefaultColor)
+{
+	ns__SensorInfo *_p = ::soap_new_ns__SensorInfo(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->ns__SensorInfo::ID = ID;
+		_p->ns__SensorInfo::Name = Name;
+		_p->ns__SensorInfo::AveragePeriod = AveragePeriod;
+		_p->ns__SensorInfo::Unit = Unit;
+		_p->ns__SensorInfo::MeasurClass = MeasurClass;
+		_p->ns__SensorInfo::StationID = StationID;
+		_p->ns__SensorInfo::IsWeathercock = IsWeathercock;
+		_p->ns__SensorInfo::PDKValue = PDKValue;
+		_p->ns__SensorInfo::PDKDayValue = PDKDayValue;
+		_p->ns__SensorInfo::DefaultColor = DefaultColor;
+	}
+	return _p;
+}
+
+inline int soap_write_ns__SensorInfo(struct soap *soap, ns__SensorInfo const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns:SensorInfo", p->soap_type() == SOAP_TYPE_ns__SensorInfo ? "" : NULL) || soap_end_send(soap))
+		return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT_ns__SensorInfo(struct soap *soap, const char *URL, ns__SensorInfo const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns:SensorInfo", p->soap_type() == SOAP_TYPE_ns__SensorInfo ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH_ns__SensorInfo(struct soap *soap, const char *URL, ns__SensorInfo const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns:SensorInfo", p->soap_type() == SOAP_TYPE_ns__SensorInfo ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send_ns__SensorInfo(struct soap *soap, const char *URL, ns__SensorInfo const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns:SensorInfo", p->soap_type() == SOAP_TYPE_ns__SensorInfo ? "" : NULL) || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 ns__SensorInfo * SOAP_FMAC4 soap_get_ns__SensorInfo(struct soap*, ns__SensorInfo *, const char*, const char*);
+
+inline int soap_read_ns__SensorInfo(struct soap *soap, ns__SensorInfo *p)
+{
+	if (p)
+	{	p->soap_default(soap);
+		if (soap_begin_recv(soap) || ::soap_get_ns__SensorInfo(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET_ns__SensorInfo(struct soap *soap, const char *URL, ns__SensorInfo *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read_ns__SensorInfo(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv_ns__SensorInfo(struct soap *soap, ns__SensorInfo *p)
+{
+	if (::soap_read_ns__SensorInfo(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE_ns__UnitInfo_DEFINED
+#define SOAP_TYPE_ns__UnitInfo_DEFINED
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns__UnitInfo(struct soap*, const char*, int, const ns__UnitInfo *, const char*);
+SOAP_FMAC3 ns__UnitInfo * SOAP_FMAC4 soap_in_ns__UnitInfo(struct soap*, const char*, ns__UnitInfo *, const char*);
+SOAP_FMAC1 ns__UnitInfo * SOAP_FMAC2 soap_instantiate_ns__UnitInfo(struct soap*, int, const char*, const char*, size_t*);
+
+inline ns__UnitInfo * soap_new_ns__UnitInfo(struct soap *soap, int n = -1)
+{
+	return soap_instantiate_ns__UnitInfo(soap, n, NULL, NULL, NULL);
+}
+
+inline ns__UnitInfo * soap_new_req_ns__UnitInfo(
+	struct soap *soap,
+	const std::wstring& ID,
+	const std::wstring& Name)
+{
+	ns__UnitInfo *_p = ::soap_new_ns__UnitInfo(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->ns__UnitInfo::ID = ID;
+		_p->ns__UnitInfo::Name = Name;
+	}
+	return _p;
+}
+
+inline ns__UnitInfo * soap_new_set_ns__UnitInfo(
+	struct soap *soap,
+	const std::wstring& ID,
+	const std::wstring& Name)
+{
+	ns__UnitInfo *_p = ::soap_new_ns__UnitInfo(soap);
+	if (_p)
+	{	_p->soap_default(soap);
+		_p->ns__UnitInfo::ID = ID;
+		_p->ns__UnitInfo::Name = Name;
+	}
+	return _p;
+}
+
+inline int soap_write_ns__UnitInfo(struct soap *soap, ns__UnitInfo const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns:UnitInfo", p->soap_type() == SOAP_TYPE_ns__UnitInfo ? "" : NULL) || soap_end_send(soap))
+		return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT_ns__UnitInfo(struct soap *soap, const char *URL, ns__UnitInfo const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns:UnitInfo", p->soap_type() == SOAP_TYPE_ns__UnitInfo ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH_ns__UnitInfo(struct soap *soap, const char *URL, ns__UnitInfo const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns:UnitInfo", p->soap_type() == SOAP_TYPE_ns__UnitInfo ? "" : NULL) || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send_ns__UnitInfo(struct soap *soap, const char *URL, ns__UnitInfo const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (p->soap_serialize(soap), 0) || p->soap_put(soap, "ns:UnitInfo", p->soap_type() == SOAP_TYPE_ns__UnitInfo ? "" : NULL) || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 ns__UnitInfo * SOAP_FMAC4 soap_get_ns__UnitInfo(struct soap*, ns__UnitInfo *, const char*, const char*);
+
+inline int soap_read_ns__UnitInfo(struct soap *soap, ns__UnitInfo *p)
+{
+	if (p)
+	{	p->soap_default(soap);
+		if (soap_begin_recv(soap) || ::soap_get_ns__UnitInfo(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET_ns__UnitInfo(struct soap *soap, const char *URL, ns__UnitInfo *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read_ns__UnitInfo(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv_ns__UnitInfo(struct soap *soap, ns__UnitInfo *p)
+{
+	if (::soap_read_ns__UnitInfo(soap, p))
 		return soap_closesock(soap);
 	return soap_closesock(soap);
 }
@@ -1550,6 +2195,118 @@ inline int soap_POST_recv_SOAP_ENV__Header(struct soap *soap, struct SOAP_ENV__H
 
 #endif
 
+#ifndef SOAP_TYPE_ns__GetSensors_DEFINED
+#define SOAP_TYPE_ns__GetSensors_DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns__GetSensors(struct soap*, struct ns__GetSensors *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns__GetSensors(struct soap*, const struct ns__GetSensors *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns__GetSensors(struct soap*, const char*, int, const struct ns__GetSensors *, const char*);
+SOAP_FMAC3 struct ns__GetSensors * SOAP_FMAC4 soap_in_ns__GetSensors(struct soap*, const char*, struct ns__GetSensors *, const char*);
+SOAP_FMAC1 struct ns__GetSensors * SOAP_FMAC2 soap_instantiate_ns__GetSensors(struct soap*, int, const char*, const char*, size_t*);
+
+inline struct ns__GetSensors * soap_new_ns__GetSensors(struct soap *soap, int n = -1)
+{
+	return soap_instantiate_ns__GetSensors(soap, n, NULL, NULL, NULL);
+}
+
+inline struct ns__GetSensors * soap_new_req_ns__GetSensors(
+	struct soap *soap,
+	const std::wstring& login,
+	const std::wstring& password,
+	const std::wstring& StationID,
+	const std::wstring& From,
+	const std::wstring& To)
+{
+	struct ns__GetSensors *_p = ::soap_new_ns__GetSensors(soap);
+	if (_p)
+	{	::soap_default_ns__GetSensors(soap, _p);
+		_p->login = login;
+		_p->password = password;
+		_p->StationID = StationID;
+		_p->From = From;
+		_p->To = To;
+	}
+	return _p;
+}
+
+inline struct ns__GetSensors * soap_new_set_ns__GetSensors(
+	struct soap *soap,
+	const std::wstring& login,
+	const std::wstring& password,
+	const std::wstring& StationID,
+	const std::wstring& From,
+	const std::wstring& To)
+{
+	struct ns__GetSensors *_p = ::soap_new_ns__GetSensors(soap);
+	if (_p)
+	{	::soap_default_ns__GetSensors(soap, _p);
+		_p->login = login;
+		_p->password = password;
+		_p->StationID = StationID;
+		_p->From = From;
+		_p->To = To;
+	}
+	return _p;
+}
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_ns__GetSensors(struct soap*, const struct ns__GetSensors *, const char*, const char*);
+
+inline int soap_write_ns__GetSensors(struct soap *soap, struct ns__GetSensors const*p)
+{
+	soap_free_temp(soap);
+	if (soap_begin_send(soap) || (::soap_serialize_ns__GetSensors(soap, p), 0) || ::soap_put_ns__GetSensors(soap, p, "ns:GetSensors", "") || soap_end_send(soap))
+			return soap->error;
+	return SOAP_OK;
+}
+
+inline int soap_PUT_ns__GetSensors(struct soap *soap, const char *URL, struct ns__GetSensors const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PUT(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize_ns__GetSensors(soap, p), 0) || ::soap_put_ns__GetSensors(soap, p, "ns:GetSensors", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_PATCH_ns__GetSensors(struct soap *soap, const char *URL, struct ns__GetSensors const*p)
+{
+	soap_free_temp(soap);
+	if (soap_PATCH(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize_ns__GetSensors(soap, p), 0) || ::soap_put_ns__GetSensors(soap, p, "ns:GetSensors", "") || soap_end_send(soap) || soap_recv_empty_response(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+
+inline int soap_POST_send_ns__GetSensors(struct soap *soap, const char *URL, struct ns__GetSensors const*p)
+{
+	soap_free_temp(soap);
+	if (soap_POST(soap, URL, NULL, "text/xml; charset=utf-8") || (::soap_serialize_ns__GetSensors(soap, p), 0) || ::soap_put_ns__GetSensors(soap, p, "ns:GetSensors", "") || soap_end_send(soap))
+		return soap_closesock(soap);
+	return SOAP_OK;
+}
+SOAP_FMAC3 struct ns__GetSensors * SOAP_FMAC4 soap_get_ns__GetSensors(struct soap*, struct ns__GetSensors *, const char*, const char*);
+
+inline int soap_read_ns__GetSensors(struct soap *soap, struct ns__GetSensors *p)
+{
+	if (p)
+	{	::soap_default_ns__GetSensors(soap, p);
+		if (soap_begin_recv(soap) || ::soap_get_ns__GetSensors(soap, p, NULL, NULL) == NULL || soap_end_recv(soap))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+inline int soap_GET_ns__GetSensors(struct soap *soap, const char *URL, struct ns__GetSensors *p)
+{
+	if (soap_GET(soap, URL, NULL) || ::soap_read_ns__GetSensors(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+
+inline int soap_POST_recv_ns__GetSensors(struct soap *soap, struct ns__GetSensors *p)
+{
+	if (::soap_read_ns__GetSensors(soap, p))
+		return soap_closesock(soap);
+	return soap_closesock(soap);
+}
+#endif
+
 #ifndef SOAP_TYPE_ns__GetStations_DEFINED
 #define SOAP_TYPE_ns__GetStations_DEFINED
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns__GetStations(struct soap*, struct ns__GetStations *);
@@ -1689,6 +2446,15 @@ SOAP_FMAC3 struct SOAP_ENV__Code ** SOAP_FMAC4 soap_get_PointerToSOAP_ENV__Code(
 
 #endif
 
+#ifndef SOAP_TYPE_PointerTons__ArrayOfSensorsInfo_DEFINED
+#define SOAP_TYPE_PointerTons__ArrayOfSensorsInfo_DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTons__ArrayOfSensorsInfo(struct soap*, ns__ArrayOfSensorsInfo *const*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTons__ArrayOfSensorsInfo(struct soap*, const char *, int, ns__ArrayOfSensorsInfo *const*, const char *);
+SOAP_FMAC3 ns__ArrayOfSensorsInfo ** SOAP_FMAC4 soap_in_PointerTons__ArrayOfSensorsInfo(struct soap*, const char*, ns__ArrayOfSensorsInfo **, const char*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTons__ArrayOfSensorsInfo(struct soap*, ns__ArrayOfSensorsInfo *const*, const char*, const char*);
+SOAP_FMAC3 ns__ArrayOfSensorsInfo ** SOAP_FMAC4 soap_get_PointerTons__ArrayOfSensorsInfo(struct soap*, ns__ArrayOfSensorsInfo **, const char*, const char*);
+#endif
+
 #ifndef SOAP_TYPE_PointerTons__ArrayOfStationInfo_DEFINED
 #define SOAP_TYPE_PointerTons__ArrayOfStationInfo_DEFINED
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTons__ArrayOfStationInfo(struct soap*, ns__ArrayOfStationInfo *const*);
@@ -1696,6 +2462,15 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTons__ArrayOfStationInfo(struct soap*,
 SOAP_FMAC3 ns__ArrayOfStationInfo ** SOAP_FMAC4 soap_in_PointerTons__ArrayOfStationInfo(struct soap*, const char*, ns__ArrayOfStationInfo **, const char*);
 SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTons__ArrayOfStationInfo(struct soap*, ns__ArrayOfStationInfo *const*, const char*, const char*);
 SOAP_FMAC3 ns__ArrayOfStationInfo ** SOAP_FMAC4 soap_get_PointerTons__ArrayOfStationInfo(struct soap*, ns__ArrayOfStationInfo **, const char*, const char*);
+#endif
+
+#ifndef SOAP_TYPE_PointerTons__UnitInfo_DEFINED
+#define SOAP_TYPE_PointerTons__UnitInfo_DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTons__UnitInfo(struct soap*, ns__UnitInfo *const*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTons__UnitInfo(struct soap*, const char *, int, ns__UnitInfo *const*, const char *);
+SOAP_FMAC3 ns__UnitInfo ** SOAP_FMAC4 soap_in_PointerTons__UnitInfo(struct soap*, const char*, ns__UnitInfo **, const char*);
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTons__UnitInfo(struct soap*, ns__UnitInfo *const*, const char*, const char*);
+SOAP_FMAC3 ns__UnitInfo ** SOAP_FMAC4 soap_get_PointerTons__UnitInfo(struct soap*, ns__UnitInfo **, const char*, const char*);
 #endif
 
 #ifndef SOAP_TYPE__QName_DEFINED
@@ -1867,6 +2642,20 @@ inline int soap_POST_recv_string(struct soap *soap, char **p)
 	if (::soap_read_string(soap, p))
 		return soap_closesock(soap);
 	return soap_closesock(soap);
+}
+#endif
+
+#ifndef SOAP_TYPE_std__vectorTemplateOfns__SensorInfo_DEFINED
+#define SOAP_TYPE_std__vectorTemplateOfns__SensorInfo_DEFINED
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfns__SensorInfo(struct soap*, std::vector<ns__SensorInfo> *);
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfns__SensorInfo(struct soap*, const std::vector<ns__SensorInfo> *);
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_std__vectorTemplateOfns__SensorInfo(struct soap*, const char*, int, const std::vector<ns__SensorInfo> *, const char*);
+SOAP_FMAC3 std::vector<ns__SensorInfo> * SOAP_FMAC4 soap_in_std__vectorTemplateOfns__SensorInfo(struct soap*, const char*, std::vector<ns__SensorInfo> *, const char*);
+SOAP_FMAC1 std::vector<ns__SensorInfo>  * SOAP_FMAC2 soap_instantiate_std__vectorTemplateOfns__SensorInfo(struct soap*, int, const char*, const char*, size_t*);
+
+inline std::vector<ns__SensorInfo>  * soap_new_std__vectorTemplateOfns__SensorInfo(struct soap *soap, int n = -1)
+{
+	return soap_instantiate_std__vectorTemplateOfns__SensorInfo(soap, n, NULL, NULL, NULL);
 }
 #endif
 
