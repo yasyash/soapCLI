@@ -23,7 +23,8 @@ HEADERS += \
     ReplicationApiService.nsmap \
     replicationapiserviceimpl.h \
     soapservice.h \
-    stdsoap2.h
+    stdsoap2.h \
+    global.h
 
 DEFINES += WITH_PURE_VIRTUAL\
            WITH_NOIDREF
