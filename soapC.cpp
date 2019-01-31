@@ -18,7 +18,7 @@ A commercial use license is available from Genivia Inc., contact@genivia.com
 
 #include "soapH.h"
 
-SOAP_SOURCE_STAMP("@(#) soapC.cpp ver 2.8.75 2019-01-30 21:51:30 GMT")
+SOAP_SOURCE_STAMP("@(#) soapC.cpp ver 2.8.75 2019-01-31 22:57:07 GMT")
 
 
 #ifndef WITH_NOGLOBAL
@@ -203,36 +203,56 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, const char *tag,
 		return soap_in_ns__UserAccessRightCode(soap, tag, NULL, "ns:UserAccessRightCode");
 	case SOAP_TYPE_ns__ErrorCode:
 		return soap_in_ns__ErrorCode(soap, tag, NULL, "ns:ErrorCode");
+	case SOAP_TYPE_ns__ArrayOfSensors:
+		return soap_in_ns__ArrayOfSensors(soap, tag, NULL, "ns:ArrayOfSensors");
 	case SOAP_TYPE_ns__StInfo:
 		return soap_in_ns__StInfo(soap, tag, NULL, "ns:StInfo");
+	case SOAP_TYPE_ns__GetHistoricalDataBriefResponse:
+		return soap_in_ns__GetHistoricalDataBriefResponse(soap, tag, NULL, "ns:GetHistoricalDataBriefResponse");
 	case SOAP_TYPE_ns__GetSensorsResponse:
 		return soap_in_ns__GetSensorsResponse(soap, tag, NULL, "ns:GetSensorsResponse");
 	case SOAP_TYPE_ns__GetStationsResponse:
 		return soap_in_ns__GetStationsResponse(soap, tag, NULL, "ns:GetStationsResponse");
+	case SOAP_TYPE_ns__ArrayOfSensorData:
+		return soap_in_ns__ArrayOfSensorData(soap, tag, NULL, "ns:ArrayOfSensorData");
 	case SOAP_TYPE_ns__ArrayOfSensorsInfo:
 		return soap_in_ns__ArrayOfSensorsInfo(soap, tag, NULL, "ns:ArrayOfSensorsInfo");
 	case SOAP_TYPE_ns__ArrayOfStationInfo:
 		return soap_in_ns__ArrayOfStationInfo(soap, tag, NULL, "ns:ArrayOfStationInfo");
+	case SOAP_TYPE_ns__SensorData:
+		return soap_in_ns__SensorData(soap, tag, NULL, "ns:SensorData");
 	case SOAP_TYPE_ns__SensorInfo:
 		return soap_in_ns__SensorInfo(soap, tag, NULL, "ns:SensorInfo");
 	case SOAP_TYPE_ns__UnitInfo:
 		return soap_in_ns__UnitInfo(soap, tag, NULL, "ns:UnitInfo");
 	case SOAP_TYPE_ns__StationInfo:
 		return soap_in_ns__StationInfo(soap, tag, NULL, "ns:StationInfo");
+	case SOAP_TYPE_ns__ArrayOfBriefData:
+		return soap_in_ns__ArrayOfBriefData(soap, tag, NULL, "ns:ArrayOfBriefData");
+	case SOAP_TYPE_ns__BriefData:
+		return soap_in_ns__BriefData(soap, tag, NULL, "ns:BriefData");
 	case SOAP_TYPE_xsd__string:
 		return soap_in_xsd__string(soap, tag, NULL, "xsd:string");
 	case SOAP_TYPE_std__wstring:
 		return soap_in_std__wstring(soap, tag, NULL, "xsd:string");
+	case SOAP_TYPE_ns__GetHistoricalDataBrief:
+		return soap_in_ns__GetHistoricalDataBrief(soap, tag, NULL, "ns:GetHistoricalDataBrief");
 	case SOAP_TYPE_ns__GetSensors:
 		return soap_in_ns__GetSensors(soap, tag, NULL, "ns:GetSensors");
 	case SOAP_TYPE_ns__GetStations:
 		return soap_in_ns__GetStations(soap, tag, NULL, "ns:GetStations");
+	case SOAP_TYPE_PointerTons__ArrayOfSensorData:
+		return soap_in_PointerTons__ArrayOfSensorData(soap, tag, NULL, "ns:ArrayOfSensorData");
 	case SOAP_TYPE_PointerTons__ArrayOfSensorsInfo:
 		return soap_in_PointerTons__ArrayOfSensorsInfo(soap, tag, NULL, "ns:ArrayOfSensorsInfo");
 	case SOAP_TYPE_PointerTons__ArrayOfStationInfo:
 		return soap_in_PointerTons__ArrayOfStationInfo(soap, tag, NULL, "ns:ArrayOfStationInfo");
+	case SOAP_TYPE_PointerTons__ArrayOfBriefData:
+		return soap_in_PointerTons__ArrayOfBriefData(soap, tag, NULL, "ns:ArrayOfBriefData");
 	case SOAP_TYPE_PointerTons__UnitInfo:
 		return soap_in_PointerTons__UnitInfo(soap, tag, NULL, "ns:UnitInfo");
+	case SOAP_TYPE_PointerTons__BriefData:
+		return soap_in_PointerTons__BriefData(soap, tag, NULL, "ns:BriefData");
 	case SOAP_TYPE__QName:
 	{	char **s;
 		s = soap_in__QName(soap, tag, NULL, "xsd:QName");
@@ -250,9 +270,17 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, const char *tag,
 	{	const char *t = soap->type;
 		if (!*t)
 			t = soap->tag;
+		if (!soap_match_tag(soap, t, "ns:ArrayOfSensors"))
+		{	*type = SOAP_TYPE_ns__ArrayOfSensors;
+			return soap_in_ns__ArrayOfSensors(soap, tag, NULL, NULL);
+		}
 		if (!soap_match_tag(soap, t, "ns:StInfo"))
 		{	*type = SOAP_TYPE_ns__StInfo;
 			return soap_in_ns__StInfo(soap, tag, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ns:GetHistoricalDataBriefResponse"))
+		{	*type = SOAP_TYPE_ns__GetHistoricalDataBriefResponse;
+			return soap_in_ns__GetHistoricalDataBriefResponse(soap, tag, NULL, NULL);
 		}
 		if (!soap_match_tag(soap, t, "ns:GetSensorsResponse"))
 		{	*type = SOAP_TYPE_ns__GetSensorsResponse;
@@ -262,6 +290,10 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, const char *tag,
 		{	*type = SOAP_TYPE_ns__GetStationsResponse;
 			return soap_in_ns__GetStationsResponse(soap, tag, NULL, NULL);
 		}
+		if (!soap_match_tag(soap, t, "ns:ArrayOfSensorData"))
+		{	*type = SOAP_TYPE_ns__ArrayOfSensorData;
+			return soap_in_ns__ArrayOfSensorData(soap, tag, NULL, NULL);
+		}
 		if (!soap_match_tag(soap, t, "ns:ArrayOfSensorsInfo"))
 		{	*type = SOAP_TYPE_ns__ArrayOfSensorsInfo;
 			return soap_in_ns__ArrayOfSensorsInfo(soap, tag, NULL, NULL);
@@ -269,6 +301,10 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, const char *tag,
 		if (!soap_match_tag(soap, t, "ns:ArrayOfStationInfo"))
 		{	*type = SOAP_TYPE_ns__ArrayOfStationInfo;
 			return soap_in_ns__ArrayOfStationInfo(soap, tag, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ns:SensorData"))
+		{	*type = SOAP_TYPE_ns__SensorData;
+			return soap_in_ns__SensorData(soap, tag, NULL, NULL);
 		}
 		if (!soap_match_tag(soap, t, "ns:SensorInfo"))
 		{	*type = SOAP_TYPE_ns__SensorInfo;
@@ -281,6 +317,14 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, const char *tag,
 		if (!soap_match_tag(soap, t, "ns:StationInfo"))
 		{	*type = SOAP_TYPE_ns__StationInfo;
 			return soap_in_ns__StationInfo(soap, tag, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ns:ArrayOfBriefData"))
+		{	*type = SOAP_TYPE_ns__ArrayOfBriefData;
+			return soap_in_ns__ArrayOfBriefData(soap, tag, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ns:BriefData"))
+		{	*type = SOAP_TYPE_ns__BriefData;
+			return soap_in_ns__BriefData(soap, tag, NULL, NULL);
 		}
 		if (!soap_match_tag(soap, t, "xsd:string"))
 		{	*type = SOAP_TYPE_xsd__string;
@@ -321,6 +365,10 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_getelement(struct soap *soap, const char *tag,
 		if (!soap_match_tag(soap, t, "ns:ErrorCode"))
 		{	*type = SOAP_TYPE_ns__ErrorCode;
 			return soap_in_ns__ErrorCode(soap, tag, NULL, NULL);
+		}
+		if (!soap_match_tag(soap, t, "ns:GetHistoricalDataBrief"))
+		{	*type = SOAP_TYPE_ns__GetHistoricalDataBrief;
+			return soap_in_ns__GetHistoricalDataBrief(soap, tag, NULL, NULL);
 		}
 		if (!soap_match_tag(soap, t, "ns:GetSensors"))
 		{	*type = SOAP_TYPE_ns__GetSensors;
@@ -418,36 +466,56 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_putelement(struct soap *soap, const void *ptr, co
 		return soap_out_ns__UserAccessRightCode(soap, tag, id, (const enum ns__UserAccessRightCode *)ptr, "ns:UserAccessRightCode");
 	case SOAP_TYPE_ns__ErrorCode:
 		return soap_out_ns__ErrorCode(soap, tag, id, (const enum ns__ErrorCode *)ptr, "ns:ErrorCode");
+	case SOAP_TYPE_ns__ArrayOfSensors:
+		return ((ns__ArrayOfSensors *)ptr)->soap_out(soap, tag, id, "ns:ArrayOfSensors");
 	case SOAP_TYPE_ns__StInfo:
 		return ((ns__StInfo *)ptr)->soap_out(soap, tag, id, "ns:StInfo");
+	case SOAP_TYPE_ns__GetHistoricalDataBriefResponse:
+		return ((ns__GetHistoricalDataBriefResponse *)ptr)->soap_out(soap, tag, id, "ns:GetHistoricalDataBriefResponse");
 	case SOAP_TYPE_ns__GetSensorsResponse:
 		return ((ns__GetSensorsResponse *)ptr)->soap_out(soap, tag, id, "ns:GetSensorsResponse");
 	case SOAP_TYPE_ns__GetStationsResponse:
 		return ((ns__GetStationsResponse *)ptr)->soap_out(soap, tag, id, "ns:GetStationsResponse");
+	case SOAP_TYPE_ns__ArrayOfSensorData:
+		return ((ns__ArrayOfSensorData *)ptr)->soap_out(soap, tag, id, "ns:ArrayOfSensorData");
 	case SOAP_TYPE_ns__ArrayOfSensorsInfo:
 		return ((ns__ArrayOfSensorsInfo *)ptr)->soap_out(soap, tag, id, "ns:ArrayOfSensorsInfo");
 	case SOAP_TYPE_ns__ArrayOfStationInfo:
 		return ((ns__ArrayOfStationInfo *)ptr)->soap_out(soap, tag, id, "ns:ArrayOfStationInfo");
+	case SOAP_TYPE_ns__SensorData:
+		return ((ns__SensorData *)ptr)->soap_out(soap, tag, id, "ns:SensorData");
 	case SOAP_TYPE_ns__SensorInfo:
 		return ((ns__SensorInfo *)ptr)->soap_out(soap, tag, id, "ns:SensorInfo");
 	case SOAP_TYPE_ns__UnitInfo:
 		return ((ns__UnitInfo *)ptr)->soap_out(soap, tag, id, "ns:UnitInfo");
 	case SOAP_TYPE_ns__StationInfo:
 		return ((ns__StationInfo *)ptr)->soap_out(soap, tag, id, "ns:StationInfo");
+	case SOAP_TYPE_ns__ArrayOfBriefData:
+		return ((ns__ArrayOfBriefData *)ptr)->soap_out(soap, tag, id, "ns:ArrayOfBriefData");
+	case SOAP_TYPE_ns__BriefData:
+		return ((ns__BriefData *)ptr)->soap_out(soap, tag, id, "ns:BriefData");
 	case SOAP_TYPE_xsd__string:
 		return soap_out_xsd__string(soap, tag, id, (const std::wstring *)ptr, "xsd:string");
 	case SOAP_TYPE_std__wstring:
 		return soap_out_std__wstring(soap, tag, id, (const std::wstring *)ptr, "xsd:string");
+	case SOAP_TYPE_ns__GetHistoricalDataBrief:
+		return soap_out_ns__GetHistoricalDataBrief(soap, tag, id, (const struct ns__GetHistoricalDataBrief *)ptr, "ns:GetHistoricalDataBrief");
 	case SOAP_TYPE_ns__GetSensors:
 		return soap_out_ns__GetSensors(soap, tag, id, (const struct ns__GetSensors *)ptr, "ns:GetSensors");
 	case SOAP_TYPE_ns__GetStations:
 		return soap_out_ns__GetStations(soap, tag, id, (const struct ns__GetStations *)ptr, "ns:GetStations");
+	case SOAP_TYPE_PointerTons__ArrayOfSensorData:
+		return soap_out_PointerTons__ArrayOfSensorData(soap, tag, id, (ns__ArrayOfSensorData *const*)ptr, "ns:ArrayOfSensorData");
 	case SOAP_TYPE_PointerTons__ArrayOfSensorsInfo:
 		return soap_out_PointerTons__ArrayOfSensorsInfo(soap, tag, id, (ns__ArrayOfSensorsInfo *const*)ptr, "ns:ArrayOfSensorsInfo");
 	case SOAP_TYPE_PointerTons__ArrayOfStationInfo:
 		return soap_out_PointerTons__ArrayOfStationInfo(soap, tag, id, (ns__ArrayOfStationInfo *const*)ptr, "ns:ArrayOfStationInfo");
+	case SOAP_TYPE_PointerTons__ArrayOfBriefData:
+		return soap_out_PointerTons__ArrayOfBriefData(soap, tag, id, (ns__ArrayOfBriefData *const*)ptr, "ns:ArrayOfBriefData");
 	case SOAP_TYPE_PointerTons__UnitInfo:
 		return soap_out_PointerTons__UnitInfo(soap, tag, id, (ns__UnitInfo *const*)ptr, "ns:UnitInfo");
+	case SOAP_TYPE_PointerTons__BriefData:
+		return soap_out_PointerTons__BriefData(soap, tag, id, (ns__BriefData *const*)ptr, "ns:BriefData");
 	case SOAP_TYPE__QName:
 		return soap_out_string(soap, tag, id, (char*const*)(void*)&ptr, "xsd:QName");
 	case SOAP_TYPE_string:
@@ -472,8 +540,14 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 	(void)soap; (void)ptr; (void)type; /* appease -Wall -Werror */
 	switch (type)
 	{
+	case SOAP_TYPE_ns__ArrayOfSensors:
+		((ns__ArrayOfSensors *)ptr)->soap_serialize(soap);
+		break;
 	case SOAP_TYPE_ns__StInfo:
 		((ns__StInfo *)ptr)->soap_serialize(soap);
+		break;
+	case SOAP_TYPE_ns__GetHistoricalDataBriefResponse:
+		((ns__GetHistoricalDataBriefResponse *)ptr)->soap_serialize(soap);
 		break;
 	case SOAP_TYPE_ns__GetSensorsResponse:
 		((ns__GetSensorsResponse *)ptr)->soap_serialize(soap);
@@ -481,11 +555,17 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 	case SOAP_TYPE_ns__GetStationsResponse:
 		((ns__GetStationsResponse *)ptr)->soap_serialize(soap);
 		break;
+	case SOAP_TYPE_ns__ArrayOfSensorData:
+		((ns__ArrayOfSensorData *)ptr)->soap_serialize(soap);
+		break;
 	case SOAP_TYPE_ns__ArrayOfSensorsInfo:
 		((ns__ArrayOfSensorsInfo *)ptr)->soap_serialize(soap);
 		break;
 	case SOAP_TYPE_ns__ArrayOfStationInfo:
 		((ns__ArrayOfStationInfo *)ptr)->soap_serialize(soap);
+		break;
+	case SOAP_TYPE_ns__SensorData:
+		((ns__SensorData *)ptr)->soap_serialize(soap);
 		break;
 	case SOAP_TYPE_ns__SensorInfo:
 		((ns__SensorInfo *)ptr)->soap_serialize(soap);
@@ -496,11 +576,20 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 	case SOAP_TYPE_ns__StationInfo:
 		((ns__StationInfo *)ptr)->soap_serialize(soap);
 		break;
+	case SOAP_TYPE_ns__ArrayOfBriefData:
+		((ns__ArrayOfBriefData *)ptr)->soap_serialize(soap);
+		break;
+	case SOAP_TYPE_ns__BriefData:
+		((ns__BriefData *)ptr)->soap_serialize(soap);
+		break;
 	case SOAP_TYPE_xsd__string:
 		soap_serialize_xsd__string(soap, (const std::wstring *)ptr);
 		break;
 	case SOAP_TYPE_std__wstring:
 		soap_serialize_std__wstring(soap, (const std::wstring *)ptr);
+		break;
+	case SOAP_TYPE_ns__GetHistoricalDataBrief:
+		soap_serialize_ns__GetHistoricalDataBrief(soap, (const struct ns__GetHistoricalDataBrief *)ptr);
 		break;
 	case SOAP_TYPE_ns__GetSensors:
 		soap_serialize_ns__GetSensors(soap, (const struct ns__GetSensors *)ptr);
@@ -508,14 +597,23 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_markelement(struct soap *soap, const void *ptr, 
 	case SOAP_TYPE_ns__GetStations:
 		soap_serialize_ns__GetStations(soap, (const struct ns__GetStations *)ptr);
 		break;
+	case SOAP_TYPE_PointerTons__ArrayOfSensorData:
+		soap_serialize_PointerTons__ArrayOfSensorData(soap, (ns__ArrayOfSensorData *const*)ptr);
+		break;
 	case SOAP_TYPE_PointerTons__ArrayOfSensorsInfo:
 		soap_serialize_PointerTons__ArrayOfSensorsInfo(soap, (ns__ArrayOfSensorsInfo *const*)ptr);
 		break;
 	case SOAP_TYPE_PointerTons__ArrayOfStationInfo:
 		soap_serialize_PointerTons__ArrayOfStationInfo(soap, (ns__ArrayOfStationInfo *const*)ptr);
 		break;
+	case SOAP_TYPE_PointerTons__ArrayOfBriefData:
+		soap_serialize_PointerTons__ArrayOfBriefData(soap, (ns__ArrayOfBriefData *const*)ptr);
+		break;
 	case SOAP_TYPE_PointerTons__UnitInfo:
 		soap_serialize_PointerTons__UnitInfo(soap, (ns__UnitInfo *const*)ptr);
+		break;
+	case SOAP_TYPE_PointerTons__BriefData:
+		soap_serialize_PointerTons__BriefData(soap, (ns__BriefData *const*)ptr);
 		break;
 	case SOAP_TYPE__QName:
 		soap_serialize_string(soap, (char*const*)(void*)&ptr);
@@ -559,26 +657,40 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_instantiate(struct soap *soap, int t, const ch
 	{
 	case SOAP_TYPE_std__wstring:
 		return (void*)soap_instantiate_std__wstring(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_ns__BriefData:
+		return (void*)soap_instantiate_ns__BriefData(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_ns__ArrayOfBriefData:
+		return (void*)soap_instantiate_ns__ArrayOfBriefData(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_ns__StationInfo:
 		return (void*)soap_instantiate_ns__StationInfo(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_ns__UnitInfo:
 		return (void*)soap_instantiate_ns__UnitInfo(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_ns__SensorInfo:
 		return (void*)soap_instantiate_ns__SensorInfo(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_ns__SensorData:
+		return (void*)soap_instantiate_ns__SensorData(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_ns__ArrayOfStationInfo:
 		return (void*)soap_instantiate_ns__ArrayOfStationInfo(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_ns__ArrayOfSensorsInfo:
 		return (void*)soap_instantiate_ns__ArrayOfSensorsInfo(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_ns__ArrayOfSensorData:
+		return (void*)soap_instantiate_ns__ArrayOfSensorData(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_ns__GetStationsResponse:
 		return (void*)soap_instantiate_ns__GetStationsResponse(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_ns__GetSensorsResponse:
 		return (void*)soap_instantiate_ns__GetSensorsResponse(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_ns__GetHistoricalDataBriefResponse:
+		return (void*)soap_instantiate_ns__GetHistoricalDataBriefResponse(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_ns__StInfo:
 		return (void*)soap_instantiate_ns__StInfo(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_ns__ArrayOfSensors:
+		return (void*)soap_instantiate_ns__ArrayOfSensors(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_ns__GetStations:
 		return (void*)soap_instantiate_ns__GetStations(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_ns__GetSensors:
 		return (void*)soap_instantiate_ns__GetSensors(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_ns__GetHistoricalDataBrief:
+		return (void*)soap_instantiate_ns__GetHistoricalDataBrief(soap, -1, type, arrayType, n);
 #ifndef WITH_NOGLOBAL
 	case SOAP_TYPE_SOAP_ENV__Header:
 		return (void*)soap_instantiate_SOAP_ENV__Header(soap, -1, type, arrayType, n);
@@ -601,10 +713,16 @@ SOAP_FMAC3 void * SOAP_FMAC4 soap_instantiate(struct soap *soap, int t, const ch
 #endif
 	case SOAP_TYPE_xsd__string:
 		return (void*)soap_instantiate_xsd__string(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_std__vectorTemplateOfxsd__string:
+		return (void*)soap_instantiate_std__vectorTemplateOfxsd__string(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_std__vectorTemplateOfns__SensorData:
+		return (void*)soap_instantiate_std__vectorTemplateOfns__SensorData(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_std__vectorTemplateOfns__SensorInfo:
 		return (void*)soap_instantiate_std__vectorTemplateOfns__SensorInfo(soap, -1, type, arrayType, n);
 	case SOAP_TYPE_std__vectorTemplateOfns__StationInfo:
 		return (void*)soap_instantiate_std__vectorTemplateOfns__StationInfo(soap, -1, type, arrayType, n);
+	case SOAP_TYPE_std__vectorTemplateOfPointerTons__BriefData:
+		return (void*)soap_instantiate_std__vectorTemplateOfPointerTons__BriefData(soap, -1, type, arrayType, n);
 	}
 	return NULL;
 }
@@ -621,6 +739,18 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap *soap, struct soap_clist *p)
 			SOAP_DELETE(soap, static_cast<std::wstring*>(p->ptr), std::wstring);
 		else
 			SOAP_DELETE_ARRAY(soap, static_cast<std::wstring*>(p->ptr), std::wstring);
+		break;
+	case SOAP_TYPE_ns__BriefData:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<ns__BriefData*>(p->ptr), ns__BriefData);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<ns__BriefData*>(p->ptr), ns__BriefData);
+		break;
+	case SOAP_TYPE_ns__ArrayOfBriefData:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<ns__ArrayOfBriefData*>(p->ptr), ns__ArrayOfBriefData);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<ns__ArrayOfBriefData*>(p->ptr), ns__ArrayOfBriefData);
 		break;
 	case SOAP_TYPE_ns__StationInfo:
 		if (p->size < 0)
@@ -640,6 +770,12 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap *soap, struct soap_clist *p)
 		else
 			SOAP_DELETE_ARRAY(soap, static_cast<ns__SensorInfo*>(p->ptr), ns__SensorInfo);
 		break;
+	case SOAP_TYPE_ns__SensorData:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<ns__SensorData*>(p->ptr), ns__SensorData);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<ns__SensorData*>(p->ptr), ns__SensorData);
+		break;
 	case SOAP_TYPE_ns__ArrayOfStationInfo:
 		if (p->size < 0)
 			SOAP_DELETE(soap, static_cast<ns__ArrayOfStationInfo*>(p->ptr), ns__ArrayOfStationInfo);
@@ -651,6 +787,12 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap *soap, struct soap_clist *p)
 			SOAP_DELETE(soap, static_cast<ns__ArrayOfSensorsInfo*>(p->ptr), ns__ArrayOfSensorsInfo);
 		else
 			SOAP_DELETE_ARRAY(soap, static_cast<ns__ArrayOfSensorsInfo*>(p->ptr), ns__ArrayOfSensorsInfo);
+		break;
+	case SOAP_TYPE_ns__ArrayOfSensorData:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<ns__ArrayOfSensorData*>(p->ptr), ns__ArrayOfSensorData);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<ns__ArrayOfSensorData*>(p->ptr), ns__ArrayOfSensorData);
 		break;
 	case SOAP_TYPE_ns__GetStationsResponse:
 		if (p->size < 0)
@@ -664,11 +806,23 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap *soap, struct soap_clist *p)
 		else
 			SOAP_DELETE_ARRAY(soap, static_cast<ns__GetSensorsResponse*>(p->ptr), ns__GetSensorsResponse);
 		break;
+	case SOAP_TYPE_ns__GetHistoricalDataBriefResponse:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<ns__GetHistoricalDataBriefResponse*>(p->ptr), ns__GetHistoricalDataBriefResponse);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<ns__GetHistoricalDataBriefResponse*>(p->ptr), ns__GetHistoricalDataBriefResponse);
+		break;
 	case SOAP_TYPE_ns__StInfo:
 		if (p->size < 0)
 			SOAP_DELETE(soap, static_cast<ns__StInfo*>(p->ptr), ns__StInfo);
 		else
 			SOAP_DELETE_ARRAY(soap, static_cast<ns__StInfo*>(p->ptr), ns__StInfo);
+		break;
+	case SOAP_TYPE_ns__ArrayOfSensors:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<ns__ArrayOfSensors*>(p->ptr), ns__ArrayOfSensors);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<ns__ArrayOfSensors*>(p->ptr), ns__ArrayOfSensors);
 		break;
 	case SOAP_TYPE_ns__GetStations:
 		if (p->size < 0)
@@ -681,6 +835,12 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap *soap, struct soap_clist *p)
 			SOAP_DELETE(soap, static_cast<struct ns__GetSensors*>(p->ptr), struct ns__GetSensors);
 		else
 			SOAP_DELETE_ARRAY(soap, static_cast<struct ns__GetSensors*>(p->ptr), struct ns__GetSensors);
+		break;
+	case SOAP_TYPE_ns__GetHistoricalDataBrief:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<struct ns__GetHistoricalDataBrief*>(p->ptr), struct ns__GetHistoricalDataBrief);
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<struct ns__GetHistoricalDataBrief*>(p->ptr), struct ns__GetHistoricalDataBrief);
 		break;
 #ifndef WITH_NOGLOBAL
 	case SOAP_TYPE_SOAP_ENV__Header:
@@ -728,6 +888,18 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap *soap, struct soap_clist *p)
 		else
 			SOAP_DELETE_ARRAY(soap, static_cast<std::wstring*>(p->ptr), std::wstring);
 		break;
+	case SOAP_TYPE_std__vectorTemplateOfxsd__string:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<std::vector<std::wstring> *>(p->ptr), std::vector<std::wstring> );
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<std::vector<std::wstring> *>(p->ptr), std::vector<std::wstring> );
+		break;
+	case SOAP_TYPE_std__vectorTemplateOfns__SensorData:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<std::vector<ns__SensorData> *>(p->ptr), std::vector<ns__SensorData> );
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<std::vector<ns__SensorData> *>(p->ptr), std::vector<ns__SensorData> );
+		break;
 	case SOAP_TYPE_std__vectorTemplateOfns__SensorInfo:
 		if (p->size < 0)
 			SOAP_DELETE(soap, static_cast<std::vector<ns__SensorInfo> *>(p->ptr), std::vector<ns__SensorInfo> );
@@ -739,6 +911,12 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_fdelete(struct soap *soap, struct soap_clist *p)
 			SOAP_DELETE(soap, static_cast<std::vector<ns__StationInfo> *>(p->ptr), std::vector<ns__StationInfo> );
 		else
 			SOAP_DELETE_ARRAY(soap, static_cast<std::vector<ns__StationInfo> *>(p->ptr), std::vector<ns__StationInfo> );
+		break;
+	case SOAP_TYPE_std__vectorTemplateOfPointerTons__BriefData:
+		if (p->size < 0)
+			SOAP_DELETE(soap, static_cast<std::vector<ns__BriefData *> *>(p->ptr), std::vector<ns__BriefData *> );
+		else
+			SOAP_DELETE_ARRAY(soap, static_cast<std::vector<ns__BriefData *> *>(p->ptr), std::vector<ns__BriefData *> );
 		break;
 	default:
 		return SOAP_ERR;
@@ -771,6 +949,18 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_finsert(struct soap *soap, int t, int tt, void *
 	(void)soap; (void)t; (void)p; (void)index; (void)q; (void)x; /* appease -Wall -Werror */
 	switch (tt)
 	{
+	case SOAP_TYPE_std__vectorTemplateOfxsd__string:
+		if (t == SOAP_TYPE_xsd__string)
+		{	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Container std::vector<std::wstring>  insert type=%d in %d location=%p object=%p at index=%lu\n", t, tt, p, q, (unsigned long)index));
+			(*(std::vector<std::wstring> *)p)[index] = *(std::wstring *)q;
+		}
+		break;
+	case SOAP_TYPE_std__vectorTemplateOfns__SensorData:
+		if (t == SOAP_TYPE_ns__SensorData)
+		{	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Container std::vector<ns__SensorData>  insert type=%d in %d location=%p object=%p at index=%lu\n", t, tt, p, q, (unsigned long)index));
+			(*(std::vector<ns__SensorData> *)p)[index] = *(ns__SensorData *)q;
+		}
+		break;
 	case SOAP_TYPE_std__vectorTemplateOfns__SensorInfo:
 		if (t == SOAP_TYPE_ns__SensorInfo)
 		{	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Container std::vector<ns__SensorInfo>  insert type=%d in %d location=%p object=%p at index=%lu\n", t, tt, p, q, (unsigned long)index));
@@ -783,9 +973,23 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_finsert(struct soap *soap, int t, int tt, void *
 			(*(std::vector<ns__StationInfo> *)p)[index] = *(ns__StationInfo *)q;
 		}
 		break;
+	case SOAP_TYPE_std__vectorTemplateOfPointerTons__BriefData:
+		if (t == SOAP_TYPE_ns__BriefData || soap_fbase(t, SOAP_TYPE_ns__BriefData))
+		{	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Container std::vector<ns__BriefData *>  insert type=%d in %d location=%p object=%p at index=%lu\n", t, tt, p, q, (unsigned long)index));
+			(*(std::vector<ns__BriefData *> *)p)[index] = *(ns__BriefData **)q;
+		}
+		break;
 	case SOAP_TYPE_std__wstring:
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy std::wstring type=%d location=%p object=%p\n", t, p, q));
 		*(std::wstring*)p = *(std::wstring*)q;
+		break;
+	case SOAP_TYPE_ns__BriefData:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy ns__BriefData type=%d location=%p object=%p\n", t, p, q));
+		*(ns__BriefData*)p = *(ns__BriefData*)q;
+		break;
+	case SOAP_TYPE_ns__ArrayOfBriefData:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy ns__ArrayOfBriefData type=%d location=%p object=%p\n", t, p, q));
+		*(ns__ArrayOfBriefData*)p = *(ns__ArrayOfBriefData*)q;
 		break;
 	case SOAP_TYPE_ns__StationInfo:
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy ns__StationInfo type=%d location=%p object=%p\n", t, p, q));
@@ -799,6 +1003,10 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_finsert(struct soap *soap, int t, int tt, void *
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy ns__SensorInfo type=%d location=%p object=%p\n", t, p, q));
 		*(ns__SensorInfo*)p = *(ns__SensorInfo*)q;
 		break;
+	case SOAP_TYPE_ns__SensorData:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy ns__SensorData type=%d location=%p object=%p\n", t, p, q));
+		*(ns__SensorData*)p = *(ns__SensorData*)q;
+		break;
 	case SOAP_TYPE_ns__ArrayOfStationInfo:
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy ns__ArrayOfStationInfo type=%d location=%p object=%p\n", t, p, q));
 		*(ns__ArrayOfStationInfo*)p = *(ns__ArrayOfStationInfo*)q;
@@ -806,6 +1014,10 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_finsert(struct soap *soap, int t, int tt, void *
 	case SOAP_TYPE_ns__ArrayOfSensorsInfo:
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy ns__ArrayOfSensorsInfo type=%d location=%p object=%p\n", t, p, q));
 		*(ns__ArrayOfSensorsInfo*)p = *(ns__ArrayOfSensorsInfo*)q;
+		break;
+	case SOAP_TYPE_ns__ArrayOfSensorData:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy ns__ArrayOfSensorData type=%d location=%p object=%p\n", t, p, q));
+		*(ns__ArrayOfSensorData*)p = *(ns__ArrayOfSensorData*)q;
 		break;
 	case SOAP_TYPE_ns__GetStationsResponse:
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy ns__GetStationsResponse type=%d location=%p object=%p\n", t, p, q));
@@ -815,9 +1027,17 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_finsert(struct soap *soap, int t, int tt, void *
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy ns__GetSensorsResponse type=%d location=%p object=%p\n", t, p, q));
 		*(ns__GetSensorsResponse*)p = *(ns__GetSensorsResponse*)q;
 		break;
+	case SOAP_TYPE_ns__GetHistoricalDataBriefResponse:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy ns__GetHistoricalDataBriefResponse type=%d location=%p object=%p\n", t, p, q));
+		*(ns__GetHistoricalDataBriefResponse*)p = *(ns__GetHistoricalDataBriefResponse*)q;
+		break;
 	case SOAP_TYPE_ns__StInfo:
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy ns__StInfo type=%d location=%p object=%p\n", t, p, q));
 		*(ns__StInfo*)p = *(ns__StInfo*)q;
+		break;
+	case SOAP_TYPE_ns__ArrayOfSensors:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy ns__ArrayOfSensors type=%d location=%p object=%p\n", t, p, q));
+		*(ns__ArrayOfSensors*)p = *(ns__ArrayOfSensors*)q;
 		break;
 	case SOAP_TYPE_ns__GetStations:
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct ns__GetStations type=%d location=%p object=%p\n", t, p, q));
@@ -826,6 +1046,10 @@ SOAP_FMAC3 void SOAP_FMAC4 soap_finsert(struct soap *soap, int t, int tt, void *
 	case SOAP_TYPE_ns__GetSensors:
 		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct ns__GetSensors type=%d location=%p object=%p\n", t, p, q));
 		*(struct ns__GetSensors*)p = *(struct ns__GetSensors*)q;
+		break;
+	case SOAP_TYPE_ns__GetHistoricalDataBrief:
+		DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Copy struct ns__GetHistoricalDataBrief type=%d location=%p object=%p\n", t, p, q));
+		*(struct ns__GetHistoricalDataBrief*)p = *(struct ns__GetHistoricalDataBrief*)q;
 		break;
 #ifndef WITH_NOGLOBAL
 	case SOAP_TYPE_SOAP_ENV__Header:
@@ -1347,6 +1571,127 @@ SOAP_FMAC3 enum ns__ErrorCode * SOAP_FMAC4 soap_get_ns__ErrorCode(struct soap *s
 	return p;
 }
 
+void ns__ArrayOfSensors::soap_default(struct soap *soap)
+{
+	(void)soap; /* appease -Wall -Werror */
+	soap_default_std__vectorTemplateOfxsd__string(soap, &this->ns__ArrayOfSensors::string);
+}
+
+void ns__ArrayOfSensors::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_std__vectorTemplateOfxsd__string(soap, &this->ns__ArrayOfSensors::string);
+#endif
+}
+
+int ns__ArrayOfSensors::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out_ns__ArrayOfSensors(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns__ArrayOfSensors(struct soap *soap, const char *tag, int id, const ns__ArrayOfSensors *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_ns__ArrayOfSensors), type))
+		return soap->error;
+	if (soap_out_std__vectorTemplateOfxsd__string(soap, "string", -1, &a->ns__ArrayOfSensors::string, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *ns__ArrayOfSensors::soap_in(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_in_ns__ArrayOfSensors(soap, tag, this, type);
+}
+
+SOAP_FMAC3 ns__ArrayOfSensors * SOAP_FMAC4 soap_in_ns__ArrayOfSensors(struct soap *soap, const char *tag, ns__ArrayOfSensors *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (ns__ArrayOfSensors*)soap_id_enter(soap, soap->id, a, SOAP_TYPE_ns__ArrayOfSensors, sizeof(ns__ArrayOfSensors), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
+	if (!a)
+		return NULL;
+	if (soap->alloced && soap->alloced != SOAP_TYPE_ns__ArrayOfSensors)
+	{	soap_revert(soap);
+		*soap->id = '\0';
+		return (ns__ArrayOfSensors *)a->soap_in(soap, tag, type);
+	}
+	if (soap->alloced)
+		a->soap_default(soap);
+	if (soap->body && *soap->href != '#')
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_std__vectorTemplateOfxsd__string(soap, "string", &a->ns__ArrayOfSensors::string, "xsd:string"))
+					continue;
+			}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (ns__ArrayOfSensors *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_ns__ArrayOfSensors, SOAP_TYPE_ns__ArrayOfSensors, sizeof(ns__ArrayOfSensors), 0, soap_finsert, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 ns__ArrayOfSensors * SOAP_FMAC2 soap_instantiate_ns__ArrayOfSensors(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_ns__ArrayOfSensors(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	ns__ArrayOfSensors *p;
+	size_t k = sizeof(ns__ArrayOfSensors);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE_ns__ArrayOfSensors, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, ns__ArrayOfSensors);
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, ns__ArrayOfSensors, n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated ns__ArrayOfSensors location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+int ns__ArrayOfSensors::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	if (soap_out_ns__ArrayOfSensors(soap, tag ? tag : "ns:ArrayOfSensors", -2, this, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *ns__ArrayOfSensors::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get_ns__ArrayOfSensors(soap, this, tag, type);
+}
+
+SOAP_FMAC3 ns__ArrayOfSensors * SOAP_FMAC4 soap_get_ns__ArrayOfSensors(struct soap *soap, ns__ArrayOfSensors *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_ns__ArrayOfSensors(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
 void ns__StInfo::soap_default(struct soap *soap)
 {
 	(void)soap; /* appease -Wall -Werror */
@@ -1515,6 +1860,153 @@ void *ns__StInfo::soap_get(struct soap *soap, const char *tag, const char *type)
 SOAP_FMAC3 ns__StInfo * SOAP_FMAC4 soap_get_ns__StInfo(struct soap *soap, ns__StInfo *p, const char *tag, const char *type)
 {
 	if ((p = soap_in_ns__StInfo(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+void ns__GetHistoricalDataBriefResponse::soap_default(struct soap *soap)
+{
+	this->soap = soap;
+	this->ns__GetHistoricalDataBriefResponse::GetHistoricalDataBriefResult = NULL;
+	soap_default_ns__ErrorCode(soap, &this->ns__GetHistoricalDataBriefResponse::ErrorCode);
+}
+
+void ns__GetHistoricalDataBriefResponse::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_PointerTons__ArrayOfSensorData(soap, &this->ns__GetHistoricalDataBriefResponse::GetHistoricalDataBriefResult);
+#endif
+}
+
+int ns__GetHistoricalDataBriefResponse::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out_ns__GetHistoricalDataBriefResponse(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns__GetHistoricalDataBriefResponse(struct soap *soap, const char *tag, int id, const ns__GetHistoricalDataBriefResponse *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_ns__GetHistoricalDataBriefResponse), type))
+		return soap->error;
+	if (soap_out_PointerTons__ArrayOfSensorData(soap, "GetHistoricalDataBriefResult", -1, &a->ns__GetHistoricalDataBriefResponse::GetHistoricalDataBriefResult, ""))
+		return soap->error;
+	if (soap_out_ns__ErrorCode(soap, "ErrorCode", -1, &a->ns__GetHistoricalDataBriefResponse::ErrorCode, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *ns__GetHistoricalDataBriefResponse::soap_in(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_in_ns__GetHistoricalDataBriefResponse(soap, tag, this, type);
+}
+
+SOAP_FMAC3 ns__GetHistoricalDataBriefResponse * SOAP_FMAC4 soap_in_ns__GetHistoricalDataBriefResponse(struct soap *soap, const char *tag, ns__GetHistoricalDataBriefResponse *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (ns__GetHistoricalDataBriefResponse*)soap_id_enter(soap, soap->id, a, SOAP_TYPE_ns__GetHistoricalDataBriefResponse, sizeof(ns__GetHistoricalDataBriefResponse), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
+	if (!a)
+		return NULL;
+	if (soap->alloced && soap->alloced != SOAP_TYPE_ns__GetHistoricalDataBriefResponse)
+	{	soap_revert(soap);
+		*soap->id = '\0';
+		return (ns__GetHistoricalDataBriefResponse *)a->soap_in(soap, tag, type);
+	}
+	if (soap->alloced)
+		a->soap_default(soap);
+	size_t soap_flag_GetHistoricalDataBriefResult1 = 1;
+	size_t soap_flag_ErrorCode1 = 1;
+	if (soap->body && *soap->href != '#')
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_GetHistoricalDataBriefResult1 && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_PointerTons__ArrayOfSensorData(soap, "GetHistoricalDataBriefResult", &a->ns__GetHistoricalDataBriefResponse::GetHistoricalDataBriefResult, "ns:ArrayOfSensorData"))
+				{	soap_flag_GetHistoricalDataBriefResult1--;
+					continue;
+				}
+			}
+			if (soap_flag_ErrorCode1 && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_ns__ErrorCode(soap, "ErrorCode", &a->ns__GetHistoricalDataBriefResponse::ErrorCode, "ns:ErrorCode"))
+				{	soap_flag_ErrorCode1--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+		if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_ErrorCode1 > 0))
+		{	soap->error = SOAP_OCCURS;
+			return NULL;
+		}
+	}
+	else if ((soap->mode & SOAP_XML_STRICT) && *soap->href != '#')
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
+	}
+	else
+	{	a = (ns__GetHistoricalDataBriefResponse *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_ns__GetHistoricalDataBriefResponse, SOAP_TYPE_ns__GetHistoricalDataBriefResponse, sizeof(ns__GetHistoricalDataBriefResponse), 0, soap_finsert, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 ns__GetHistoricalDataBriefResponse * SOAP_FMAC2 soap_instantiate_ns__GetHistoricalDataBriefResponse(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_ns__GetHistoricalDataBriefResponse(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	ns__GetHistoricalDataBriefResponse *p;
+	size_t k = sizeof(ns__GetHistoricalDataBriefResponse);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE_ns__GetHistoricalDataBriefResponse, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, ns__GetHistoricalDataBriefResponse);
+		if (p)
+			p->soap = soap;
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, ns__GetHistoricalDataBriefResponse, n);
+		k *= n;
+		if (p)
+			for (int i = 0; i < n; i++)
+				p[i].soap = soap;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated ns__GetHistoricalDataBriefResponse location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+int ns__GetHistoricalDataBriefResponse::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	if (soap_out_ns__GetHistoricalDataBriefResponse(soap, tag ? tag : "ns:GetHistoricalDataBriefResponse", -2, this, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *ns__GetHistoricalDataBriefResponse::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get_ns__GetHistoricalDataBriefResponse(soap, this, tag, type);
+}
+
+SOAP_FMAC3 ns__GetHistoricalDataBriefResponse * SOAP_FMAC4 soap_get_ns__GetHistoricalDataBriefResponse(struct soap *soap, ns__GetHistoricalDataBriefResponse *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_ns__GetHistoricalDataBriefResponse(soap, tag, p, type)))
 		if (soap_getindependent(soap))
 			return NULL;
 	return p;
@@ -1814,6 +2306,127 @@ SOAP_FMAC3 ns__GetStationsResponse * SOAP_FMAC4 soap_get_ns__GetStationsResponse
 	return p;
 }
 
+void ns__ArrayOfSensorData::soap_default(struct soap *soap)
+{
+	(void)soap; /* appease -Wall -Werror */
+	soap_default_std__vectorTemplateOfns__SensorData(soap, &this->ns__ArrayOfSensorData::SensorData);
+}
+
+void ns__ArrayOfSensorData::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_std__vectorTemplateOfns__SensorData(soap, &this->ns__ArrayOfSensorData::SensorData);
+#endif
+}
+
+int ns__ArrayOfSensorData::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out_ns__ArrayOfSensorData(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns__ArrayOfSensorData(struct soap *soap, const char *tag, int id, const ns__ArrayOfSensorData *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_ns__ArrayOfSensorData), type))
+		return soap->error;
+	if (soap_out_std__vectorTemplateOfns__SensorData(soap, "SensorData", -1, &a->ns__ArrayOfSensorData::SensorData, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *ns__ArrayOfSensorData::soap_in(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_in_ns__ArrayOfSensorData(soap, tag, this, type);
+}
+
+SOAP_FMAC3 ns__ArrayOfSensorData * SOAP_FMAC4 soap_in_ns__ArrayOfSensorData(struct soap *soap, const char *tag, ns__ArrayOfSensorData *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (ns__ArrayOfSensorData*)soap_id_enter(soap, soap->id, a, SOAP_TYPE_ns__ArrayOfSensorData, sizeof(ns__ArrayOfSensorData), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
+	if (!a)
+		return NULL;
+	if (soap->alloced && soap->alloced != SOAP_TYPE_ns__ArrayOfSensorData)
+	{	soap_revert(soap);
+		*soap->id = '\0';
+		return (ns__ArrayOfSensorData *)a->soap_in(soap, tag, type);
+	}
+	if (soap->alloced)
+		a->soap_default(soap);
+	if (soap->body && *soap->href != '#')
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_std__vectorTemplateOfns__SensorData(soap, "SensorData", &a->ns__ArrayOfSensorData::SensorData, "ns:SensorData"))
+					continue;
+			}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (ns__ArrayOfSensorData *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_ns__ArrayOfSensorData, SOAP_TYPE_ns__ArrayOfSensorData, sizeof(ns__ArrayOfSensorData), 0, soap_finsert, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 ns__ArrayOfSensorData * SOAP_FMAC2 soap_instantiate_ns__ArrayOfSensorData(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_ns__ArrayOfSensorData(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	ns__ArrayOfSensorData *p;
+	size_t k = sizeof(ns__ArrayOfSensorData);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE_ns__ArrayOfSensorData, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, ns__ArrayOfSensorData);
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, ns__ArrayOfSensorData, n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated ns__ArrayOfSensorData location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+int ns__ArrayOfSensorData::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	if (soap_out_ns__ArrayOfSensorData(soap, tag ? tag : "ns:ArrayOfSensorData", -2, this, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *ns__ArrayOfSensorData::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get_ns__ArrayOfSensorData(soap, this, tag, type);
+}
+
+SOAP_FMAC3 ns__ArrayOfSensorData * SOAP_FMAC4 soap_get_ns__ArrayOfSensorData(struct soap *soap, ns__ArrayOfSensorData *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_ns__ArrayOfSensorData(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
 void ns__ArrayOfSensorsInfo::soap_default(struct soap *soap)
 {
 	(void)soap; /* appease -Wall -Werror */
@@ -2051,6 +2664,149 @@ void *ns__ArrayOfStationInfo::soap_get(struct soap *soap, const char *tag, const
 SOAP_FMAC3 ns__ArrayOfStationInfo * SOAP_FMAC4 soap_get_ns__ArrayOfStationInfo(struct soap *soap, ns__ArrayOfStationInfo *p, const char *tag, const char *type)
 {
 	if ((p = soap_in_ns__ArrayOfStationInfo(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+void ns__SensorData::soap_default(struct soap *soap)
+{
+	(void)soap; /* appease -Wall -Werror */
+	soap_default_xsd__string(soap, &this->ns__SensorData::SensorID);
+	this->ns__SensorData::Data = NULL;
+}
+
+void ns__SensorData::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_xsd__string(soap, &this->ns__SensorData::SensorID);
+	soap_serialize_PointerTons__ArrayOfBriefData(soap, &this->ns__SensorData::Data);
+#endif
+}
+
+int ns__SensorData::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out_ns__SensorData(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns__SensorData(struct soap *soap, const char *tag, int id, const ns__SensorData *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_ns__SensorData), type))
+		return soap->error;
+	if (soap_out_xsd__string(soap, "SensorID", -1, &a->ns__SensorData::SensorID, ""))
+		return soap->error;
+	if (soap_out_PointerTons__ArrayOfBriefData(soap, "Data", -1, &a->ns__SensorData::Data, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *ns__SensorData::soap_in(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_in_ns__SensorData(soap, tag, this, type);
+}
+
+SOAP_FMAC3 ns__SensorData * SOAP_FMAC4 soap_in_ns__SensorData(struct soap *soap, const char *tag, ns__SensorData *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (ns__SensorData*)soap_id_enter(soap, soap->id, a, SOAP_TYPE_ns__SensorData, sizeof(ns__SensorData), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
+	if (!a)
+		return NULL;
+	if (soap->alloced && soap->alloced != SOAP_TYPE_ns__SensorData)
+	{	soap_revert(soap);
+		*soap->id = '\0';
+		return (ns__SensorData *)a->soap_in(soap, tag, type);
+	}
+	if (soap->alloced)
+		a->soap_default(soap);
+	size_t soap_flag_SensorID1 = 1;
+	size_t soap_flag_Data1 = 1;
+	if (soap->body && *soap->href != '#')
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_SensorID1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+			{	if (soap_in_xsd__string(soap, "SensorID", &a->ns__SensorData::SensorID, "xsd:string"))
+				{	soap_flag_SensorID1--;
+					continue;
+				}
+			}
+			if (soap_flag_Data1 && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_PointerTons__ArrayOfBriefData(soap, "Data", &a->ns__SensorData::Data, "ns:ArrayOfBriefData"))
+				{	soap_flag_Data1--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+		if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_SensorID1 > 0))
+		{	soap->error = SOAP_OCCURS;
+			return NULL;
+		}
+	}
+	else if ((soap->mode & SOAP_XML_STRICT) && *soap->href != '#')
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
+	}
+	else
+	{	a = (ns__SensorData *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_ns__SensorData, SOAP_TYPE_ns__SensorData, sizeof(ns__SensorData), 0, soap_finsert, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 ns__SensorData * SOAP_FMAC2 soap_instantiate_ns__SensorData(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_ns__SensorData(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	ns__SensorData *p;
+	size_t k = sizeof(ns__SensorData);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE_ns__SensorData, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, ns__SensorData);
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, ns__SensorData, n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated ns__SensorData location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+int ns__SensorData::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	if (soap_out_ns__SensorData(soap, tag ? tag : "ns:SensorData", -2, this, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *ns__SensorData::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get_ns__SensorData(soap, this, tag, type);
+}
+
+SOAP_FMAC3 ns__SensorData * SOAP_FMAC4 soap_get_ns__SensorData(struct soap *soap, ns__SensorData *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_ns__SensorData(soap, tag, p, type)))
 		if (soap_getindependent(soap))
 			return NULL;
 	return p;
@@ -2624,6 +3380,269 @@ void *ns__StationInfo::soap_get(struct soap *soap, const char *tag, const char *
 SOAP_FMAC3 ns__StationInfo * SOAP_FMAC4 soap_get_ns__StationInfo(struct soap *soap, ns__StationInfo *p, const char *tag, const char *type)
 {
 	if ((p = soap_in_ns__StationInfo(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+void ns__ArrayOfBriefData::soap_default(struct soap *soap)
+{
+	(void)soap; /* appease -Wall -Werror */
+	soap_default_std__vectorTemplateOfPointerTons__BriefData(soap, &this->ns__ArrayOfBriefData::BriefData);
+}
+
+void ns__ArrayOfBriefData::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_std__vectorTemplateOfPointerTons__BriefData(soap, &this->ns__ArrayOfBriefData::BriefData);
+#endif
+}
+
+int ns__ArrayOfBriefData::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out_ns__ArrayOfBriefData(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns__ArrayOfBriefData(struct soap *soap, const char *tag, int id, const ns__ArrayOfBriefData *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_ns__ArrayOfBriefData), type))
+		return soap->error;
+	if (soap_out_std__vectorTemplateOfPointerTons__BriefData(soap, "BriefData", -1, &a->ns__ArrayOfBriefData::BriefData, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *ns__ArrayOfBriefData::soap_in(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_in_ns__ArrayOfBriefData(soap, tag, this, type);
+}
+
+SOAP_FMAC3 ns__ArrayOfBriefData * SOAP_FMAC4 soap_in_ns__ArrayOfBriefData(struct soap *soap, const char *tag, ns__ArrayOfBriefData *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (ns__ArrayOfBriefData*)soap_id_enter(soap, soap->id, a, SOAP_TYPE_ns__ArrayOfBriefData, sizeof(ns__ArrayOfBriefData), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
+	if (!a)
+		return NULL;
+	if (soap->alloced && soap->alloced != SOAP_TYPE_ns__ArrayOfBriefData)
+	{	soap_revert(soap);
+		*soap->id = '\0';
+		return (ns__ArrayOfBriefData *)a->soap_in(soap, tag, type);
+	}
+	if (soap->alloced)
+		a->soap_default(soap);
+	if (soap->body && *soap->href != '#')
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_std__vectorTemplateOfPointerTons__BriefData(soap, "BriefData", &a->ns__ArrayOfBriefData::BriefData, "ns:BriefData"))
+					continue;
+			}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	else
+	{	a = (ns__ArrayOfBriefData *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_ns__ArrayOfBriefData, SOAP_TYPE_ns__ArrayOfBriefData, sizeof(ns__ArrayOfBriefData), 0, soap_finsert, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 ns__ArrayOfBriefData * SOAP_FMAC2 soap_instantiate_ns__ArrayOfBriefData(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_ns__ArrayOfBriefData(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	ns__ArrayOfBriefData *p;
+	size_t k = sizeof(ns__ArrayOfBriefData);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE_ns__ArrayOfBriefData, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, ns__ArrayOfBriefData);
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, ns__ArrayOfBriefData, n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated ns__ArrayOfBriefData location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+int ns__ArrayOfBriefData::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	if (soap_out_ns__ArrayOfBriefData(soap, tag ? tag : "ns:ArrayOfBriefData", -2, this, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *ns__ArrayOfBriefData::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get_ns__ArrayOfBriefData(soap, this, tag, type);
+}
+
+SOAP_FMAC3 ns__ArrayOfBriefData * SOAP_FMAC4 soap_get_ns__ArrayOfBriefData(struct soap *soap, ns__ArrayOfBriefData *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_ns__ArrayOfBriefData(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+void ns__BriefData::soap_default(struct soap *soap)
+{
+	(void)soap; /* appease -Wall -Werror */
+	soap_default_xsd__string(soap, &this->ns__BriefData::Time);
+	soap_default_double(soap, &this->ns__BriefData::Value);
+}
+
+void ns__BriefData::soap_serialize(struct soap *soap) const
+{
+	(void)soap; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_xsd__string(soap, &this->ns__BriefData::Time);
+#endif
+}
+
+int ns__BriefData::soap_out(struct soap *soap, const char *tag, int id, const char *type) const
+{
+	return soap_out_ns__BriefData(soap, tag, id, this, type);
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns__BriefData(struct soap *soap, const char *tag, int id, const ns__BriefData *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_ns__BriefData), type))
+		return soap->error;
+	if (soap_out_xsd__string(soap, "Time", -1, &a->ns__BriefData::Time, ""))
+		return soap->error;
+	if (soap_out_double(soap, "Value", -1, &a->ns__BriefData::Value, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+void *ns__BriefData::soap_in(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_in_ns__BriefData(soap, tag, this, type);
+}
+
+SOAP_FMAC3 ns__BriefData * SOAP_FMAC4 soap_in_ns__BriefData(struct soap *soap, const char *tag, ns__BriefData *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (ns__BriefData*)soap_id_enter(soap, soap->id, a, SOAP_TYPE_ns__BriefData, sizeof(ns__BriefData), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
+	if (!a)
+		return NULL;
+	if (soap->alloced && soap->alloced != SOAP_TYPE_ns__BriefData)
+	{	soap_revert(soap);
+		*soap->id = '\0';
+		return (ns__BriefData *)a->soap_in(soap, tag, type);
+	}
+	if (soap->alloced)
+		a->soap_default(soap);
+	size_t soap_flag_Time1 = 1;
+	size_t soap_flag_Value1 = 1;
+	if (soap->body && *soap->href != '#')
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_Time1 && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+			{	if (soap_in_xsd__string(soap, "Time", &a->ns__BriefData::Time, "xsd:string"))
+				{	soap_flag_Time1--;
+					continue;
+				}
+			}
+			if (soap_flag_Value1 && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_double(soap, "Value", &a->ns__BriefData::Value, "xsd:double"))
+				{	soap_flag_Value1--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+		if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_Time1 > 0 || soap_flag_Value1 > 0))
+		{	soap->error = SOAP_OCCURS;
+			return NULL;
+		}
+	}
+	else if ((soap->mode & SOAP_XML_STRICT) && *soap->href != '#')
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
+	}
+	else
+	{	a = (ns__BriefData *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_ns__BriefData, SOAP_TYPE_ns__BriefData, sizeof(ns__BriefData), 0, soap_finsert, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 ns__BriefData * SOAP_FMAC2 soap_instantiate_ns__BriefData(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_ns__BriefData(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	ns__BriefData *p;
+	size_t k = sizeof(ns__BriefData);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE_ns__BriefData, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, ns__BriefData);
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, ns__BriefData, n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated ns__BriefData location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+int ns__BriefData::soap_put(struct soap *soap, const char *tag, const  char *type) const
+{
+	if (soap_out_ns__BriefData(soap, tag ? tag : "ns:BriefData", -2, this, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+void *ns__BriefData::soap_get(struct soap *soap, const char *tag, const char *type)
+{
+	return soap_get_ns__BriefData(soap, this, tag, type);
+}
+
+SOAP_FMAC3 ns__BriefData * SOAP_FMAC4 soap_get_ns__BriefData(struct soap *soap, ns__BriefData *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_ns__BriefData(soap, tag, p, type)))
 		if (soap_getindependent(soap))
 			return NULL;
 	return p;
@@ -3401,6 +4420,176 @@ SOAP_FMAC3 struct SOAP_ENV__Header * SOAP_FMAC4 soap_get_SOAP_ENV__Header(struct
 
 #endif
 
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns__GetHistoricalDataBrief(struct soap *soap, struct ns__GetHistoricalDataBrief *a)
+{
+	a->soap = soap;
+	soap_default_xsd__string(soap, &a->login);
+	soap_default_xsd__string(soap, &a->password);
+	soap_default_int(soap, &a->AveragePeriod);
+	a->sSensors.ns__ArrayOfSensors::soap_default(soap);
+	soap_default_xsd__string(soap, &a->From);
+	soap_default_xsd__string(soap, &a->To);
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_ns__GetHistoricalDataBrief(struct soap *soap, const struct ns__GetHistoricalDataBrief *a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	soap_serialize_xsd__string(soap, &a->login);
+	soap_serialize_xsd__string(soap, &a->password);
+	a->sSensors.soap_serialize(soap);
+	soap_serialize_xsd__string(soap, &a->From);
+	soap_serialize_xsd__string(soap, &a->To);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_ns__GetHistoricalDataBrief(struct soap *soap, const char *tag, int id, const struct ns__GetHistoricalDataBrief *a, const char *type)
+{
+	(void)soap; (void)tag; (void)id; (void)a; (void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_out(soap, tag, soap_embedded_id(soap, id, a, SOAP_TYPE_ns__GetHistoricalDataBrief), type))
+		return soap->error;
+	if (soap_out_xsd__string(soap, "login", -1, &a->login, ""))
+		return soap->error;
+	if (soap_out_xsd__string(soap, "password", -1, &a->password, ""))
+		return soap->error;
+	if (soap_out_int(soap, "AveragePeriod", -1, &a->AveragePeriod, ""))
+		return soap->error;
+	if (a->sSensors.soap_out(soap, "sSensors", -1, ""))
+		return soap->error;
+	if (soap_out_xsd__string(soap, "From", -1, &a->From, ""))
+		return soap->error;
+	if (soap_out_xsd__string(soap, "To", -1, &a->To, ""))
+		return soap->error;
+	return soap_element_end_out(soap, tag);
+}
+
+SOAP_FMAC3 struct ns__GetHistoricalDataBrief * SOAP_FMAC4 soap_in_ns__GetHistoricalDataBrief(struct soap *soap, const char *tag, struct ns__GetHistoricalDataBrief *a, const char *type)
+{
+	size_t soap_flag_login = 1;
+	size_t soap_flag_password = 1;
+	size_t soap_flag_AveragePeriod = 1;
+	size_t soap_flag_sSensors = 1;
+	size_t soap_flag_From = 1;
+	size_t soap_flag_To = 1;
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 0, NULL))
+		return NULL;
+	a = (struct ns__GetHistoricalDataBrief*)soap_id_enter(soap, soap->id, a, SOAP_TYPE_ns__GetHistoricalDataBrief, sizeof(struct ns__GetHistoricalDataBrief), soap->type, soap->arrayType, soap_instantiate, soap_fbase);
+	if (!a)
+		return NULL;
+	soap_default_ns__GetHistoricalDataBrief(soap, a);
+	if (soap->body && *soap->href != '#')
+	{
+		for (;;)
+		{	soap->error = SOAP_TAG_MISMATCH;
+			if (soap_flag_login && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+			{	if (soap_in_xsd__string(soap, "login", &a->login, "xsd:string"))
+				{	soap_flag_login--;
+					continue;
+				}
+			}
+			if (soap_flag_password && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+			{	if (soap_in_xsd__string(soap, "password", &a->password, "xsd:string"))
+				{	soap_flag_password--;
+					continue;
+				}
+			}
+			if (soap_flag_AveragePeriod && soap->error == SOAP_TAG_MISMATCH)
+			{	if (soap_in_int(soap, "AveragePeriod", &a->AveragePeriod, "xsd:int"))
+				{	soap_flag_AveragePeriod--;
+					continue;
+				}
+			}
+			if (soap_flag_sSensors && soap->error == SOAP_TAG_MISMATCH)
+			{	if (a->sSensors.soap_in(soap, "sSensors", "ns:ArrayOfSensors"))
+				{	soap_flag_sSensors--;
+					continue;
+				}
+			}
+			if (soap_flag_From && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+			{	if (soap_in_xsd__string(soap, "From", &a->From, "xsd:string"))
+				{	soap_flag_From--;
+					continue;
+				}
+			}
+			if (soap_flag_To && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+			{	if (soap_in_xsd__string(soap, "To", &a->To, "xsd:string"))
+				{	soap_flag_To--;
+					continue;
+				}
+			}
+			if (soap->error == SOAP_TAG_MISMATCH)
+				soap->error = soap_ignore_element(soap);
+			if (soap->error == SOAP_NO_TAG)
+				break;
+			if (soap->error)
+				return NULL;
+		}
+		if (soap_element_end_in(soap, tag))
+			return NULL;
+		if ((soap->mode & SOAP_XML_STRICT) && (soap_flag_login > 0 || soap_flag_password > 0 || soap_flag_AveragePeriod > 0 || soap_flag_sSensors > 0 || soap_flag_From > 0 || soap_flag_To > 0))
+		{	soap->error = SOAP_OCCURS;
+			return NULL;
+		}
+	}
+	else if ((soap->mode & SOAP_XML_STRICT) && *soap->href != '#')
+	{	soap->error = SOAP_OCCURS;
+		return NULL;
+	}
+	else
+	{	a = (struct ns__GetHistoricalDataBrief *)soap_id_forward(soap, soap->href, (void*)a, 0, SOAP_TYPE_ns__GetHistoricalDataBrief, SOAP_TYPE_ns__GetHistoricalDataBrief, sizeof(struct ns__GetHistoricalDataBrief), 0, soap_finsert, NULL);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC1 struct ns__GetHistoricalDataBrief * SOAP_FMAC2 soap_instantiate_ns__GetHistoricalDataBrief(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_ns__GetHistoricalDataBrief(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	struct ns__GetHistoricalDataBrief *p;
+	size_t k = sizeof(struct ns__GetHistoricalDataBrief);
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE_ns__GetHistoricalDataBrief, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, struct ns__GetHistoricalDataBrief);
+		if (p)
+			p->soap = soap;
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, struct ns__GetHistoricalDataBrief, n);
+		k *= n;
+		if (p)
+			for (int i = 0; i < n; i++)
+				p[i].soap = soap;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated struct ns__GetHistoricalDataBrief location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_ns__GetHistoricalDataBrief(struct soap *soap, const struct ns__GetHistoricalDataBrief *a, const char *tag, const char *type)
+{
+	if (soap_out_ns__GetHistoricalDataBrief(soap, tag ? tag : "ns:GetHistoricalDataBrief", -2, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 struct ns__GetHistoricalDataBrief * SOAP_FMAC4 soap_get_ns__GetHistoricalDataBrief(struct soap *soap, struct ns__GetHistoricalDataBrief *p, const char *tag, const char *type)
+{
+	if ((p = soap_in_ns__GetHistoricalDataBrief(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
 SOAP_FMAC3 void SOAP_FMAC4 soap_default_ns__GetSensors(struct soap *soap, struct ns__GetSensors *a)
 {
 	a->soap = soap;
@@ -3865,6 +5054,65 @@ SOAP_FMAC3 struct SOAP_ENV__Code ** SOAP_FMAC4 soap_get_PointerToSOAP_ENV__Code(
 
 #endif
 
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTons__ArrayOfSensorData(struct soap *soap, ns__ArrayOfSensorData *const*a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	if (!soap_reference(soap, *a, SOAP_TYPE_ns__ArrayOfSensorData))
+		(*a)->soap_serialize(soap);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTons__ArrayOfSensorData(struct soap *soap, const char *tag, int id, ns__ArrayOfSensorData *const*a, const char *type)
+{
+	id = soap_element_id(soap, tag, id, *a, NULL, 0, type, SOAP_TYPE_ns__ArrayOfSensorData, NULL);
+	if (id < 0)
+		return soap->error;
+	return (*a)->soap_out(soap, tag, id, (*a)->soap_type() == SOAP_TYPE_ns__ArrayOfSensorData ? type : NULL);
+}
+
+SOAP_FMAC3 ns__ArrayOfSensorData ** SOAP_FMAC4 soap_in_PointerTons__ArrayOfSensorData(struct soap *soap, const char *tag, ns__ArrayOfSensorData **a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 1, NULL))
+		return NULL;
+	if (!a)
+		if (!(a = (ns__ArrayOfSensorData **)soap_malloc(soap, sizeof(ns__ArrayOfSensorData *))))
+			return NULL;
+	*a = NULL;
+	if (!soap->null && *soap->href != '#')
+	{	soap_revert(soap);
+		if (!(*a = (ns__ArrayOfSensorData *)soap_instantiate_ns__ArrayOfSensorData(soap, -1, soap->type, soap->arrayType, NULL)))
+			return NULL;
+		(*a)->soap_default(soap);
+		if (!(*a)->soap_in(soap, tag, NULL))
+		{	*a = NULL;
+			return NULL;
+		}
+	}
+	else
+	{	a = (ns__ArrayOfSensorData **)soap_id_lookup(soap, soap->href, (void**)a, SOAP_TYPE_ns__ArrayOfSensorData, sizeof(ns__ArrayOfSensorData), 0, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTons__ArrayOfSensorData(struct soap *soap, ns__ArrayOfSensorData *const*a, const char *tag, const char *type)
+{
+	if (soap_out_PointerTons__ArrayOfSensorData(soap, tag ? tag : "ns:ArrayOfSensorData", -2, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 ns__ArrayOfSensorData ** SOAP_FMAC4 soap_get_PointerTons__ArrayOfSensorData(struct soap *soap, ns__ArrayOfSensorData **p, const char *tag, const char *type)
+{
+	if ((p = soap_in_PointerTons__ArrayOfSensorData(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTons__ArrayOfSensorsInfo(struct soap *soap, ns__ArrayOfSensorsInfo *const*a)
 {
 	(void)soap; (void)a; /* appease -Wall -Werror */
@@ -3983,6 +5231,65 @@ SOAP_FMAC3 ns__ArrayOfStationInfo ** SOAP_FMAC4 soap_get_PointerTons__ArrayOfSta
 	return p;
 }
 
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTons__ArrayOfBriefData(struct soap *soap, ns__ArrayOfBriefData *const*a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	if (!soap_reference(soap, *a, SOAP_TYPE_ns__ArrayOfBriefData))
+		(*a)->soap_serialize(soap);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTons__ArrayOfBriefData(struct soap *soap, const char *tag, int id, ns__ArrayOfBriefData *const*a, const char *type)
+{
+	id = soap_element_id(soap, tag, id, *a, NULL, 0, type, SOAP_TYPE_ns__ArrayOfBriefData, NULL);
+	if (id < 0)
+		return soap->error;
+	return (*a)->soap_out(soap, tag, id, (*a)->soap_type() == SOAP_TYPE_ns__ArrayOfBriefData ? type : NULL);
+}
+
+SOAP_FMAC3 ns__ArrayOfBriefData ** SOAP_FMAC4 soap_in_PointerTons__ArrayOfBriefData(struct soap *soap, const char *tag, ns__ArrayOfBriefData **a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 1, NULL))
+		return NULL;
+	if (!a)
+		if (!(a = (ns__ArrayOfBriefData **)soap_malloc(soap, sizeof(ns__ArrayOfBriefData *))))
+			return NULL;
+	*a = NULL;
+	if (!soap->null && *soap->href != '#')
+	{	soap_revert(soap);
+		if (!(*a = (ns__ArrayOfBriefData *)soap_instantiate_ns__ArrayOfBriefData(soap, -1, soap->type, soap->arrayType, NULL)))
+			return NULL;
+		(*a)->soap_default(soap);
+		if (!(*a)->soap_in(soap, tag, NULL))
+		{	*a = NULL;
+			return NULL;
+		}
+	}
+	else
+	{	a = (ns__ArrayOfBriefData **)soap_id_lookup(soap, soap->href, (void**)a, SOAP_TYPE_ns__ArrayOfBriefData, sizeof(ns__ArrayOfBriefData), 0, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTons__ArrayOfBriefData(struct soap *soap, ns__ArrayOfBriefData *const*a, const char *tag, const char *type)
+{
+	if (soap_out_PointerTons__ArrayOfBriefData(soap, tag ? tag : "ns:ArrayOfBriefData", -2, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 ns__ArrayOfBriefData ** SOAP_FMAC4 soap_get_PointerTons__ArrayOfBriefData(struct soap *soap, ns__ArrayOfBriefData **p, const char *tag, const char *type)
+{
+	if ((p = soap_in_PointerTons__ArrayOfBriefData(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
 SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTons__UnitInfo(struct soap *soap, ns__UnitInfo *const*a)
 {
 	(void)soap; (void)a; /* appease -Wall -Werror */
@@ -4037,6 +5344,65 @@ SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTons__UnitInfo(struct soap *soap, ns__
 SOAP_FMAC3 ns__UnitInfo ** SOAP_FMAC4 soap_get_PointerTons__UnitInfo(struct soap *soap, ns__UnitInfo **p, const char *tag, const char *type)
 {
 	if ((p = soap_in_PointerTons__UnitInfo(soap, tag, p, type)))
+		if (soap_getindependent(soap))
+			return NULL;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_PointerTons__BriefData(struct soap *soap, ns__BriefData *const*a)
+{
+	(void)soap; (void)a; /* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	if (!soap_reference(soap, *a, SOAP_TYPE_ns__BriefData))
+		(*a)->soap_serialize(soap);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_PointerTons__BriefData(struct soap *soap, const char *tag, int id, ns__BriefData *const*a, const char *type)
+{
+	id = soap_element_id(soap, tag, id, *a, NULL, 0, type, SOAP_TYPE_ns__BriefData, NULL);
+	if (id < 0)
+		return soap->error;
+	return (*a)->soap_out(soap, tag, id, (*a)->soap_type() == SOAP_TYPE_ns__BriefData ? type : NULL);
+}
+
+SOAP_FMAC3 ns__BriefData ** SOAP_FMAC4 soap_in_PointerTons__BriefData(struct soap *soap, const char *tag, ns__BriefData **a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	if (soap_element_begin_in(soap, tag, 1, NULL))
+		return NULL;
+	if (!a)
+		if (!(a = (ns__BriefData **)soap_malloc(soap, sizeof(ns__BriefData *))))
+			return NULL;
+	*a = NULL;
+	if (!soap->null && *soap->href != '#')
+	{	soap_revert(soap);
+		if (!(*a = (ns__BriefData *)soap_instantiate_ns__BriefData(soap, -1, soap->type, soap->arrayType, NULL)))
+			return NULL;
+		(*a)->soap_default(soap);
+		if (!(*a)->soap_in(soap, tag, NULL))
+		{	*a = NULL;
+			return NULL;
+		}
+	}
+	else
+	{	a = (ns__BriefData **)soap_id_lookup(soap, soap->href, (void**)a, SOAP_TYPE_ns__BriefData, sizeof(ns__BriefData), 0, soap_fbase);
+		if (soap->body && soap_element_end_in(soap, tag))
+			return NULL;
+	}
+	return a;
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_put_PointerTons__BriefData(struct soap *soap, ns__BriefData *const*a, const char *tag, const char *type)
+{
+	if (soap_out_PointerTons__BriefData(soap, tag ? tag : "ns:BriefData", -2, a, type))
+		return soap->error;
+	return soap_putindependent(soap);
+}
+
+SOAP_FMAC3 ns__BriefData ** SOAP_FMAC4 soap_get_PointerTons__BriefData(struct soap *soap, ns__BriefData **p, const char *tag, const char *type)
+{
+	if ((p = soap_in_PointerTons__BriefData(soap, tag, p, type)))
 		if (soap_getindependent(soap))
 			return NULL;
 	return p;
@@ -4115,6 +5481,214 @@ SOAP_FMAC3 char ** SOAP_FMAC4 soap_get_string(struct soap *soap, char **p, const
 	if ((p = soap_in_string(soap, tag, p, type)))
 		if (soap_getindependent(soap))
 			return NULL;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfxsd__string(struct soap *soap, std::vector<std::wstring> *p)
+{
+	(void)soap; /* appease -Wall -Werror */
+	p->clear();
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfxsd__string(struct soap *soap, const std::vector<std::wstring> *a)
+{
+	(void)soap; (void)a;/* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	for (std::vector<std::wstring> ::const_iterator i = a->begin(); i != a->end(); ++i)
+		soap_serialize_xsd__string(soap, &(*i));
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_std__vectorTemplateOfxsd__string(struct soap *soap, const char *tag, int id, const std::vector<std::wstring> *a, const char *type)
+{
+	(void)id; (void)type; /* appease -Wall -Werror */
+	for (std::vector<std::wstring> ::const_iterator i = a->begin(); i != a->end(); ++i)
+	{
+		if (soap_out_xsd__string(soap, tag, id, &(*i), ""))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 std::vector<std::wstring> * SOAP_FMAC4 soap_in_std__vectorTemplateOfxsd__string(struct soap *soap, const char *tag, std::vector<std::wstring> *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	short soap_flag;
+	for (soap_flag = 0;; soap_flag = 1)
+	{
+		if (tag && *tag != '-')
+		{	if (soap_element_begin_in(soap, tag, 1, NULL))
+				break;
+			soap_revert(soap);
+		}
+		if (!a && !(a = soap_new_std__vectorTemplateOfxsd__string(soap)))
+			return NULL;
+		else if (static_cast<size_t>(a->size()) > soap->maxoccurs)
+		{	soap->error = SOAP_OCCURS;
+			return NULL;
+		}
+		std::wstring n;
+		soap_default_xsd__string(soap, &n);
+		short soap_shaky = soap_begin_shaky(soap);
+		if (tag && *tag != '-' && (*soap->id || *soap->href == '#'))
+		{	if (!soap_id_forward(soap, *soap->id?soap->id:soap->href, a, static_cast<size_t>(a->size()), SOAP_TYPE_xsd__string, SOAP_TYPE_std__vectorTemplateOfxsd__string, sizeof(std::wstring), 0, soap_finsert, soap_fbase))
+				break;
+			if (!soap_in_xsd__string(soap, tag, NULL, "xsd:string"))
+				break;
+		}
+		else
+		{	if (!soap_in_xsd__string(soap, tag, &n, "xsd:string"))
+				break;
+		}
+		soap_end_shaky(soap, soap_shaky);
+		if (a->size())
+		{	const void *p = &*a->begin();
+			soap_update_pointers(soap, (const char*)&(*a->insert(a->end(), n)), (const char*)&n, sizeof(std::wstring));
+			if (p != &*a->begin())
+			{	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Container capacity increased: updating pointers\n"));
+				soap_update_pointers(soap, (const char*)&*a->begin(), (const char*)p, (a->size() - 1) * sizeof(std::wstring));
+			}
+		}
+		else
+		{	soap_update_pointers(soap, (const char*)&(*a->insert(a->end(), n)), (const char*)&n, sizeof(std::wstring));
+		}
+		if (!tag || *tag == '-')
+			return a;
+	}
+	if (soap_flag && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+	{	soap->error = SOAP_OK;
+		return a;
+	}
+	return NULL;
+}
+
+SOAP_FMAC1 std::vector<std::wstring>  * SOAP_FMAC2 soap_instantiate_std__vectorTemplateOfxsd__string(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_std__vectorTemplateOfxsd__string(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	std::vector<std::wstring> *p;
+	size_t k = sizeof(std::vector<std::wstring> );
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE_std__vectorTemplateOfxsd__string, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, std::vector<std::wstring> );
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, std::vector<std::wstring> , n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated std::vector<std::wstring>  location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfns__SensorData(struct soap *soap, std::vector<ns__SensorData> *p)
+{
+	(void)soap; /* appease -Wall -Werror */
+	p->clear();
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfns__SensorData(struct soap *soap, const std::vector<ns__SensorData> *a)
+{
+	(void)soap; (void)a;/* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	for (std::vector<ns__SensorData> ::const_iterator i = a->begin(); i != a->end(); ++i)
+		(*i).soap_serialize(soap);
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_std__vectorTemplateOfns__SensorData(struct soap *soap, const char *tag, int id, const std::vector<ns__SensorData> *a, const char *type)
+{
+	(void)id; (void)type; /* appease -Wall -Werror */
+	for (std::vector<ns__SensorData> ::const_iterator i = a->begin(); i != a->end(); ++i)
+	{
+		if ((*i).soap_out(soap, tag, id, ""))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 std::vector<ns__SensorData> * SOAP_FMAC4 soap_in_std__vectorTemplateOfns__SensorData(struct soap *soap, const char *tag, std::vector<ns__SensorData> *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	short soap_flag;
+	for (soap_flag = 0;; soap_flag = 1)
+	{
+		if (tag && *tag != '-')
+		{	if (soap_element_begin_in(soap, tag, 1, NULL))
+				break;
+			soap_revert(soap);
+		}
+		if (!a && !(a = soap_new_std__vectorTemplateOfns__SensorData(soap)))
+			return NULL;
+		else if (static_cast<size_t>(a->size()) > soap->maxoccurs)
+		{	soap->error = SOAP_OCCURS;
+			return NULL;
+		}
+		ns__SensorData n;
+		n.soap_default(soap);
+		short soap_shaky = soap_begin_shaky(soap);
+		if (tag && *tag != '-' && (*soap->id || *soap->href == '#'))
+		{	if (!soap_id_forward(soap, *soap->id?soap->id:soap->href, a, static_cast<size_t>(a->size()), SOAP_TYPE_ns__SensorData, SOAP_TYPE_std__vectorTemplateOfns__SensorData, sizeof(ns__SensorData), 0, soap_finsert, soap_fbase))
+				break;
+			if (!soap_in_ns__SensorData(soap, tag, NULL, "ns:SensorData"))
+				break;
+		}
+		else
+		{	if (!soap_in_ns__SensorData(soap, tag, &n, "ns:SensorData"))
+				break;
+		}
+		soap_end_shaky(soap, soap_shaky);
+		if (a->size())
+		{	const void *p = &*a->begin();
+			soap_update_pointers(soap, (const char*)&(*a->insert(a->end(), n)), (const char*)&n, sizeof(ns__SensorData));
+			if (p != &*a->begin())
+			{	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Container capacity increased: updating pointers\n"));
+				soap_update_pointers(soap, (const char*)&*a->begin(), (const char*)p, (a->size() - 1) * sizeof(ns__SensorData));
+			}
+		}
+		else
+		{	soap_update_pointers(soap, (const char*)&(*a->insert(a->end(), n)), (const char*)&n, sizeof(ns__SensorData));
+		}
+		if (!tag || *tag == '-')
+			return a;
+	}
+	if (soap_flag && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+	{	soap->error = SOAP_OK;
+		return a;
+	}
+	return NULL;
+}
+
+SOAP_FMAC1 std::vector<ns__SensorData>  * SOAP_FMAC2 soap_instantiate_std__vectorTemplateOfns__SensorData(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_std__vectorTemplateOfns__SensorData(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	std::vector<ns__SensorData> *p;
+	size_t k = sizeof(std::vector<ns__SensorData> );
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE_std__vectorTemplateOfns__SensorData, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, std::vector<ns__SensorData> );
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, std::vector<ns__SensorData> , n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated std::vector<ns__SensorData>  location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
 	return p;
 }
 
@@ -4317,6 +5891,98 @@ SOAP_FMAC1 std::vector<ns__StationInfo>  * SOAP_FMAC2 soap_instantiate_std__vect
 		k *= n;
 	}
 	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated std::vector<ns__StationInfo>  location=%p n=%d\n", (void*)p, n));
+	if (size)
+		*size = k;
+	if (!p)
+		soap->error = SOAP_EOM;
+	else if (cp)
+		cp->ptr = (void*)p;
+	return p;
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_default_std__vectorTemplateOfPointerTons__BriefData(struct soap *soap, std::vector<ns__BriefData *> *p)
+{
+	(void)soap; /* appease -Wall -Werror */
+	p->clear();
+}
+
+SOAP_FMAC3 void SOAP_FMAC4 soap_serialize_std__vectorTemplateOfPointerTons__BriefData(struct soap *soap, const std::vector<ns__BriefData *> *a)
+{
+	(void)soap; (void)a;/* appease -Wall -Werror */
+#ifndef WITH_NOIDREF
+	for (std::vector<ns__BriefData *> ::const_iterator i = a->begin(); i != a->end(); ++i)
+		soap_serialize_PointerTons__BriefData(soap, &(*i));
+#endif
+}
+
+SOAP_FMAC3 int SOAP_FMAC4 soap_out_std__vectorTemplateOfPointerTons__BriefData(struct soap *soap, const char *tag, int id, const std::vector<ns__BriefData *> *a, const char *type)
+{
+	(void)id; (void)type; /* appease -Wall -Werror */
+	for (std::vector<ns__BriefData *> ::const_iterator i = a->begin(); i != a->end(); ++i)
+	{
+		if (soap_out_PointerTons__BriefData(soap, tag, id, &(*i), ""))
+			return soap->error;
+	}
+	return SOAP_OK;
+}
+
+SOAP_FMAC3 std::vector<ns__BriefData *> * SOAP_FMAC4 soap_in_std__vectorTemplateOfPointerTons__BriefData(struct soap *soap, const char *tag, std::vector<ns__BriefData *> *a, const char *type)
+{
+	(void)type; /* appease -Wall -Werror */
+	short soap_flag;
+	for (soap_flag = 0;; soap_flag = 1)
+	{
+		if (tag && *tag != '-')
+		{	if (soap_element_begin_in(soap, tag, 1, NULL))
+				break;
+			soap_revert(soap);
+		}
+		if (!a && !(a = soap_new_std__vectorTemplateOfPointerTons__BriefData(soap)))
+			return NULL;
+		else if (static_cast<size_t>(a->size()) > soap->maxoccurs)
+		{	soap->error = SOAP_OCCURS;
+			return NULL;
+		}
+		ns__BriefData *n;
+		n = NULL;
+		if (tag && *tag != '-' && (*soap->id || *soap->href == '#'))
+		{	if (!soap_id_forward(soap, *soap->id?soap->id:soap->href, a, static_cast<size_t>(a->size()), SOAP_TYPE_ns__BriefData, SOAP_TYPE_std__vectorTemplateOfPointerTons__BriefData, sizeof(ns__BriefData), 1, soap_finsert, soap_fbase))
+				break;
+			if (!soap_in_PointerTons__BriefData(soap, tag, NULL, "ns:BriefData"))
+				break;
+		}
+		else
+		{	if (!soap_in_PointerTons__BriefData(soap, tag, &n, "ns:BriefData"))
+				break;
+		}
+		a->insert(a->end(), n);
+		if (!tag || *tag == '-')
+			return a;
+	}
+	if (soap_flag && (soap->error == SOAP_TAG_MISMATCH || soap->error == SOAP_NO_TAG))
+	{	soap->error = SOAP_OK;
+		return a;
+	}
+	return NULL;
+}
+
+SOAP_FMAC1 std::vector<ns__BriefData *>  * SOAP_FMAC2 soap_instantiate_std__vectorTemplateOfPointerTons__BriefData(struct soap *soap, int n, const char *type, const char *arrayType, size_t *size)
+{
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "soap_instantiate_std__vectorTemplateOfPointerTons__BriefData(%p, %d, %s, %s)\n", (void*)soap, n, type?type:"", arrayType?arrayType:""));
+	(void)type; (void)arrayType; /* appease -Wall -Werror */
+	std::vector<ns__BriefData *> *p;
+	size_t k = sizeof(std::vector<ns__BriefData *> );
+	struct soap_clist *cp = soap_link(soap, SOAP_TYPE_std__vectorTemplateOfPointerTons__BriefData, n, soap_fdelete);
+	if (!cp && soap && n != SOAP_NO_LINK_TO_DELETE)
+		return NULL;
+	if (n < 0)
+	{	p = SOAP_NEW(soap, std::vector<ns__BriefData *> );
+	}
+	else
+	{	p = SOAP_NEW_ARRAY(soap, std::vector<ns__BriefData *> , n);
+		k *= n;
+	}
+	DBGLOG(TEST, SOAP_MESSAGE(fdebug, "Instantiated std::vector<ns__BriefData *>  location=%p n=%d\n", (void*)p, n));
 	if (size)
 		*size = k;
 	if (!p)

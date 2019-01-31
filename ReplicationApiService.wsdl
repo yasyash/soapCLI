@@ -64,6 +64,17 @@
         <enumeration value="nothing"/><!-- nothing_ -->
       </restriction>
     </simpleType>
+    <complexType name="BriefData"><!-- ns__BriefData -->
+          <sequence>
+            <element name="Time" type="xsd:string" minOccurs="1" maxOccurs="1"/><!-- ns__BriefData::Time -->
+            <element name="Value" type="xsd:double" minOccurs="1" maxOccurs="1"/><!-- ns__BriefData::Value -->
+          </sequence>
+    </complexType>
+    <complexType name="ArrayOfBriefData"><!-- ns__ArrayOfBriefData -->
+          <sequence>
+            <element name="BriefData" type="ns:BriefData" minOccurs="0" maxOccurs="unbounded"/><!-- ns__ArrayOfBriefData::BriefData -->
+          </sequence>
+    </complexType>
     <complexType name="StationInfo"><!-- ns__StationInfo -->
           <sequence>
             <element name="ID" type="xsd:string" minOccurs="1" maxOccurs="1"/><!-- ns__StationInfo::ID -->
@@ -96,6 +107,12 @@
             <element name="DefaultColor" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- ns__SensorInfo::DefaultColor -->
           </sequence>
     </complexType>
+    <complexType name="SensorData"><!-- ns__SensorData -->
+          <sequence>
+            <element name="SensorID" type="xsd:string" minOccurs="1" maxOccurs="1"/><!-- ns__SensorData::SensorID -->
+            <element name="Data" type="ns:ArrayOfBriefData" minOccurs="0" maxOccurs="1"/><!-- ns__SensorData::Data -->
+          </sequence>
+    </complexType>
     <complexType name="ArrayOfStationInfo"><!-- ns__ArrayOfStationInfo -->
           <sequence>
             <element name="StationsInfo" type="ns:StationInfo" minOccurs="0" maxOccurs="unbounded"/><!-- ns__ArrayOfStationInfo::StationsInfo -->
@@ -106,6 +123,11 @@
             <element name="SensorsInfo" type="ns:SensorInfo" minOccurs="0" maxOccurs="unbounded"/><!-- ns__ArrayOfSensorsInfo::SensorsInfo -->
           </sequence>
     </complexType>
+    <complexType name="ArrayOfSensorData"><!-- ns__ArrayOfSensorData -->
+          <sequence>
+            <element name="SensorData" type="ns:SensorData" minOccurs="0" maxOccurs="unbounded"/><!-- ns__ArrayOfSensorData::SensorData -->
+          </sequence>
+    </complexType>
     <complexType name="StInfo"><!-- ns__StInfo -->
           <sequence>
             <element name="ID" type="xsd:string" minOccurs="1" maxOccurs="1"/><!-- ns__StInfo::ID -->
@@ -113,6 +135,11 @@
             <element name="Name" type="xsd:string" minOccurs="1" maxOccurs="1"/><!-- ns__StInfo::Name -->
             <element name="UpdatePeriod" type="xsd:int" minOccurs="1" maxOccurs="1"/><!-- ns__StInfo::UpdatePeriod -->
             <element name="UserAccessRight" type="ns:UserAccessRightCode" minOccurs="1" maxOccurs="1"/><!-- ns__StInfo::UserAccessRight -->
+          </sequence>
+    </complexType>
+    <complexType name="ArrayOfSensors"><!-- ns__ArrayOfSensors -->
+          <sequence>
+            <element name="string" type="xsd:string" minOccurs="0" maxOccurs="unbounded"/><!-- ns__ArrayOfSensors::string -->
           </sequence>
     </complexType>
   </schema>
@@ -142,6 +169,20 @@
   <part name="ErrorCode" type="ns:ErrorCode"/><!-- ns__GetSensors::ErrorCode -->
 </message>
 
+<message name="GetHistoricalDataBrief">
+  <part name="login" type="xsd:string"/><!-- ns__GetHistoricalDataBrief::login -->
+  <part name="password" type="xsd:string"/><!-- ns__GetHistoricalDataBrief::password -->
+  <part name="AveragePeriod" type="xsd:int"/><!-- ns__GetHistoricalDataBrief::AveragePeriod -->
+  <part name="sSensors" type="ns:ArrayOfSensors"/><!-- ns__GetHistoricalDataBrief::sSensors -->
+  <part name="From" type="xsd:string"/><!-- ns__GetHistoricalDataBrief::From -->
+  <part name="To" type="xsd:string"/><!-- ns__GetHistoricalDataBrief::To -->
+</message>
+
+<message name="GetHistoricalDataBriefResponse">
+  <part name="GetHistoricalDataBriefResult" type="ns:ArrayOfSensorData"/><!-- ns__GetHistoricalDataBrief::GetHistoricalDataBriefResult -->
+  <part name="ErrorCode" type="ns:ErrorCode"/><!-- ns__GetHistoricalDataBrief::ErrorCode -->
+</message>
+
 <portType name="ReplicationApiServicePortType">
   <operation name="GetStations">
     <documentation>Service definition of function ns__GetStations</documentation>
@@ -152,6 +193,11 @@
     <documentation>Service definition of function ns__GetSensors</documentation>
     <input message="tns:GetSensors"/>
     <output message="tns:GetSensorsResponse"/>
+  </operation>
+  <operation name="GetHistoricalDataBrief">
+    <documentation>Service definition of function ns__GetHistoricalDataBrief</documentation>
+    <input message="tns:GetHistoricalDataBrief"/>
+    <output message="tns:GetHistoricalDataBriefResponse"/>
   </operation>
 </portType>
 
@@ -167,6 +213,15 @@
     </output>
   </operation>
   <operation name="GetSensors">
+    <SOAP:operation style="rpc" soapAction=""/>
+    <input>
+          <SOAP:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:ReplicationApiService"/>
+    </input>
+    <output>
+          <SOAP:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:ReplicationApiService"/>
+    </output>
+  </operation>
+  <operation name="GetHistoricalDataBrief">
     <SOAP:operation style="rpc" soapAction=""/>
     <input>
           <SOAP:body use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:ReplicationApiService"/>

@@ -1,10 +1,10 @@
 //gsoap ns service name: ReplicationApiService
 //gsoap ns service namespace: urn:ReplicationApiService
-//gsoap ns service protocol:        SOAP
+//gsoap ns service protocol: SOAP
 //gsoap ns service style: rpc
 //gsoap ns service encoding: encoded
 
-//gsoap ns schema namespace:        urn:ReplicationApiService
+//gsoap ns schema namespace: urn:ReplicationApiService
 
 #include <vector>
 
@@ -32,6 +32,17 @@ enum ns__MeasurementClasses{
     alert_,
     hum_out_,
     nothing_
+};
+
+class ns__BriefData
+{ public:
+    xsd__string Time;
+    double Value;
+};
+
+class ns__ArrayOfBriefData
+{ public:
+    std::vector<ns__BriefData*> BriefData;
 };
 
 class ns__StationInfo{
@@ -68,6 +79,12 @@ public:
     int DefaultColor;
 };
 
+class ns__SensorData
+{
+public:
+    xsd__string SensorID;
+    ns__ArrayOfBriefData* Data;
+};
 
 class ns__ArrayOfStationInfo
 {
@@ -80,18 +97,31 @@ public:
     std::vector<ns__SensorInfo> SensorsInfo;
 };
 
-class ns__GetStationsResponse  {
+class ns__ArrayOfSensorData{
+public:
+    std::vector<ns__SensorData> SensorData;
+};
+
+class ns__GetStationsResponse {
 public:
     ns__ArrayOfStationInfo* GetStationsResult;
     enum ns__ErrorCode ErrorCode;
     struct soap *soap;
 };
 
-class ns__GetSensorsResponse  {
+class ns__GetSensorsResponse {
 public:
     ns__ArrayOfSensorsInfo* GetSensorsResult;
     enum ns__ErrorCode ErrorCode;
     struct soap *soap;
+};
+
+class ns__GetHistoricalDataBriefResponse {
+public:
+    ns__ArrayOfSensorData* GetHistoricalDataBriefResult;
+    enum ns__ErrorCode ErrorCode;
+    struct soap *soap;
+
 };
 
 class ns__StInfo{
@@ -103,5 +133,11 @@ public:
     enum ns__UserAccessRightCode UserAccessRight;
 };
 
+class ns__ArrayOfSensors
+{ public:
+    std::vector<xsd__string> string;
+};
+
 int ns__GetStations (struct soap *soap, xsd__string login, xsd__string password, ns__GetStationsResponse &result);
 int ns__GetSensors (struct soap *soap, xsd__string login, xsd__string password, xsd__string StationID, xsd__string From, xsd__string To, ns__GetSensorsResponse &result);
+int ns__GetHistoricalDataBrief (struct soap *soap, xsd__string login, xsd__string password, int AveragePeriod, ns__ArrayOfSensors sSensors, xsd__string From, xsd__string To, ns__GetHistoricalDataBriefResponse &result);

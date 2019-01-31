@@ -30,3 +30,8 @@ DEFINES += WITH_PURE_VIRTUAL\
            WITH_NOIDREF
 
 include( common.pri )
+
+DISTFILES += \
+    perl_soap/data_get_pg \
+    perl_soap/sensors_get_pg \
+    perl_soap/stations_get_pg

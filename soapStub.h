@@ -78,20 +78,97 @@ enum ns__MeasurementClasses {
  *                                                                            *
 \******************************************************************************/
 
-class ns__StationInfo;	/* replicator.h:37 */
-class ns__UnitInfo;	/* replicator.h:49 */
-class ns__SensorInfo;	/* replicator.h:56 */
-class ns__ArrayOfStationInfo;	/* replicator.h:72 */
-class ns__ArrayOfSensorsInfo;	/* replicator.h:78 */
-class ns__GetStationsResponse;	/* replicator.h:83 */
-class ns__GetSensorsResponse;	/* replicator.h:90 */
-class ns__StInfo;	/* replicator.h:97 */
-struct ns__GetStations;	/* replicator.h:106 */
-struct ns__GetSensors;	/* replicator.h:107 */
+class ns__BriefData;	/* replicator.h:37 */
+class ns__ArrayOfBriefData;	/* replicator.h:43 */
+class ns__StationInfo;	/* replicator.h:48 */
+class ns__UnitInfo;	/* replicator.h:60 */
+class ns__SensorInfo;	/* replicator.h:67 */
+class ns__SensorData;	/* replicator.h:82 */
+class ns__ArrayOfStationInfo;	/* replicator.h:89 */
+class ns__ArrayOfSensorsInfo;	/* replicator.h:95 */
+class ns__ArrayOfSensorData;	/* replicator.h:100 */
+class ns__GetStationsResponse;	/* replicator.h:105 */
+class ns__GetSensorsResponse;	/* replicator.h:112 */
+class ns__GetHistoricalDataBriefResponse;	/* replicator.h:119 */
+class ns__StInfo;	/* replicator.h:127 */
+class ns__ArrayOfSensors;	/* replicator.h:136 */
+struct ns__GetStations;	/* replicator.h:141 */
+struct ns__GetSensors;	/* replicator.h:142 */
+struct ns__GetHistoricalDataBrief;	/* replicator.h:143 */
 
 /* replicator.h:37 */
+#ifndef SOAP_TYPE_ns__BriefData
+#define SOAP_TYPE_ns__BriefData (13)
+/* complex XML schema type 'ns:BriefData': */
+class SOAP_CMAC ns__BriefData {
+      public:
+        /// Required element 'Time' of XML schema type 'xsd:string'
+        std::wstring Time;
+        /// Required element 'Value' of XML schema type 'xsd:double'
+        double Value;
+      public:
+        /// Return unique type id SOAP_TYPE_ns__BriefData
+        virtual long soap_type(void) const { return SOAP_TYPE_ns__BriefData; }
+        /// (Re)set members to default values
+        virtual void soap_default(struct soap*);
+        /// Serialize object to prepare for SOAP 1.1/1.2 encoded output (or with SOAP_XML_GRAPH) by analyzing its (cyclic) structures
+        virtual void soap_serialize(struct soap*) const;
+        /// Output object in XML, compliant with SOAP 1.1 encoding style, return error code or SOAP_OK
+        virtual int soap_put(struct soap*, const char *tag, const char *type) const;
+        /// Output object in XML, with tag and optional id attribute and xsi:type, return error code or SOAP_OK
+        virtual int soap_out(struct soap*, const char *tag, int id, const char *type) const;
+        /// Get object from XML, compliant with SOAP 1.1 encoding style, return pointer to object or NULL on error
+        virtual void *soap_get(struct soap*, const char *tag, const char *type);
+        /// Get object from XML, with matching tag and type (NULL matches any tag and type), return pointer to object or NULL on error
+        virtual void *soap_in(struct soap*, const char *tag, const char *type);
+        /// Return a new object of type ns__BriefData, default initialized and not managed by a soap context
+        virtual ns__BriefData *soap_alloc(void) const { return SOAP_NEW_UNMANAGED(ns__BriefData); }
+      public:
+        /// Constructor with default initializations
+        ns__BriefData() : Time(), Value() { }
+        virtual ~ns__BriefData() { }
+        /// Friend allocator used by soap_new_ns__BriefData(struct soap*, int)
+        friend SOAP_FMAC1 ns__BriefData * SOAP_FMAC2 soap_instantiate_ns__BriefData(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* replicator.h:43 */
+#ifndef SOAP_TYPE_ns__ArrayOfBriefData
+#define SOAP_TYPE_ns__ArrayOfBriefData (15)
+/* complex XML schema type 'ns:ArrayOfBriefData': */
+class SOAP_CMAC ns__ArrayOfBriefData {
+      public:
+        /// Optional element 'BriefData' of XML schema type 'ns:BriefData'
+        std::vector<ns__BriefData *> BriefData;
+      public:
+        /// Return unique type id SOAP_TYPE_ns__ArrayOfBriefData
+        virtual long soap_type(void) const { return SOAP_TYPE_ns__ArrayOfBriefData; }
+        /// (Re)set members to default values
+        virtual void soap_default(struct soap*);
+        /// Serialize object to prepare for SOAP 1.1/1.2 encoded output (or with SOAP_XML_GRAPH) by analyzing its (cyclic) structures
+        virtual void soap_serialize(struct soap*) const;
+        /// Output object in XML, compliant with SOAP 1.1 encoding style, return error code or SOAP_OK
+        virtual int soap_put(struct soap*, const char *tag, const char *type) const;
+        /// Output object in XML, with tag and optional id attribute and xsi:type, return error code or SOAP_OK
+        virtual int soap_out(struct soap*, const char *tag, int id, const char *type) const;
+        /// Get object from XML, compliant with SOAP 1.1 encoding style, return pointer to object or NULL on error
+        virtual void *soap_get(struct soap*, const char *tag, const char *type);
+        /// Get object from XML, with matching tag and type (NULL matches any tag and type), return pointer to object or NULL on error
+        virtual void *soap_in(struct soap*, const char *tag, const char *type);
+        /// Return a new object of type ns__ArrayOfBriefData, default initialized and not managed by a soap context
+        virtual ns__ArrayOfBriefData *soap_alloc(void) const { return SOAP_NEW_UNMANAGED(ns__ArrayOfBriefData); }
+      public:
+        /// Constructor with default initializations
+        ns__ArrayOfBriefData() : BriefData() { }
+        virtual ~ns__ArrayOfBriefData() { }
+        /// Friend allocator used by soap_new_ns__ArrayOfBriefData(struct soap*, int)
+        friend SOAP_FMAC1 ns__ArrayOfBriefData * SOAP_FMAC2 soap_instantiate_ns__ArrayOfBriefData(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* replicator.h:48 */
 #ifndef SOAP_TYPE_ns__StationInfo
-#define SOAP_TYPE_ns__StationInfo (13)
+#define SOAP_TYPE_ns__StationInfo (18)
 /* complex XML schema type 'ns:StationInfo': */
 class SOAP_CMAC ns__StationInfo {
       public:
@@ -137,9 +214,9 @@ class SOAP_CMAC ns__StationInfo {
 };
 #endif
 
-/* replicator.h:49 */
+/* replicator.h:60 */
 #ifndef SOAP_TYPE_ns__UnitInfo
-#define SOAP_TYPE_ns__UnitInfo (15)
+#define SOAP_TYPE_ns__UnitInfo (20)
 /* complex XML schema type 'ns:UnitInfo': */
 class SOAP_CMAC ns__UnitInfo {
       public:
@@ -173,9 +250,9 @@ class SOAP_CMAC ns__UnitInfo {
 };
 #endif
 
-/* replicator.h:56 */
+/* replicator.h:67 */
 #ifndef SOAP_TYPE_ns__SensorInfo
-#define SOAP_TYPE_ns__SensorInfo (16)
+#define SOAP_TYPE_ns__SensorInfo (21)
 /* complex XML schema type 'ns:SensorInfo': */
 class SOAP_CMAC ns__SensorInfo {
       public:
@@ -225,9 +302,45 @@ class SOAP_CMAC ns__SensorInfo {
 };
 #endif
 
-/* replicator.h:72 */
+/* replicator.h:82 */
+#ifndef SOAP_TYPE_ns__SensorData
+#define SOAP_TYPE_ns__SensorData (24)
+/* complex XML schema type 'ns:SensorData': */
+class SOAP_CMAC ns__SensorData {
+      public:
+        /// Required element 'SensorID' of XML schema type 'xsd:string'
+        std::wstring SensorID;
+        /// Optional element 'Data' of XML schema type 'ns:ArrayOfBriefData'
+        ns__ArrayOfBriefData *Data;
+      public:
+        /// Return unique type id SOAP_TYPE_ns__SensorData
+        virtual long soap_type(void) const { return SOAP_TYPE_ns__SensorData; }
+        /// (Re)set members to default values
+        virtual void soap_default(struct soap*);
+        /// Serialize object to prepare for SOAP 1.1/1.2 encoded output (or with SOAP_XML_GRAPH) by analyzing its (cyclic) structures
+        virtual void soap_serialize(struct soap*) const;
+        /// Output object in XML, compliant with SOAP 1.1 encoding style, return error code or SOAP_OK
+        virtual int soap_put(struct soap*, const char *tag, const char *type) const;
+        /// Output object in XML, with tag and optional id attribute and xsi:type, return error code or SOAP_OK
+        virtual int soap_out(struct soap*, const char *tag, int id, const char *type) const;
+        /// Get object from XML, compliant with SOAP 1.1 encoding style, return pointer to object or NULL on error
+        virtual void *soap_get(struct soap*, const char *tag, const char *type);
+        /// Get object from XML, with matching tag and type (NULL matches any tag and type), return pointer to object or NULL on error
+        virtual void *soap_in(struct soap*, const char *tag, const char *type);
+        /// Return a new object of type ns__SensorData, default initialized and not managed by a soap context
+        virtual ns__SensorData *soap_alloc(void) const { return SOAP_NEW_UNMANAGED(ns__SensorData); }
+      public:
+        /// Constructor with default initializations
+        ns__SensorData() : SensorID(), Data() { }
+        virtual ~ns__SensorData() { }
+        /// Friend allocator used by soap_new_ns__SensorData(struct soap*, int)
+        friend SOAP_FMAC1 ns__SensorData * SOAP_FMAC2 soap_instantiate_ns__SensorData(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* replicator.h:89 */
 #ifndef SOAP_TYPE_ns__ArrayOfStationInfo
-#define SOAP_TYPE_ns__ArrayOfStationInfo (20)
+#define SOAP_TYPE_ns__ArrayOfStationInfo (26)
 /* complex XML schema type 'ns:ArrayOfStationInfo': */
 class SOAP_CMAC ns__ArrayOfStationInfo {
       public:
@@ -259,9 +372,9 @@ class SOAP_CMAC ns__ArrayOfStationInfo {
 };
 #endif
 
-/* replicator.h:78 */
+/* replicator.h:95 */
 #ifndef SOAP_TYPE_ns__ArrayOfSensorsInfo
-#define SOAP_TYPE_ns__ArrayOfSensorsInfo (22)
+#define SOAP_TYPE_ns__ArrayOfSensorsInfo (28)
 /* complex XML schema type 'ns:ArrayOfSensorsInfo': */
 class SOAP_CMAC ns__ArrayOfSensorsInfo {
       public:
@@ -293,9 +406,43 @@ class SOAP_CMAC ns__ArrayOfSensorsInfo {
 };
 #endif
 
-/* replicator.h:83 */
+/* replicator.h:100 */
+#ifndef SOAP_TYPE_ns__ArrayOfSensorData
+#define SOAP_TYPE_ns__ArrayOfSensorData (30)
+/* complex XML schema type 'ns:ArrayOfSensorData': */
+class SOAP_CMAC ns__ArrayOfSensorData {
+      public:
+        /// Optional element 'SensorData' of XML schema type 'ns:SensorData'
+        std::vector<ns__SensorData> SensorData;
+      public:
+        /// Return unique type id SOAP_TYPE_ns__ArrayOfSensorData
+        virtual long soap_type(void) const { return SOAP_TYPE_ns__ArrayOfSensorData; }
+        /// (Re)set members to default values
+        virtual void soap_default(struct soap*);
+        /// Serialize object to prepare for SOAP 1.1/1.2 encoded output (or with SOAP_XML_GRAPH) by analyzing its (cyclic) structures
+        virtual void soap_serialize(struct soap*) const;
+        /// Output object in XML, compliant with SOAP 1.1 encoding style, return error code or SOAP_OK
+        virtual int soap_put(struct soap*, const char *tag, const char *type) const;
+        /// Output object in XML, with tag and optional id attribute and xsi:type, return error code or SOAP_OK
+        virtual int soap_out(struct soap*, const char *tag, int id, const char *type) const;
+        /// Get object from XML, compliant with SOAP 1.1 encoding style, return pointer to object or NULL on error
+        virtual void *soap_get(struct soap*, const char *tag, const char *type);
+        /// Get object from XML, with matching tag and type (NULL matches any tag and type), return pointer to object or NULL on error
+        virtual void *soap_in(struct soap*, const char *tag, const char *type);
+        /// Return a new object of type ns__ArrayOfSensorData, default initialized and not managed by a soap context
+        virtual ns__ArrayOfSensorData *soap_alloc(void) const { return SOAP_NEW_UNMANAGED(ns__ArrayOfSensorData); }
+      public:
+        /// Constructor with default initializations
+        ns__ArrayOfSensorData() : SensorData() { }
+        virtual ~ns__ArrayOfSensorData() { }
+        /// Friend allocator used by soap_new_ns__ArrayOfSensorData(struct soap*, int)
+        friend SOAP_FMAC1 ns__ArrayOfSensorData * SOAP_FMAC2 soap_instantiate_ns__ArrayOfSensorData(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* replicator.h:105 */
 #ifndef SOAP_TYPE_ns__GetStationsResponse
-#define SOAP_TYPE_ns__GetStationsResponse (24)
+#define SOAP_TYPE_ns__GetStationsResponse (32)
 /* complex XML schema type 'ns:GetStationsResponse': */
 class SOAP_CMAC ns__GetStationsResponse {
       public:
@@ -331,9 +478,9 @@ class SOAP_CMAC ns__GetStationsResponse {
 };
 #endif
 
-/* replicator.h:90 */
+/* replicator.h:112 */
 #ifndef SOAP_TYPE_ns__GetSensorsResponse
-#define SOAP_TYPE_ns__GetSensorsResponse (27)
+#define SOAP_TYPE_ns__GetSensorsResponse (35)
 /* complex XML schema type 'ns:GetSensorsResponse': */
 class SOAP_CMAC ns__GetSensorsResponse {
       public:
@@ -369,9 +516,47 @@ class SOAP_CMAC ns__GetSensorsResponse {
 };
 #endif
 
-/* replicator.h:97 */
+/* replicator.h:119 */
+#ifndef SOAP_TYPE_ns__GetHistoricalDataBriefResponse
+#define SOAP_TYPE_ns__GetHistoricalDataBriefResponse (37)
+/* complex XML schema type 'ns:GetHistoricalDataBriefResponse': */
+class SOAP_CMAC ns__GetHistoricalDataBriefResponse {
+      public:
+        /// Optional element 'GetHistoricalDataBriefResult' of XML schema type 'ns:ArrayOfSensorData'
+        ns__ArrayOfSensorData *GetHistoricalDataBriefResult;
+        /// Required element 'ErrorCode' of XML schema type 'ns:ErrorCode'
+        enum ns__ErrorCode ErrorCode;
+        /// Context that manages this object
+        struct soap *soap;
+      public:
+        /// Return unique type id SOAP_TYPE_ns__GetHistoricalDataBriefResponse
+        virtual long soap_type(void) const { return SOAP_TYPE_ns__GetHistoricalDataBriefResponse; }
+        /// (Re)set members to default values
+        virtual void soap_default(struct soap*);
+        /// Serialize object to prepare for SOAP 1.1/1.2 encoded output (or with SOAP_XML_GRAPH) by analyzing its (cyclic) structures
+        virtual void soap_serialize(struct soap*) const;
+        /// Output object in XML, compliant with SOAP 1.1 encoding style, return error code or SOAP_OK
+        virtual int soap_put(struct soap*, const char *tag, const char *type) const;
+        /// Output object in XML, with tag and optional id attribute and xsi:type, return error code or SOAP_OK
+        virtual int soap_out(struct soap*, const char *tag, int id, const char *type) const;
+        /// Get object from XML, compliant with SOAP 1.1 encoding style, return pointer to object or NULL on error
+        virtual void *soap_get(struct soap*, const char *tag, const char *type);
+        /// Get object from XML, with matching tag and type (NULL matches any tag and type), return pointer to object or NULL on error
+        virtual void *soap_in(struct soap*, const char *tag, const char *type);
+        /// Return a new object of type ns__GetHistoricalDataBriefResponse, default initialized and not managed by a soap context
+        virtual ns__GetHistoricalDataBriefResponse *soap_alloc(void) const { return SOAP_NEW_UNMANAGED(ns__GetHistoricalDataBriefResponse); }
+      public:
+        /// Constructor with default initializations
+        ns__GetHistoricalDataBriefResponse() : GetHistoricalDataBriefResult(), ErrorCode(), soap() { }
+        virtual ~ns__GetHistoricalDataBriefResponse() { }
+        /// Friend allocator used by soap_new_ns__GetHistoricalDataBriefResponse(struct soap*, int)
+        friend SOAP_FMAC1 ns__GetHistoricalDataBriefResponse * SOAP_FMAC2 soap_instantiate_ns__GetHistoricalDataBriefResponse(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* replicator.h:127 */
 #ifndef SOAP_TYPE_ns__StInfo
-#define SOAP_TYPE_ns__StInfo (29)
+#define SOAP_TYPE_ns__StInfo (39)
 /* complex XML schema type 'ns:StInfo': */
 class SOAP_CMAC ns__StInfo {
       public:
@@ -411,9 +596,43 @@ class SOAP_CMAC ns__StInfo {
 };
 #endif
 
-/* replicator.h:106 */
+/* replicator.h:136 */
+#ifndef SOAP_TYPE_ns__ArrayOfSensors
+#define SOAP_TYPE_ns__ArrayOfSensors (40)
+/* complex XML schema type 'ns:ArrayOfSensors': */
+class SOAP_CMAC ns__ArrayOfSensors {
+      public:
+        /// Optional element 'string' of XML schema type 'xsd:string'
+        std::vector<std::wstring> string;
+      public:
+        /// Return unique type id SOAP_TYPE_ns__ArrayOfSensors
+        virtual long soap_type(void) const { return SOAP_TYPE_ns__ArrayOfSensors; }
+        /// (Re)set members to default values
+        virtual void soap_default(struct soap*);
+        /// Serialize object to prepare for SOAP 1.1/1.2 encoded output (or with SOAP_XML_GRAPH) by analyzing its (cyclic) structures
+        virtual void soap_serialize(struct soap*) const;
+        /// Output object in XML, compliant with SOAP 1.1 encoding style, return error code or SOAP_OK
+        virtual int soap_put(struct soap*, const char *tag, const char *type) const;
+        /// Output object in XML, with tag and optional id attribute and xsi:type, return error code or SOAP_OK
+        virtual int soap_out(struct soap*, const char *tag, int id, const char *type) const;
+        /// Get object from XML, compliant with SOAP 1.1 encoding style, return pointer to object or NULL on error
+        virtual void *soap_get(struct soap*, const char *tag, const char *type);
+        /// Get object from XML, with matching tag and type (NULL matches any tag and type), return pointer to object or NULL on error
+        virtual void *soap_in(struct soap*, const char *tag, const char *type);
+        /// Return a new object of type ns__ArrayOfSensors, default initialized and not managed by a soap context
+        virtual ns__ArrayOfSensors *soap_alloc(void) const { return SOAP_NEW_UNMANAGED(ns__ArrayOfSensors); }
+      public:
+        /// Constructor with default initializations
+        ns__ArrayOfSensors() : string() { }
+        virtual ~ns__ArrayOfSensors() { }
+        /// Friend allocator used by soap_new_ns__ArrayOfSensors(struct soap*, int)
+        friend SOAP_FMAC1 ns__ArrayOfSensors * SOAP_FMAC2 soap_instantiate_ns__ArrayOfSensors(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* replicator.h:141 */
 #ifndef SOAP_TYPE_ns__GetStations
-#define SOAP_TYPE_ns__GetStations (32)
+#define SOAP_TYPE_ns__GetStations (44)
 /* complex XML schema type 'ns:GetStations': */
 struct SOAP_CMAC ns__GetStations {
       public:
@@ -433,9 +652,9 @@ struct SOAP_CMAC ns__GetStations {
 };
 #endif
 
-/* replicator.h:107 */
+/* replicator.h:142 */
 #ifndef SOAP_TYPE_ns__GetSensors
-#define SOAP_TYPE_ns__GetSensors (35)
+#define SOAP_TYPE_ns__GetSensors (47)
 /* complex XML schema type 'ns:GetSensors': */
 struct SOAP_CMAC ns__GetSensors {
       public:
@@ -461,10 +680,40 @@ struct SOAP_CMAC ns__GetSensors {
 };
 #endif
 
-/* replicator.h:108 */
+/* replicator.h:143 */
+#ifndef SOAP_TYPE_ns__GetHistoricalDataBrief
+#define SOAP_TYPE_ns__GetHistoricalDataBrief (50)
+/* complex XML schema type 'ns:GetHistoricalDataBrief': */
+struct SOAP_CMAC ns__GetHistoricalDataBrief {
+      public:
+        /** Context that manages this object */
+        struct soap *soap;
+        /** Required element 'login' of XML schema type 'xsd:string' */
+        std::wstring login;
+        /** Required element 'password' of XML schema type 'xsd:string' */
+        std::wstring password;
+        /** Required element 'AveragePeriod' of XML schema type 'xsd:int' */
+        int AveragePeriod;
+        /** Required element 'sSensors' of XML schema type 'ns:ArrayOfSensors' */
+        ns__ArrayOfSensors sSensors;
+        /** Required element 'From' of XML schema type 'xsd:string' */
+        std::wstring From;
+        /** Required element 'To' of XML schema type 'xsd:string' */
+        std::wstring To;
+      public:
+        /** Return unique type id SOAP_TYPE_ns__GetHistoricalDataBrief */
+        long soap_type() const { return SOAP_TYPE_ns__GetHistoricalDataBrief; }
+        /** Constructor with member initializations */
+        ns__GetHistoricalDataBrief() : soap(), login(), password(), AveragePeriod(), sSensors(), From(), To() { }
+        /** Friend allocator */
+        friend SOAP_FMAC1 ns__GetHistoricalDataBrief * SOAP_FMAC2 soap_instantiate_ns__GetHistoricalDataBrief(struct soap*, int, const char*, const char*, size_t*);
+};
+#endif
+
+/* replicator.h:144 */
 #ifndef WITH_NOGLOBAL
 #ifndef SOAP_TYPE_SOAP_ENV__Header
-#define SOAP_TYPE_SOAP_ENV__Header (36)
+#define SOAP_TYPE_SOAP_ENV__Header (51)
 /* SOAP_ENV__Header: */
 struct SOAP_CMAC SOAP_ENV__Header {
       public:
@@ -478,10 +727,10 @@ struct SOAP_CMAC SOAP_ENV__Header {
 #endif
 #endif
 
-/* replicator.h:108 */
+/* replicator.h:144 */
 #ifndef WITH_NOGLOBAL
 #ifndef SOAP_TYPE_SOAP_ENV__Code
-#define SOAP_TYPE_SOAP_ENV__Code (37)
+#define SOAP_TYPE_SOAP_ENV__Code (52)
 /* Type SOAP_ENV__Code is a recursive data type, (in)directly referencing itself through its (base or derived class) members */
 /* SOAP_ENV__Code: */
 struct SOAP_CMAC SOAP_ENV__Code {
@@ -501,10 +750,10 @@ struct SOAP_CMAC SOAP_ENV__Code {
 #endif
 #endif
 
-/* replicator.h:108 */
+/* replicator.h:144 */
 #ifndef WITH_NOGLOBAL
 #ifndef SOAP_TYPE_SOAP_ENV__Detail
-#define SOAP_TYPE_SOAP_ENV__Detail (39)
+#define SOAP_TYPE_SOAP_ENV__Detail (54)
 /* SOAP_ENV__Detail: */
 struct SOAP_CMAC SOAP_ENV__Detail {
       public:
@@ -524,10 +773,10 @@ struct SOAP_CMAC SOAP_ENV__Detail {
 #endif
 #endif
 
-/* replicator.h:108 */
+/* replicator.h:144 */
 #ifndef WITH_NOGLOBAL
 #ifndef SOAP_TYPE_SOAP_ENV__Reason
-#define SOAP_TYPE_SOAP_ENV__Reason (42)
+#define SOAP_TYPE_SOAP_ENV__Reason (57)
 /* SOAP_ENV__Reason: */
 struct SOAP_CMAC SOAP_ENV__Reason {
       public:
@@ -544,10 +793,10 @@ struct SOAP_CMAC SOAP_ENV__Reason {
 #endif
 #endif
 
-/* replicator.h:108 */
+/* replicator.h:144 */
 #ifndef WITH_NOGLOBAL
 #ifndef SOAP_TYPE_SOAP_ENV__Fault
-#define SOAP_TYPE_SOAP_ENV__Fault (43)
+#define SOAP_TYPE_SOAP_ENV__Fault (58)
 /* SOAP_ENV__Fault: */
 struct SOAP_CMAC SOAP_ENV__Fault {
       public:
@@ -624,17 +873,17 @@ typedef std::wstring xsd__string;
 
 /* float has binding name 'float' for type 'xsd:float' */
 #ifndef SOAP_TYPE_float
-#define SOAP_TYPE_float (14)
+#define SOAP_TYPE_float (19)
 #endif
 
 /* double has binding name 'double' for type 'xsd:double' */
 #ifndef SOAP_TYPE_double
-#define SOAP_TYPE_double (19)
+#define SOAP_TYPE_double (14)
 #endif
 
 /* bool has binding name 'bool' for type 'xsd:boolean' */
 #ifndef SOAP_TYPE_bool
-#define SOAP_TYPE_bool (18)
+#define SOAP_TYPE_bool (23)
 #endif
 
 /* enum ns__MeasurementClasses has binding name 'ns__MeasurementClasses' for type 'ns:MeasurementClasses' */
@@ -652,44 +901,74 @@ typedef std::wstring xsd__string;
 #define SOAP_TYPE_ns__ErrorCode (10)
 #endif
 
+/* ns__ArrayOfSensors has binding name 'ns__ArrayOfSensors' for type 'ns:ArrayOfSensors' */
+#ifndef SOAP_TYPE_ns__ArrayOfSensors
+#define SOAP_TYPE_ns__ArrayOfSensors (40)
+#endif
+
 /* ns__StInfo has binding name 'ns__StInfo' for type 'ns:StInfo' */
 #ifndef SOAP_TYPE_ns__StInfo
-#define SOAP_TYPE_ns__StInfo (29)
+#define SOAP_TYPE_ns__StInfo (39)
+#endif
+
+/* ns__GetHistoricalDataBriefResponse has binding name 'ns__GetHistoricalDataBriefResponse' for type 'ns:GetHistoricalDataBriefResponse' */
+#ifndef SOAP_TYPE_ns__GetHistoricalDataBriefResponse
+#define SOAP_TYPE_ns__GetHistoricalDataBriefResponse (37)
 #endif
 
 /* ns__GetSensorsResponse has binding name 'ns__GetSensorsResponse' for type 'ns:GetSensorsResponse' */
 #ifndef SOAP_TYPE_ns__GetSensorsResponse
-#define SOAP_TYPE_ns__GetSensorsResponse (27)
+#define SOAP_TYPE_ns__GetSensorsResponse (35)
 #endif
 
 /* ns__GetStationsResponse has binding name 'ns__GetStationsResponse' for type 'ns:GetStationsResponse' */
 #ifndef SOAP_TYPE_ns__GetStationsResponse
-#define SOAP_TYPE_ns__GetStationsResponse (24)
+#define SOAP_TYPE_ns__GetStationsResponse (32)
+#endif
+
+/* ns__ArrayOfSensorData has binding name 'ns__ArrayOfSensorData' for type 'ns:ArrayOfSensorData' */
+#ifndef SOAP_TYPE_ns__ArrayOfSensorData
+#define SOAP_TYPE_ns__ArrayOfSensorData (30)
 #endif
 
 /* ns__ArrayOfSensorsInfo has binding name 'ns__ArrayOfSensorsInfo' for type 'ns:ArrayOfSensorsInfo' */
 #ifndef SOAP_TYPE_ns__ArrayOfSensorsInfo
-#define SOAP_TYPE_ns__ArrayOfSensorsInfo (22)
+#define SOAP_TYPE_ns__ArrayOfSensorsInfo (28)
 #endif
 
 /* ns__ArrayOfStationInfo has binding name 'ns__ArrayOfStationInfo' for type 'ns:ArrayOfStationInfo' */
 #ifndef SOAP_TYPE_ns__ArrayOfStationInfo
-#define SOAP_TYPE_ns__ArrayOfStationInfo (20)
+#define SOAP_TYPE_ns__ArrayOfStationInfo (26)
+#endif
+
+/* ns__SensorData has binding name 'ns__SensorData' for type 'ns:SensorData' */
+#ifndef SOAP_TYPE_ns__SensorData
+#define SOAP_TYPE_ns__SensorData (24)
 #endif
 
 /* ns__SensorInfo has binding name 'ns__SensorInfo' for type 'ns:SensorInfo' */
 #ifndef SOAP_TYPE_ns__SensorInfo
-#define SOAP_TYPE_ns__SensorInfo (16)
+#define SOAP_TYPE_ns__SensorInfo (21)
 #endif
 
 /* ns__UnitInfo has binding name 'ns__UnitInfo' for type 'ns:UnitInfo' */
 #ifndef SOAP_TYPE_ns__UnitInfo
-#define SOAP_TYPE_ns__UnitInfo (15)
+#define SOAP_TYPE_ns__UnitInfo (20)
 #endif
 
 /* ns__StationInfo has binding name 'ns__StationInfo' for type 'ns:StationInfo' */
 #ifndef SOAP_TYPE_ns__StationInfo
-#define SOAP_TYPE_ns__StationInfo (13)
+#define SOAP_TYPE_ns__StationInfo (18)
+#endif
+
+/* ns__ArrayOfBriefData has binding name 'ns__ArrayOfBriefData' for type 'ns:ArrayOfBriefData' */
+#ifndef SOAP_TYPE_ns__ArrayOfBriefData
+#define SOAP_TYPE_ns__ArrayOfBriefData (15)
+#endif
+
+/* ns__BriefData has binding name 'ns__BriefData' for type 'ns:BriefData' */
+#ifndef SOAP_TYPE_ns__BriefData
+#define SOAP_TYPE_ns__BriefData (13)
 #endif
 
 /* xsd__string has binding name 'xsd__string' for type 'xsd:string' */
@@ -704,67 +983,87 @@ typedef std::wstring xsd__string;
 
 /* struct SOAP_ENV__Fault has binding name 'SOAP_ENV__Fault' for type '' */
 #ifndef SOAP_TYPE_SOAP_ENV__Fault
-#define SOAP_TYPE_SOAP_ENV__Fault (43)
+#define SOAP_TYPE_SOAP_ENV__Fault (58)
 #endif
 
 /* struct SOAP_ENV__Reason has binding name 'SOAP_ENV__Reason' for type '' */
 #ifndef SOAP_TYPE_SOAP_ENV__Reason
-#define SOAP_TYPE_SOAP_ENV__Reason (42)
+#define SOAP_TYPE_SOAP_ENV__Reason (57)
 #endif
 
 /* struct SOAP_ENV__Detail has binding name 'SOAP_ENV__Detail' for type '' */
 #ifndef SOAP_TYPE_SOAP_ENV__Detail
-#define SOAP_TYPE_SOAP_ENV__Detail (39)
+#define SOAP_TYPE_SOAP_ENV__Detail (54)
 #endif
 
 /* struct SOAP_ENV__Code has binding name 'SOAP_ENV__Code' for type '' */
 #ifndef SOAP_TYPE_SOAP_ENV__Code
-#define SOAP_TYPE_SOAP_ENV__Code (37)
+#define SOAP_TYPE_SOAP_ENV__Code (52)
 #endif
 
 /* struct SOAP_ENV__Header has binding name 'SOAP_ENV__Header' for type '' */
 #ifndef SOAP_TYPE_SOAP_ENV__Header
-#define SOAP_TYPE_SOAP_ENV__Header (36)
+#define SOAP_TYPE_SOAP_ENV__Header (51)
+#endif
+
+/* struct ns__GetHistoricalDataBrief has binding name 'ns__GetHistoricalDataBrief' for type 'ns:GetHistoricalDataBrief' */
+#ifndef SOAP_TYPE_ns__GetHistoricalDataBrief
+#define SOAP_TYPE_ns__GetHistoricalDataBrief (50)
 #endif
 
 /* struct ns__GetSensors has binding name 'ns__GetSensors' for type 'ns:GetSensors' */
 #ifndef SOAP_TYPE_ns__GetSensors
-#define SOAP_TYPE_ns__GetSensors (35)
+#define SOAP_TYPE_ns__GetSensors (47)
 #endif
 
 /* struct ns__GetStations has binding name 'ns__GetStations' for type 'ns:GetStations' */
 #ifndef SOAP_TYPE_ns__GetStations
-#define SOAP_TYPE_ns__GetStations (32)
+#define SOAP_TYPE_ns__GetStations (44)
 #endif
 
 /* struct SOAP_ENV__Reason * has binding name 'PointerToSOAP_ENV__Reason' for type '' */
 #ifndef SOAP_TYPE_PointerToSOAP_ENV__Reason
-#define SOAP_TYPE_PointerToSOAP_ENV__Reason (45)
+#define SOAP_TYPE_PointerToSOAP_ENV__Reason (60)
 #endif
 
 /* struct SOAP_ENV__Detail * has binding name 'PointerToSOAP_ENV__Detail' for type '' */
 #ifndef SOAP_TYPE_PointerToSOAP_ENV__Detail
-#define SOAP_TYPE_PointerToSOAP_ENV__Detail (44)
+#define SOAP_TYPE_PointerToSOAP_ENV__Detail (59)
 #endif
 
 /* struct SOAP_ENV__Code * has binding name 'PointerToSOAP_ENV__Code' for type '' */
 #ifndef SOAP_TYPE_PointerToSOAP_ENV__Code
-#define SOAP_TYPE_PointerToSOAP_ENV__Code (38)
+#define SOAP_TYPE_PointerToSOAP_ENV__Code (53)
+#endif
+
+/* ns__ArrayOfSensorData * has binding name 'PointerTons__ArrayOfSensorData' for type 'ns:ArrayOfSensorData' */
+#ifndef SOAP_TYPE_PointerTons__ArrayOfSensorData
+#define SOAP_TYPE_PointerTons__ArrayOfSensorData (38)
 #endif
 
 /* ns__ArrayOfSensorsInfo * has binding name 'PointerTons__ArrayOfSensorsInfo' for type 'ns:ArrayOfSensorsInfo' */
 #ifndef SOAP_TYPE_PointerTons__ArrayOfSensorsInfo
-#define SOAP_TYPE_PointerTons__ArrayOfSensorsInfo (28)
+#define SOAP_TYPE_PointerTons__ArrayOfSensorsInfo (36)
 #endif
 
 /* ns__ArrayOfStationInfo * has binding name 'PointerTons__ArrayOfStationInfo' for type 'ns:ArrayOfStationInfo' */
 #ifndef SOAP_TYPE_PointerTons__ArrayOfStationInfo
-#define SOAP_TYPE_PointerTons__ArrayOfStationInfo (25)
+#define SOAP_TYPE_PointerTons__ArrayOfStationInfo (33)
+#endif
+
+/* ns__ArrayOfBriefData * has binding name 'PointerTons__ArrayOfBriefData' for type 'ns:ArrayOfBriefData' */
+#ifndef SOAP_TYPE_PointerTons__ArrayOfBriefData
+#define SOAP_TYPE_PointerTons__ArrayOfBriefData (25)
 #endif
 
 /* ns__UnitInfo * has binding name 'PointerTons__UnitInfo' for type 'ns:UnitInfo' */
 #ifndef SOAP_TYPE_PointerTons__UnitInfo
-#define SOAP_TYPE_PointerTons__UnitInfo (17)
+#define SOAP_TYPE_PointerTons__UnitInfo (22)
+#endif
+
+/* ns__BriefData * has binding name 'PointerTons__BriefData' for type 'ns:BriefData' */
+#ifndef SOAP_TYPE_PointerTons__BriefData
+#define SOAP_TYPE_PointerTons__BriefData (16)
 #endif
 
 /* _QName has binding name '_QName' for type 'xsd:QName' */
@@ -782,14 +1081,29 @@ typedef std::wstring xsd__string;
 #define SOAP_TYPE_string (4)
 #endif
 
+/* std::vector<std::wstring>  has binding name 'std__vectorTemplateOfxsd__string' for type 'xsd:string' */
+#ifndef SOAP_TYPE_std__vectorTemplateOfxsd__string
+#define SOAP_TYPE_std__vectorTemplateOfxsd__string (41)
+#endif
+
+/* std::vector<ns__SensorData>  has binding name 'std__vectorTemplateOfns__SensorData' for type 'ns:SensorData' */
+#ifndef SOAP_TYPE_std__vectorTemplateOfns__SensorData
+#define SOAP_TYPE_std__vectorTemplateOfns__SensorData (31)
+#endif
+
 /* std::vector<ns__SensorInfo>  has binding name 'std__vectorTemplateOfns__SensorInfo' for type 'ns:SensorInfo' */
 #ifndef SOAP_TYPE_std__vectorTemplateOfns__SensorInfo
-#define SOAP_TYPE_std__vectorTemplateOfns__SensorInfo (23)
+#define SOAP_TYPE_std__vectorTemplateOfns__SensorInfo (29)
 #endif
 
 /* std::vector<ns__StationInfo>  has binding name 'std__vectorTemplateOfns__StationInfo' for type 'ns:StationInfo' */
 #ifndef SOAP_TYPE_std__vectorTemplateOfns__StationInfo
-#define SOAP_TYPE_std__vectorTemplateOfns__StationInfo (21)
+#define SOAP_TYPE_std__vectorTemplateOfns__StationInfo (27)
+#endif
+
+/* std::vector<ns__BriefData *>  has binding name 'std__vectorTemplateOfPointerTons__BriefData' for type 'ns:BriefData' */
+#ifndef SOAP_TYPE_std__vectorTemplateOfPointerTons__BriefData
+#define SOAP_TYPE_std__vectorTemplateOfPointerTons__BriefData (17)
 #endif
 
 /******************************************************************************\

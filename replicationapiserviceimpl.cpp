@@ -66,7 +66,7 @@ void ReplicationApiServiceImpl::addThreadCount(const int &cnt)
         *conn = QSqlDatabase::addDatabase("QPSQL", i);
     }
     else
-    { int j = 1;
+    { //int j = 1;
         while(!dbmutex->tryLock() )
         {
         }
@@ -173,7 +173,7 @@ int ReplicationApiServiceImpl::GetSensors (struct soap *soap, const std::wstring
 
     }
 
-      if (!status)
+    if (!status)
     {
         result.ErrorCode = authoization_error_;
         fprintf(stderr, "DB - BUSY \n");
@@ -242,3 +242,95 @@ int ReplicationApiServiceImpl::GetSensors (struct soap *soap, const std::wstring
 
 }
 
+int ReplicationApiServiceImpl::GetHistoricalDataBrief (struct soap *soap, const std::wstring &login, const std::wstring &password, int AveragePeriod, const ns__ArrayOfSensors &sSensors, const std::wstring &From, const std::wstring &To, ns__GetHistoricalDataBriefResponse &result)
+{
+    while(!dbmutex->tryLock());
+
+    ns__BriefData *bd;
+    ns__SensorData sd;
+
+    result.GetHistoricalDataBriefResult = new ns__ArrayOfSensorData();
+    sd.Data = new ns__ArrayOfBriefData();
+    //sd.Data->BriefData = new  std::vector<ns__BriefData>;
+    std::vector<ns__BriefData*> abd;
+
+    bool status = conn->isOpen();
+    if (!status)
+    {
+        conn->setHostName("127.0.0.1"); //localhost database
+        conn->setDatabaseName("weather"); //hardcoded name
+        conn->setUserName( QString::fromStdWString(login));
+        conn->setPassword(QString::fromStdWString(password));
+
+        status = conn->open();
+
+    }
+
+    if (!status)
+    {
+        result.ErrorCode = authoization_error_;
+        fprintf(stderr, "DB - BUSY \n");
+        dbmutex->unlock();
+
+        return SOAP_OK;
+    }
+    //}
+    QSqlQuery *query = new QSqlQuery(*conn);
+    std::wstring SensorID;
+    QSqlRecord recordset;
+
+    for (std::size_t _i =0; _i < sSensors.string.size(); _i++)
+    {
+
+
+        SensorID = sSensors.string[_i];
+
+        QString str = QString::fromStdWString(L"SELECT * FROM sensors_data WHERE  serialnum = '" + SensorID +L"' AND date_time > '" + From + L"' AND date_time <='" + To + L"'");
+        query->prepare(str);
+        query->exec();
+
+        if(!query->lastError().isValid())
+        {
+            while (query->next()) {
+                bd = new ns__BriefData();
+                recordset = query->record();
+
+                bd->Time = recordset.value("date_time").toString().toStdWString();
+                bd->Value = recordset.value("measure").toDouble();
+
+                sd.Data->BriefData.push_back(bd);
+
+                //delete  bd;
+            }
+
+            sd.SensorID = SensorID;
+
+            result.GetHistoricalDataBriefResult->SensorData.push_back(sd);
+            result.ErrorCode = authoization_ok_;
+            recordset.clear();
+            query->finish();
+            query->clear();
+        }
+        else
+        {
+
+            sd.SensorID = SensorID;
+
+            result.GetHistoricalDataBriefResult->SensorData.push_back(sd);
+            result.ErrorCode = query_error_;
+            query->finish();
+            query->clear();
+
+        }
+    }
+
+    delete query;
+
+    conn->close();
+
+    dbmutex->unlock();
+    fprintf(stderr, "GetHistoricalDataBrief is done \n");
+
+
+    return SOAP_OK;
+}

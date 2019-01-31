@@ -19,6 +19,7 @@ public:
     int GetStations (struct soap *soap, const std::wstring &login, const std::wstring &password, ns__GetStationsResponse &result);
     int GetSensors (struct soap *soap, const std::wstring &login, const std::wstring &password, const std::wstring &StationID, const std::wstring &From, const std::wstring &To, ns__GetSensorsResponse &result);
     void addThreadCount(const int &cnt);
+    int GetHistoricalDataBrief (struct soap *soap, const std::wstring &login, const std::wstring &password, int AveragePeriod, const ns__ArrayOfSensors &sSensors, const std::wstring &From, const std::wstring &To, ns__GetHistoricalDataBriefResponse &result);
 private:
     QVector<QSqlDatabase> connV;
     QSqlDatabase *conn;
