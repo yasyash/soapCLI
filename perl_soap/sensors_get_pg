@@ -14,7 +14,7 @@ use DBI;
 use MIME::Base64;
 use XML::Simple;
  
-$db = DBI->connect("DBI:Pg:host=localhost;dbname=weather1","weather","31415") or die "No access to database: $!";
+$db = DBI->connect("DBI:Pg:host=localhost;dbname=weather","weather","31415") or die "No access to database: $!";
 $start = $i = $j = 0;
 #$insert
 $insert = "INSERT INTO equipments ( id, idd, serialnum, typemeasure, average_period, unit_name, measure_class, is_wind_sensor, max_consentration, max_day_consentration, def_colour, date_time_in, date_time_out, is_present)  VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?)";

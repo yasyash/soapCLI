@@ -48,7 +48,7 @@ $client=SOAP::Lite->proxy( $ip);
 $client->uri("urn:ReplicationApiService");
 
 $client->readable(1);
-$client->on_action( sub {  join '', '"'.$ip,qq($_[1]")} );
+$client->on_action( sub {  join '', '"'.$ip.'/',qq($_[1]")} );
 
 
 $obj_login = SOAP::Data->new(name => 'login', value => $user);
