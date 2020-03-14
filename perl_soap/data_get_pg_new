@@ -19,6 +19,22 @@ use XML::Simple;
 use DateTime;
 use DateTime::Format::Strptime;
 
+use Fcntl ":flock";
+use Sys::Syslog;
+$lockfilename="/tmp/data_get_pg.lock";
+
+
+if (!open(LOCKFILE, ">$lockfilename")) {
+  print "Can't lock file!";
+  exit(1);
+}
+
+if (!flock(LOCKFILE, LOCK_EX | LOCK_NB)) {
+#if process is already running
+  print "Process is already running!\n\n" ;
+  syslog('debug', 'data_get_pg: Process already running!');
+  exit(1);
+}
  
 $db = DBI->connect("DBI:Pg:host=localhost;dbname=weather","weather","31415") or die "No access to database: $!";
 $i = $j = 0;
@@ -168,4 +184,8 @@ print ("\nThere are ".$j." sensors in the database and " . $i . " records added 
 $db->disconnect;
 #print "Result is: ". XMLout($elm)."\n\n";
 #print "Result is: ". $som->dataof('//GetStationsResponse/GetStationsResult/StationInfo/*'). "...\n\n";
+
+close(LOCKFILE);
+unlink($lockfilename);
+  print "Process is completed!" ;
 
