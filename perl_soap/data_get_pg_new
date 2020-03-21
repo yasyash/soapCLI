@@ -22,7 +22,7 @@ use DateTime::Format::Strptime;
 use Fcntl ":flock";
 use Sys::Syslog;
 $lockfilename="/tmp/data_get_pg.lock";
-
+$result_code = 1;
 
 if (!open(LOCKFILE, ">$lockfilename")) {
   print "Can't lock file!";
@@ -72,7 +72,7 @@ $GMT_ADD_ZONE = 0; #because soap service retreives data in UTC format.
 
 				$client=SOAP::Lite->proxy( $ip);
 				$client->uri("urn:ReplicationApiService");
-
+				$client->on_fault(\&soap_fault);
 
 				#$client->outputxml('true');
 				$client->readable(1);
@@ -117,10 +117,11 @@ $GMT_ADD_ZONE = 0; #because soap service retreives data in UTC format.
 			 
 
 						# $som = $client->call($method_get,$avrg_period, $sensor,$from, $to, $security );
+						$result_code=1;
 						 $som = $client->call($method_get, $obj_login, $obj_pwd, $avrg_period,  $sensor, $from, $to  ); #hardcoded 5 minutes average period
 
-						 die $som->faultstring if ($som->fault);
-
+						 #die $som->faultstring if ($som->fault);
+						if ($result_code == 1){
 							for  $t ($som->valueof('//GetHistoricalDataBriefResponse/GetHistoricalDataBriefResult/SensorData/Data/BriefData')) 								{
 								$i++;
 			      					#print $t->{Time} . " - " .  $t->{Value} ."\n";
@@ -160,9 +161,9 @@ $GMT_ADD_ZONE = 0; #because soap service retreives data in UTC format.
 								$query_ins->execute( $row[0], $row[2], $loctime, $row[1], $t->{Value}, '0');
 								$last_update = $_;
 								#print "last updt".$last_update;
-						$query_update->execute($last_update, $row[2], $row[0]) if (defined($last_update));
+								$query_update->execute($last_update, $row[2], $row[0]) if (defined($last_update));
     							}
-				
+						}
 
 						print "================================================================\n";
 
@@ -189,3 +190,9 @@ close(LOCKFILE);
 unlink($lockfilename);
   print "Process is completed!" ;
 
+sub soap_fault()
+{
+	$result_code = 0;
+	  print "Connection fault!\n" ;
+
+}
