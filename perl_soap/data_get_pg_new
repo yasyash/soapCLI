@@ -70,10 +70,9 @@ $GMT_ADD_ZONE = 0; #because soap service retreives data in UTC format.
 		    if ( $ip ne ''){
 					print ('Address is ' . $ip ." \n");
 
-				$client=SOAP::Lite->proxy( $ip);
+				$client=SOAP::Lite->proxy( $ip, timeout => 3);
 				$client->uri("urn:ReplicationApiService");
 				$client->on_fault(\&soap_fault);
-
 				#$client->outputxml('true');
 				$client->readable(1);
      				$client->on_action( sub {  join '', '"'.$ip,qq($_[1]")} );
