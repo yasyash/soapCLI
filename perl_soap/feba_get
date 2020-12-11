@@ -10,6 +10,8 @@ use DateTime::Format::Strptime;
 $db = DBI->connect("DBI:Pg:host=localhost;dbname=weather","weather","31415") or die "No access to database: $!";
 
 $_time  =  strftime ("%Y-%m-%d", localtime);
+$_timeM  =  strftime ("%H-%M-%S", localtime);
+
 my $strp = DateTime::Format::Strptime->new(
         pattern  => '%Y-%m-%d %H:%M:%S',
     );
@@ -27,8 +29,7 @@ $query_update = $db->prepare("$update");
 	$query = $db->prepare("$select");
 	$query->execute();
 	
-	$folder = 'parsing' . '---' . $_time.'.csv';
-	$foldernew = 'parsed' . '---' . $_time.'.csv';
+	$folder = $_timeM . '---' . $_time.'.csv';
 
 	move $_time.'.csv', $folder;
 
@@ -152,6 +153,5 @@ $query_update = $db->prepare("$update");
 	   $query_ins ->finish;
     }
 	#
-	move $folder, $foldernew;
 
 	$db->disconnect;
