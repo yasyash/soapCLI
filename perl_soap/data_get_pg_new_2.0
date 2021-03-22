@@ -99,6 +99,7 @@ $GMT_ADD_ZONE = 0; #because soap service retreives data in UTC format.
 
 				if ($query->rows >0)
 				{	
+					
 					print "In query is ". $query->rows ." rows.\n";
 					while (@row = $query->fetchrow_array)
 						{
@@ -106,14 +107,16 @@ $GMT_ADD_ZONE = 0; #because soap service retreives data in UTC format.
 						 $_ = $row[4];
 			 				m{^\s*(\d{1,4})\W*0*(\d{2})\W*0*(\d{2})\W*0*
         	 			        (\d{2})\W*0*(\d{2})\W*0*(\d{2})}x;
-
+							 
+							 $first = 0;
 							 $j++;
+
  						 print "Query === $j === for sensor === $row[1] === \n Serial num. === $row[2]\n Time period is from $row[4] to ".
 							 strftime ("%Y-%m-%d %H:%M:%S", localtime)."\n";
 						 $avrg_period = SOAP::Data->name('AveragePeriod' => $period);
 						 $id = SOAP::Data->name('string' => $row[2]); #sensor ID
 						 $sensor = SOAP::Data->name('sSensors')->value(\$id);
-							$sec = $6 + 1;
+							$sec = $6 + 3;
 			 			 $from  = SOAP::Data->name('From' => "$1-$2-$3T$4:$5:$sec");
 						 $to  = SOAP::Data->name('To' => strftime ("%Y-%m-%dT%H:%M:%S", localtime));
 			 
@@ -126,6 +129,7 @@ $GMT_ADD_ZONE = 0; #because soap service retreives data in UTC format.
 						if ($result_code == 1){
 							for  $t ($som->valueof('//GetHistoricalDataBriefResponse/GetHistoricalDataBriefResult/SensorData/Data/BriefData')) 								{
 								$i++;
+								$first++;
 			      					#print $t->{Time} . " - " .  $t->{Value} ."\n";
 								$_ = $t->{Time};
 								$utc = $t->{Time};
@@ -161,16 +165,26 @@ $GMT_ADD_ZONE = 0; #because soap service retreives data in UTC format.
 								#s/T/ /;
 								print "Result === time is === " . $loctime ." === and value === $t->{Value} \n";
 								
-								$query_check->execute($row[2], $loctime);
-								if ($query_check->rows == 0)
+								if ($first == 1)
 								{
+								$query_check->execute($row[2], $loctime);
+																
+									if ($query_check->rows == 0)
+									{
 									$query_ins->execute( $row[0], $row[2], $loctime, $row[1], $t->{Value}, '0');
 									$last_update = $_;
 									#print "last updt".$last_update;
 									$query_update->execute($last_update, $row[2], $row[0]) if (defined($last_update));
-								} else 
+									} else 
+									{
+									print "Error! Records is already exist! Go next...";
+									}
+								} else
 								{
-								print "Error! Records is already exist! Go next...";
+								$query_ins->execute( $row[0], $row[2], $loctime, $row[1], $t->{Value}, '0');
+								$last_update = $_;
+									#print "last updt".$last_update;
+								$query_update->execute($last_update, $row[2], $row[0]) if (defined($last_update));
 								}
     							}
 						}
