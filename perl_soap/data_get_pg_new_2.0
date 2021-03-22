@@ -42,7 +42,9 @@ $period = 5; # average period is 20 minutes
 #$insert
 $insert = "INSERT INTO sensors_data (  idd, serialnum, date_time, typemeasure, measure, is_alert)  VALUES(?,?,?,?,?,?)";
 $update = "UPDATE equipments SET date_time_out = ? WHERE serialnum = ? AND idd = ?"; 
+$check = "SELECT * FROM sensors_data WHERE serialnum=? AND date_time=?";
 
+$query_check = $db->prepare("$check");
 $query_ins = $db->prepare("$insert");
 $query_update = $db->prepare("$update");
 $select_st = "SELECT * FROM stations WHERE is_present = true";
@@ -158,10 +160,18 @@ $GMT_ADD_ZONE = 0; #because soap service retreives data in UTC format.
 								#+$GMT_ADD_ZONE;
 								#s/T/ /;
 								print "Result === time is === " . $loctime ." === and value === $t->{Value} \n";
-								$query_ins->execute( $row[0], $row[2], $loctime, $row[1], $t->{Value}, '0');
-								$last_update = $_;
-								#print "last updt".$last_update;
-								$query_update->execute($last_update, $row[2], $row[0]) if (defined($last_update));
+								
+								$query_check->execute($row[2], $loctime);
+								if ($query_check->rows == 0)
+								{
+									$query_ins->execute( $row[0], $row[2], $loctime, $row[1], $t->{Value}, '0');
+									$last_update = $_;
+									#print "last updt".$last_update;
+									$query_update->execute($last_update, $row[2], $row[0]) if (defined($last_update));
+								} else 
+								{
+								print "Error! Records is already exist! Go next...";
+								{
     							}
 						}
 
@@ -179,7 +189,7 @@ $query->finish;
 $query_update->finish;
 $query_ins ->finish;
 $query_sel->finish;
-
+$query_check->finish;
 
 print ("\nThere are ".$j." sensors in the database and " . $i . " records added from SOAP query\n");
 $db->disconnect;
