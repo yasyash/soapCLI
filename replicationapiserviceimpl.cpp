@@ -285,7 +285,7 @@ int ReplicationApiServiceImpl::GetHistoricalDataBrief (struct soap *soap, const 
 
         SensorID = sSensors.string[_i];
 
-        QString str = QString::fromStdWString(L"SELECT * FROM sensors_data WHERE  serialnum = '" + SensorID +L"' AND date_time > '" + From + L"' AND date_time <='" + To + L"'");
+        QString str = QString::fromStdWString(L"SELECT * FROM sensors_data WHERE  serialnum = '" + SensorID +L"' AND date_time > '" + From + L"' AND date_time <='" + To + L"' ORDER BY date_time ASC");
         query->prepare(str);
         query->exec();
 
