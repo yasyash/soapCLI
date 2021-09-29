@@ -9,11 +9,19 @@
 #include <QDateTime>
 #include <QThreadPool>
 #include <QMutex>
+#include <QSharedMemory>
 
 #include "wiper.h"
 
 int main( int argc, char* argv[] )
 {
+    QSharedMemory _shared("77777777-3333-7777-3333-4dafd2077c46");
+    if( !_shared.create( 512, QSharedMemory::ReadWrite) )
+    {
+    QTextStream(stdout) << "Can't start more than one instance of the application...\n\r";
+    exit(-1);
+    }
+
     dbmutex = new QMutex(QMutex::NonRecursive);
 
     QString db ="";
@@ -23,7 +31,7 @@ int main( int argc, char* argv[] )
     {
         // releaseModbus();
 
-        qDebug ( "Fatal error: wrong data of the database parameter\n\r");
+       QTextStream(stdout) << "Fatal error: wrong data of the database parameter\n\r";
         exit(-1);
 
     }
@@ -33,7 +41,7 @@ int main( int argc, char* argv[] )
     {
         // releaseModbus();
 
-        qDebug ( "Fatal error: wrong data of the user parameter\n\r");
+        QTextStream(stdout) << "Fatal error: wrong data of the user parameter\n\r";
         exit(-1);
 
     }
@@ -43,7 +51,7 @@ int main( int argc, char* argv[] )
     {
         // releaseModbus();
 
-        qDebug ( "Fatal error: wrong data of the password parameter\n\r");
+        QTextStream(stdout) << "Fatal error: wrong data of the password parameter\n\r";
         exit(-1);
 
     }
