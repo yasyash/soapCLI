@@ -117,6 +117,6 @@ int main( int argc, char* argv[] )
 
     delete threadPool;
     m_conn->close();
-
+    _shared.detach();
 }
 
