@@ -1,7 +1,7 @@
-# soapSRV
-SOAP 1.1 Service
+# soapCLI
+SOAP 1.1 Client
 
-Copyright (c) 2018-2019 Yaroslav Shkliar
+Copyright (c) 2021 Yaroslav Shkliar
 
 Copyright (c) 2018-2019 ILIT.RU, Research IT Laboratory 
 

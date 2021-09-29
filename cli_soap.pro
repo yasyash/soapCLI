@@ -2,7 +2,7 @@ QT       += core sql
 
 QT       -= gui
 
-TARGET = ReplicationApiService
+TARGET = cli_soap
 VERSION = 0.1.0
 
 CONFIG   += console
@@ -12,18 +12,16 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     soapC.cpp \
-    soapReplicationApiServiceService.cpp \
-    replicationapiserviceimpl.cpp \
-    soapservice.cpp
+    soapReplicationApiServiceProxy.cpp \
+    wiper.cpp
 
 HEADERS += \
     soapStub.h \
     soapH.h \
-    soapReplicationApiServiceService.h \
     ReplicationApiService.nsmap \
-    replicationapiserviceimpl.h \
-    soapservice.h \
     stdsoap2.h \
+    soapReplicationApiServiceProxy.h \
+    wiper.h \
     global.h
 
 DEFINES += WITH_PURE_VIRTUAL\
@@ -31,7 +29,4 @@ DEFINES += WITH_PURE_VIRTUAL\
 
 include( common.pri )
 
-DISTFILES += \
-    perl_soap/data_get_pg \
-    perl_soap/sensors_get_pg \
-    perl_soap/stations_get_pg
+
